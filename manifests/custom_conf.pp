@@ -1,4 +1,4 @@
-define custom_conf(
+define apache::custom_conf(
                     $source,
                     $filename=$name,
                   ) {
