@@ -1,0 +1,14 @@
+{
+  "name": "eyp-apache",
+  "version": "0.1.19",
+  "author": "eyp",
+  "summary": "basic apache module",
+  "license": "Apache-2.0",
+  "source": "",
+  "project_page": null,
+  "issues_url": null,
+  "dependencies": [
+    {"name":"puppetlabs/stdlib","version_requirement":">= 1.0.0"},
+    {"name":"puppetlabs/concat","version_requirement":">= 1.2.3"}
+  ]
+}

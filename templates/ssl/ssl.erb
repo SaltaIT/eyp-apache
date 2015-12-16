@@ -1,0 +1,15 @@
+LoadModule ssl_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_ssl.so
+
+
+AddType application/x-x509-ca-cert .crt
+AddType application/x-pkcs7-crl    .crl
+SSLPassPhraseDialog  builtin
+SSLSessionCache         shmcb:/var/cache/mod_ssl/scache(512000)
+SSLSessionCacheTimeout  300
+SSLMutex default
+SSLRandomSeed startup file:/dev/urandom  256
+SSLRandomSeed connect builtin
+SSLCryptoDevice builtin
+
+# SNI - virtualhosting SSL
+SSLStrictSNIVHostCheck <%= scope.function_bool2httpd([@sni]) %>

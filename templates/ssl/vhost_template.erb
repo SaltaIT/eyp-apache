@@ -1,0 +1,10 @@
+  SSLEngine on
+  SSLCertificateFile 	"<%= scope.lookupvar('apache::params::baseconf') %>/ssl/<%= @certname %>_cert<%= @certname_version %>.cert"
+  SSLCertificateKeyFile 	"<%= scope.lookupvar('apache::params::baseconf') %>/ssl/<%= @certname %>_pk<%= @certname_version %>.pk"
+<% if (@use_intermediate) -%>
+  SSLCertificateChainFile "<%= scope.lookupvar('apache::params::baseconf') %>/ssl/<%= @certname %>_intermediate<%= @certname_version %>.cert"
+<% end -%>
+  SSLOptions +FakeBasicAuth +ExportCertData +StrictRequire
+  SetEnvIf User-Agent ".*MSIE.*" \
+    nokeepalive ssl-unclean-shutdown \
+    downgrade-1.0 force-response-1.0

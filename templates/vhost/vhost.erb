@@ -1,0 +1,19 @@
+<VirtualHost *:<%= @port %>>
+  DocumentRoot <%= @documentroot %>
+  ServerName <%= @servername %>
+  <% if @serveralias -%>
+    <% @serveralias.each do |val| -%>
+  ServerAlias <%= val %>
+    <% end -%>
+  <% end -%>
+  DirectoryIndex <%= @directoryindex.join(' ') %>
+
+  ErrorLog "|/usr/sbin/rotatelogs -l /var/log/httpd/<%= @servername %>.error.%Y.%m.%d.log 86400"
+  CustomLog "|/usr/sbin/rotatelogs -l /var/log/httpd/<%= @servername %>.access.%Y.%m.%d.log 86400" combined
+
+  <Directory <%= @documentroot %>>
+		AllowOverride None
+		Options FollowSymLinks
+		Order Deny,Allow
+	  Allow from all
+  </Directory>

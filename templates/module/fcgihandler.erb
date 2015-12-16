@@ -1,0 +1,15 @@
+LoadModule fastcgi_module modules/mod_fastcgi.so
+
+<IfModule mod_fastcgi.c>
+  AddHandler php5-fcgi .php
+  Action php5-fcgi /php5-fcgi virtual
+  Alias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi
+  FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -host <%= @fcgihost %>:<%= @fcgiport %> -pass-header Authorization
+</IfModule>
+
+<Directory "/usr/lib/cgi-bin">
+    AllowOverride None
+    Options None
+    Order allow,deny
+    Allow from all
+</Directory>

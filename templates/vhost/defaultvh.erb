@@ -1,0 +1,27 @@
+<VirtualHost *:<%= @port %>>
+	DocumentRoot <%= @documentroot %>
+
+	<Directory <%= @documentroot %>>
+		AllowOverride None
+		Options None
+		Order Deny,Allow
+		Allow from 213.229.188.136 213.229.188.144 81.19.100.250 172.20.0.0/24
+		Allow from 10.12.80.1/32 80.169.245.0/27 62.97.117.216/30  62.97.117.220/30
+		Allow from 80.169.245.33 213.27.191.169 10.10.21.10
+		Allow from ::1 # IPv6
+		Deny from all
+	</Directory>
+
+  <Location /server-status>
+    SetHandler server-status
+    Order deny,allow
+    Deny from all
+    # IPs de monitorizacion
+    Allow from 213.229.188.136 213.229.188.144 81.19.100.250
+    Allow from 172.20.0.0/24 10.12.80.1/32 80.169.245.0/27
+    Allow from 62.97.117.216/30 62.97.117.220/30 127.0.0.1
+    Allow from 80.169.245.33 10.10.21.10
+    Allow from 213.27.191.169
+    Allow from ::1 # IPv6
+    # fin de IPs de monitorizacion
+  </Location>
