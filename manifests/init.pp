@@ -49,7 +49,13 @@ class apache (
     $ssl=false,
     $sni=true,
     $trace=false,
+		$version=$apache::version::default,
   )inherits apache::params {
+
+	if($version!=$apache::version::default)
+	{
+		fail("unsupported version for this system - expected: ${version} supported: ${apache::version::default}")
+	}
 
   validate_array($listen)
 
