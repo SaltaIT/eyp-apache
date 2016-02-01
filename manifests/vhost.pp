@@ -1,9 +1,9 @@
 #
 define apache::vhost   (
+        $documentroot,
         $order='00',
         $port='80',
         $defaultvh=false,
-        $documentroot,
         $servername=$name,
         $serveralias=undef,
         $rewrites=undef,
@@ -113,7 +113,7 @@ define apache::vhost   (
                               "${apache::params::baseconf}/ssl/${certname}_pk${certname_version}.pk",
                               "${apache::params::baseconf}/ssl/${certname}_cert${certname_version}.cert"
                             ]
-                         ],
+                        ],
         }
       }
 
