@@ -8,6 +8,7 @@ class apache::params inherits apache::version {
   $extendedstatus_default=true
   $mpm_default="prefork"
   $serversignature_default=false
+	$server_admin_default='root@localhost'
 
   case $::osfamily
   {
@@ -17,6 +18,7 @@ class apache::params inherits apache::version {
           $modulesdir='modules'
           $loadmodules_extra=true
           $apache_username='apache'
+					$apache_group='apache-data'
           $load_mpm_prefork=false
           $apache24=false
           $modssl_package= [ 'mod_ssl' ]
@@ -47,6 +49,7 @@ class apache::params inherits apache::version {
       $modulesdir='/usr/lib/apache2/modules'
       $loadmodules_extra=false
       $apache_username='www-data'
+			$apache_group='www-data'
       $load_mpm_prefork=true
       $apache24=true
 

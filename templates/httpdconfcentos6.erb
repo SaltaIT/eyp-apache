@@ -263,8 +263,8 @@ ExtendedStatus <%= scope.function_bool2httpd([@extendedstatus]) %>
 #  when the value of (unsigned)Group is above 60000;
 #  don't use Group #-1 on these systems!
 #
-User apache
-Group apache
+User <%= @apache_username %>
+Group <%= @apache_group %>
 
 ### Section 2: 'Main' server configuration
 #
@@ -283,7 +283,7 @@ Group apache
 # e-mailed.  This address appears on some server-generated pages, such
 # as error documents.  e.g. admin@your-domain.com
 #
-ServerAdmin root@localhost
+ServerAdmin <%= @server_admin_default %>
 
 #
 # ServerName gives the name and port that the server uses to identify itself.
@@ -326,8 +326,13 @@ DocumentRoot "/var/www/html"
 <Directory />
     Options FollowSymLinks -Indexes
     AllowOverride None
+    <%- if scope.function_versioncmp([@version, '2.4']) >= 0 -%>
+    Require all denied
+    <%- else -%>
     Order allow,deny
     Deny from all
+    Satisfy all
+    <%- end -%>
 </Directory>
 
 #
@@ -366,8 +371,13 @@ DocumentRoot "/var/www/html"
 #
 # Controls who can get stuff from this server.
 #
+
+    <%- if scope.function_versioncmp([@version, '2.4']) >= 0 -%>
+    Require all granted
+    <%- else -%>
     Order allow,deny
     Allow from all
+    <%- end -%>
 
 </Directory>
 
@@ -425,7 +435,7 @@ DocumentRoot "/var/www/html"
 # negotiated documents.  The MultiViews Option can be used for the
 # same purpose, but it is much slower.
 #
-DirectoryIndex index.html index.html.var
+DirectoryIndex <%= @directoty_index.join(' ') %>
 
 #
 # AccessFileName: The name of the file to look for in each directory
@@ -559,36 +569,11 @@ CustomLog logs/access_log combined
 # Set to "EMail" to also include a mailto: link to the ServerAdmin.
 # Set to one of:  On | Off | EMail
 #
-<% if @serversignature -%>
-ServerSignature On
-<% else -%>
-ServerSignature Off
-<% end -%>
+ServerSignature <%= scope.function_bool2httpd([@serversignature]) %>
 
 # Trace
 TraceEnable <%= scope.function_bool2httpd([@trace]) %>
 
-#
-# Aliases: Add here as many aliases as you need (with no limit). The format is
-# Alias fakename realname
-#
-# Note that if you include a trailing / on fakename then the server will
-# require it to be present in the URL.  So "/icons" isn't aliased in this
-# example, only "/icons/".  If the fakename is slash-terminated, then the
-# realname must also be slash terminated, and if the fakename omits the
-# trailing slash, the realname must also omit it.
-#
-# We include the /icons/ alias for FancyIndexed directory listings.  If you
-# do not use FancyIndexing, you may comment this out.
-#
-Alias /icons/ "/var/www/icons/"
-
-<Directory "/var/www/icons">
-    Options Indexes MultiViews FollowSymLinks
-    AllowOverride None
-    Order allow,deny
-    Allow from all
-</Directory>
 
 #
 # WebDAV module configuration section.
@@ -1052,5 +1037,3 @@ NameVirtualHost *:<%= val %>
 #    ErrorLog logs/dummy-host.example.com-error_log
 #    CustomLog logs/dummy-host.example.com-access_log common
 #</VirtualHost>
-
-TraceEnable off

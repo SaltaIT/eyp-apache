@@ -50,6 +50,10 @@ class apache (
     $sni=true,
     $trace=false,
 		$version=$apache::version::default,
+		$apache_username=$apache::params::apache_username,
+		$apache_group=$apache::params::apache_group,
+		$server_admin=$apache::params::server_admin_default,
+		$directoty_index=['index.html'],
   )inherits apache::params {
 
 	if($version!=$apache::version::default)
