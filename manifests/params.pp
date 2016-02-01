@@ -1,4 +1,4 @@
-class apache::params {
+class apache::params inherits apache::version {
 
   $servertokens_default="Prod"
   $timeout_default=30
@@ -50,6 +50,8 @@ class apache::params {
       $load_mpm_prefork=true
       $apache24=true
 
+			$fastcgi_dependencies=undef
+
       case $::operatingsystem
       {
         'Ubuntu':
@@ -59,6 +61,7 @@ class apache::params {
             /^14.*$/:
             {
               $packagename=[ 'apache2', 'apache2-mpm-prefork' ]
+							$packagenamedevel=undef
               $servicename='apache2'
               $conftemplate='httpdconfcentos6.erb'
               $conffile='apache2.conf'

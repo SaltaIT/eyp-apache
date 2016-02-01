@@ -2,16 +2,12 @@ require 'spec_helper_acceptance'
 
 describe 'apache class' do
 
-  context 'hari concats' do
+  context 'basic setup' do
     # Using puppet_apply as a helper
     it 'should work with no errors' do
       pp = <<-EOF
 
       class { 'apache': }
-
-    	class {'apache::fcgi':
-    		fcgihost => '192.168.56.28',
-    	}
 
       apache::vhost {'default':
         defaultvh=>true,

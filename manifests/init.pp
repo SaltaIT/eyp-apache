@@ -63,7 +63,7 @@ class apache (
     notify => Service[$apache::params::servicename],
   }
 
-  if($apache::params::packagenamedevel)
+  if($apache::params::packagenamedevel!=undef)
   {
     package { $apache::params::packagenamedevel:
       ensure => "installed",
