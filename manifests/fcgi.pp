@@ -18,7 +18,7 @@ class apache::fcgi (
 
   define install_fcgi_dependencies {
     package { "dependencia fastcgi ${name}":
-      name => $name,
+      name   => $name,
       ensure => 'installed',
     }
   }
@@ -43,15 +43,15 @@ class apache::fcgi (
   }
 
   exec { "tar xf ${srcdir}/mod_fastcgi-current.tar.gz -C ${srcdir}/mod_fastcgi":
-    command => "tar xzf ${srcdir}/mod_fastcgi-current.tar.gz --strip-components=1 -C ${srcdir}/mod_fastcgi",
-    cwd => $srcdir,
+    command => "tar xzf ${srcdir}/mod_fastcgi-current.tar.gz --strip-components =1 -C ${srcdir}/mod_fastcgi",
+    cwd     => $srcdir,
     creates => "${srcdir}/mod_fastcgi/Makefile.AP2",
     require => Exec["wget ${srcdir} fastcgi","mkdir ${srcdir} fastcgifastcgi"],
   }
 
   exec { "make fastcgi ${srcdir}":
-    command => "make -f Makefile.AP2 top_dir=/usr/lib64/httpd/",
-    cwd => "${srcdir}/mod_fastcgi",
+    command => "make -f Makefile.AP2 top_dir =/usr/lib64/httpd/",
+    cwd     => "${srcdir}/mod_fastcgi",
     require => [
                 Package[$apache::params::packagenamedevel],
                 Exec["tar xf ${srcdir}/mod_fastcgi-current.tar.gz -C ${srcdir}/mod_fastcgi"]
@@ -61,7 +61,7 @@ class apache::fcgi (
 
   exec { "install fastcgi ${srcdir}":
     require => Exec["make fastcgi ${srcdir}"],
-    cwd => "${srcdir}/mod_fastcgi",
+    cwd     => "${srcdir}/mod_fastcgi",
     command => "cp .libs/mod_fastcgi.so /usr/lib64/httpd/modules/",
     creates => '/usr/lib64/httpd/modules/mod_fastcgi.so',
   }
@@ -69,7 +69,7 @@ class apache::fcgi (
   exec { 'mkdir p /usr/lib/cgi-bin fastcgi':
     command => 'mkdir -p /usr/lib/cgi-bin',
     creates => '/usr/lib/cgi-bin',
-    before => File["${apache::params::baseconf}/conf.d/fcgi.conf"],
+    before  => File["${apache::params::baseconf}/conf.d/fcgi.conf"],
   }
 
   file { "${apache::params::baseconf}/conf.d/fcgi.conf":
