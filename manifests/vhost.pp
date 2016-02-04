@@ -1,17 +1,18 @@
 #
 define apache::vhost   (
         $documentroot,
-        $order='00',
-        $port='80',
-        $defaultvh=false,
-        $servername=$name,
-        $serveralias=undef,
-        $rewrites=undef,
-        $rewrites_source=undef,
-        $certname=undef,
-        $use_intermediate=true,
-        $certname_version='',
-        $directoryindex=[ 'index.php', 'index.html', 'index.htm' ],
+        $order            = '00',
+        $port             = '80',
+        $use_intermediate = true,
+        $certname_version = '',
+        $directoryindex   = [ 'index.php', 'index.html', 'index.htm' ],
+        $defaultvh        = false,
+        $servername       = $name,
+        $serveralias      = undef,
+        $allowedip        = undef,
+        $rewrites         = undef,
+        $rewrites_source  = undef,
+        $certname         = undef,
       ) {
 
     if ! defined(Class['apache'])

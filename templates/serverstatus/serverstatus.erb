@@ -1,0 +1,14 @@
+
+  <Location /<%= @serverstatus_url %>>
+    SetHandler server-status
+  <%- if defined?(@allowedip) -%>
+    Order Deny,Allow
+    Deny from all
+    <%- @allowedip.each do |val| -%>
+    Allow from <%= val %>
+    <%- end -%>
+  <%- else -%>
+    Order Deny,Allow
+    Allow from all
+  <%- end -%>
+  </Location>
