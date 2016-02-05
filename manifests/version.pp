@@ -1,5 +1,11 @@
 class apache::version {
 
+  $osr_array = split($::operatingsystemrelease,'[\/\.]')
+  $distrelease = $osr_array[0]
+  if ! $distrelease {
+    fail("unparsable \$::operatingsystemrelease: ${::operatingsystemrelease}")
+  }
+
   case $::osfamily {
     'RedHat': {
       if ($::operatingsystem == 'Amazon') {
