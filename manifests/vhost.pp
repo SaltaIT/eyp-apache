@@ -7,13 +7,17 @@ define apache::vhost   (
         $certname_version = '',
         $directoryindex   = [ 'index.php', 'index.html', 'index.htm' ],
         $defaultvh        = false,
+        $defaultvh_ss     = true,
         $servername       = $name,
         $serveralias      = undef,
         $allowedip        = undef,
         $rewrites         = undef,
         $rewrites_source  = undef,
         $certname         = undef,
+        $allowedip        = undef,
       ) {
+
+    #TODO: allowedip s'ignora
 
     if ! defined(Class['apache'])
     {
@@ -50,6 +54,18 @@ define apache::vhost   (
 
     if($defaultvh)
     {
+      if($defaultvh_ss)
+      {
+        apache::serverstatus { "${servername} ${port} ${order} ${allowedip}":
+          order            => $order,
+          port             => $port,
+          serverstatus_url => '/server-status',
+          servername       => $servername,
+          allowedip        => $allowedip,
+          defaultvh        => true,
+        }
+      }
+
       concat { "${apache::params::baseconf}/conf.d/00_default.conf":
         ensure  => 'present',
         owner   => 'root',

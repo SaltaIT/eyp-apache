@@ -1,4 +1,5 @@
 require 'spec_helper_acceptance'
+require_relative './version.rb'
 
 describe 'apache class' do
 
@@ -45,12 +46,16 @@ describe 'apache class' do
       expect(shell("sleep 10").exit_code).to be_zero
     end
 
-    it "curl to serverstatus http://localhost:80/server_status" do
-      expect(shell("curl http://localhost:80/server_status | grep -q 'Apache Status'").exit_code).to be_zero
+    it "curl defaultvh http://localhost:80/server-status" do
+      expect(shell("curl http://localhost:80/server-status 2>/dev/null | grep -i 'Apache Server Status for' >/dev/null").exit_code).to be_zero
     end
 
-    it "curl to serverstatus http://localhost:81/random_status" do
-      expect(shell("curl http://localhost:81/random_status | grep -q 'Apache Status'").exit_code).to be_zero
+    it "curl et2blog http://localhost:80/server-status" do
+      expect(shell("curl http://localhost:80/server-status -H 'Host: et2blog' 2>/dev/null | grep -i 'Apache Server Status for' >/dev/null").exit_code).to be_zero
+    end
+
+    it "curl port 81  http://localhost:81/server-status" do
+      expect(shell("curl http://localhost:81/server-status 2>/dev/null | grep -i 'Apache Server Status for' >/dev/null").exit_code).to be_zero
     end
 
     describe port(80) do
@@ -67,13 +72,21 @@ describe 'apache class' do
     end
 
     #default vhost
-    describe file("${baseconf}/conf.d/sites/00-et2blog-80.conf") do
+    describe file($defaultvhconf) do
       it { should be_file }
       its(:content) { should match '<Location /server-status>' }
       its(:content) { should match 'SetHandler server-status' }
       its(:content) { should match '</Location>' }
     end
-    describe file("${baseconf}/conf.d/sites/10-systemadmin.es-81.conf") do
+
+    describe file($et2blogconf) do
+      it { should be_file }
+      its(:content) { should match '<Location /server-status>' }
+      its(:content) { should match 'SetHandler server-status' }
+      its(:content) { should match '</Location>' }
+    end
+
+    describe file($systemadminconf) do
       it { should be_file }
       its(:content) { should match '<Location /server-status>' }
       its(:content) { should match 'SetHandler server-status' }
@@ -102,7 +115,9 @@ describe 'apache class' do
         documentroot => '/var/www/et2blog',
       }
 
-      apache::serverstatus {'et2blog':}
+      apache::serverstatus {'et2blog':
+        serverstatus_url => '/random_status',
+      }
 
       apache::vhost {'systemadmin.es':
         order        => '10',
@@ -128,12 +143,16 @@ describe 'apache class' do
       expect(shell("sleep 10").exit_code).to be_zero
     end
 
-    it "curl to serverstatus http://localhost:80/server_status" do
-      expect(shell("curl http://localhost:80/server_status | grep -q 'Apache Status'").exit_code).to be_zero
+    it "curl defaultvh http://localhost:80/server-status" do
+      expect(shell("curl http://localhost:80/server-status 2>/dev/null | grep -i 'Apache Server Status for' >/dev/null").exit_code).to be_zero
     end
 
-    it "curl to serverstatus http://localhost:81/random_status" do
-      expect(shell("curl http://localhost:81/random_status | grep -q 'Apache Status'").exit_code).to be_zero
+    it "curl et2blog http://localhost:80/random_status" do
+      expect(shell("curl http://localhost:80/random_status -H 'Host: et2blog' 2>/dev/null | grep -i 'Apache Server Status for' >/dev/null").exit_code).to be_zero
+    end
+
+    it "curl port 81 http://localhost:81/random_status" do
+      expect(shell("curl http://localhost:81/random_status 2>/dev/null | grep -i 'Apache Server Status for' >/dev/null").exit_code).to be_zero
     end
 
     describe port(80) do
@@ -154,13 +173,20 @@ describe 'apache class' do
     end
 
     #default vhost
-    describe file("${baseconf}/conf.d/sites/00-et2blog-80.conf") do
+    describe file($defaultvhconf) do
       it { should be_file }
       its(:content) { should match '<Location /server-status>' }
       its(:content) { should match 'SetHandler server-status' }
       its(:content) { should match '</Location>' }
     end
-    describe file("${baseconf}/conf.d/sites/10-systemadmin.es-81.conf") do
+
+    describe file($et2blogconf) do
+      it { should be_file }
+      its(:content) { should match '<Location /random_status>' }
+      its(:content) { should match 'SetHandler server-status' }
+      its(:content) { should match '</Location>' }
+    end
+    describe file($systemadminconf) do
       it { should be_file }
       its(:content) { should match '<Location /random_status>' }
       its(:content) { should match 'SetHandler server-status' }

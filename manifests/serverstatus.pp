@@ -1,9 +1,10 @@
 define apache::serverstatus (
                               $order            = '00',
                               $port             = '80',
-                              $serverstatus_url = '/server_status',
+                              $serverstatus_url = '/server-status',
                               $servername       = $name,
                               $allowedip        = undef,
+                              $defaultvh        = false,
                             ) {
 
   if($allowedip!=undef)
@@ -11,9 +12,21 @@ define apache::serverstatus (
     validate_array($allowedip)
   }
 
-  concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf serverstatus":
-    target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
-    content => template("${module_name}/serverstatus/serverstatus.erb"),
-    order   => '10',
+  if($defaultvh)
+  {
+    concat::fragment{ "${apache::params::baseconf}/conf.d/00_default.conf serverstatus":
+      target  => "${apache::params::baseconf}/conf.d/00_default.conf",
+      content => template("${module_name}/serverstatus/serverstatus.erb"),
+      order   => '10',
+    }
   }
+  else
+  {
+    concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf serverstatus":
+      target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+      content => template("${module_name}/serverstatus/serverstatus.erb"),
+      order   => '10',
+    }
+  }
+
 }

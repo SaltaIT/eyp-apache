@@ -15,17 +15,6 @@ DocumentRoot <%= @documentroot %>
   <%- end -%>
   </Directory>
 
-  <Location /server-status>
-    SetHandler server-status
-  <%- if defined?(@allowedip) -%>
-    Require all denied
-    <%- @allowedip.each do |val| -%>
-    Require ip <%= val %>
-    <%- end -%>
-  <%- else -%>
-    Require all granted
-  <%- end -%>
-  </Location>
 <%- else -%>
   <Directory <%= @documentroot %>>
     AllowOverride None
@@ -41,17 +30,4 @@ DocumentRoot <%= @documentroot %>
   <%- end -%>
   </Directory>
 
-  <Location /server-status>
-    SetHandler server-status
-  <%- if defined?(@allowedip) -%>
-    Order Deny,Allow
-    Deny from all
-    <%- @allowedip.each do |val| -%>
-    Allow from <%= val %>
-    <%- end -%>
-  <%- else -%>
-    Order Deny,Allow
-    Allow from all
-  <%- end -%>
-  </Location>
 <%- end -%>

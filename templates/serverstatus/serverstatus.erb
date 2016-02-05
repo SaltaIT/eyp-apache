@@ -1,5 +1,5 @@
 
-  <Location /<%= @serverstatus_url %>>
+  <Location <%= @serverstatus_url %>>
     SetHandler server-status
   <%- if defined?(@allowedip) -%>
     Order Deny,Allow
