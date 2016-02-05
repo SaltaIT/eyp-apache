@@ -36,7 +36,7 @@ class apache::params inherits apache::version {
       {
         /^[67].*$/:
         {
-          $packagename=[ 'httpd', 'links' ]
+          $packagename=[ 'httpd' ]
           $packagenamedevel='httpd-devel'
           $servicename='httpd'
           $conftemplate='httpdconfcentos6.erb'
