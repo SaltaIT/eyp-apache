@@ -8,12 +8,16 @@
   <% end -%>
   DirectoryIndex <%= @directoryindex.join(' ') %>
 
-  ErrorLog "|/usr/sbin/rotatelogs -l /var/log/httpd/<%= @servername %>.error.%Y.%m.%d.log 86400"
-  CustomLog "|/usr/sbin/rotatelogs -l /var/log/httpd/<%= @servername %>.access.%Y.%m.%d.log 86400" combined
+  ErrorLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::params::logdir') %>/<%= @servername %>.error.%Y.%m.%d.log 86400"
+  CustomLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::params::logdir') %>/<%= @servername %>.access.%Y.%m.%d.log 86400" combined
 
   <Directory <%= @documentroot %>>
     AllowOverride None
     Options FollowSymLinks
+    <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
+    Require all granted
+    <%- else -%>
     Order Deny,Allow
     Allow from all
+    <%- end -%>
   </Directory>
