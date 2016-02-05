@@ -18,7 +18,7 @@ class apache::params inherits apache::version {
           $modulesdir='modules'
           $loadmodules_extra=true
           $apache_username='apache'
-					$apache_group='apache-data'
+					$apache_group='apache'
           $load_mpm_prefork=false
           $apache24=false
           $modssl_package= [ 'mod_ssl' ]

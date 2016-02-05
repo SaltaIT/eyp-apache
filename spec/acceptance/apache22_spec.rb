@@ -1,4 +1,5 @@
 require 'spec_helper_acceptance'
+require_relative './version.rb'
 
 describe 'apache class' do
 
@@ -43,9 +44,8 @@ describe 'apache class' do
     end
 
     #default vhost
-    describe file("${baseconf}/conf.d/00_default.conf") do
+    describe file($defaultsiteconf) do
       it { should be_file }
-      its(:content) { should match 'Order Deny,Allow' }
       its(:content) { should match 'DocumentRoot /var/www/void' }
     end
 

@@ -1,27 +1,33 @@
 <VirtualHost *:<%= @port %>>
-	DocumentRoot <%= @documentroot %>
+DocumentRoot <%= @documentroot %>
+<%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
 
-	<Directory <%= @documentroot %>>
-		AllowOverride None
-		Options None
-		Order Deny,Allow
-		Allow from 213.229.188.136 213.229.188.144 81.19.100.250 172.20.0.0/24
-		Allow from 10.12.80.1/32 80.169.245.0/27 62.97.117.216/30  62.97.117.220/30
-		Allow from 80.169.245.33 213.27.191.169 10.10.21.10
-		Allow from ::1 # IPv6
-		Deny from all
-	</Directory>
+  <Directory <%= @documentroot %>>
+    AllowOverride None
+    Options None
+    <%- if defined?(@allowedip) -%>
+    Require all denied
+    <%- @allowedip.each do |val| -%>
+    Require ip <%= val %>
+    <%- end -%>
+  <%- else -%>
+    Require all granted
+  <%- end -%>
+  </Directory>
 
-  <Location /server-status>
-    SetHandler server-status
-    Order deny,allow
+<%- else -%>
+  <Directory <%= @documentroot %>>
+    AllowOverride None
+    Options None
+    <%- if defined?(@allowedip) -%>Order Deny,Allow
     Deny from all
-    # IPs de monitorizacion
-    Allow from 213.229.188.136 213.229.188.144 81.19.100.250
-    Allow from 172.20.0.0/24 10.12.80.1/32 80.169.245.0/27
-    Allow from 62.97.117.216/30 62.97.117.220/30 127.0.0.1
-    Allow from 80.169.245.33 10.10.21.10
-    Allow from 213.27.191.169
-    Allow from ::1 # IPv6
-    # fin de IPs de monitorizacion
-  </Location>
+    <%- @allowedip.each do |val| -%>
+    Allow from <%= val %>
+    <%- end -%>
+  <%- else -%>
+    Order Deny,Allow
+    Allow from all
+  <%- end -%>
+  </Directory>
+
+<%- end -%>

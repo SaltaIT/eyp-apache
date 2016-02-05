@@ -12,8 +12,8 @@
   CustomLog "|/usr/sbin/rotatelogs -l /var/log/httpd/<%= @servername %>.access.%Y.%m.%d.log 86400" combined
 
   <Directory <%= @documentroot %>>
-		AllowOverride None
-		Options FollowSymLinks
-		Order Deny,Allow
-	  Allow from all
+    AllowOverride None
+    Options FollowSymLinks
+    Order Deny,Allow
+    Allow from all
   </Directory>
