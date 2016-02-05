@@ -2,13 +2,23 @@
   <Location <%= @serverstatus_url %>>
     SetHandler server-status
   <%- if defined?(@allowedip) -%>
+    <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
+      <%- @allowedip.each do |val| -%>
+    Require ip <%= val %>
+      <%- end -%>
+    <%- else %>
     Order Deny,Allow
     Deny from all
-    <%- @allowedip.each do |val| -%>
+      <%- @allowedip.each do |val| -%>
     Allow from <%= val %>
+      <%- end -%>
     <%- end -%>
   <%- else -%>
+    <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
+    Require all granted
+    <%- else -%>
     Order Deny,Allow
     Allow from all
+    <%- end -%>
   <%- end -%>
   </Location>

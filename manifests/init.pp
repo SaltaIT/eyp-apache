@@ -45,6 +45,18 @@ class apache (
     }
   }
 
+  if($sysconfigfile!=undef and $sysconfigtemplate!=undef)
+  {
+    file { $sysconfigfile:
+      ensure  => 'present',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => template($sysconfigtemplate),
+    }
+  }
+
+
   file { "${apache::params::baseconf}/conf.d":
     ensure  => 'directory',
     owner   => 'root',

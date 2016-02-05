@@ -22,15 +22,21 @@ class apache::params inherits apache::version {
           $load_mpm_prefork=false
           $apache24=false
           $modssl_package= [ 'mod_ssl' ]
+          $logdir='/var/log/httpd'
+          $rotatelogsbin='/usr/sbin/rotatelogs'
+          $rundir='/var/run/httpd'
 
           $fastcgi_dependencies= [ 'make', 'gcc', 'gcc-c++' ]
+
+          $sysconfigfile=undef
+          $sysconfigtemplate=undef
 
 
       case $::operatingsystemrelease
       {
         /^[67].*$/:
         {
-          $packagename='httpd'
+          $packagename=[ 'httpd', 'links' ]
           $packagenamedevel='httpd-devel'
           $servicename='httpd'
           $conftemplate='httpdconfcentos6.erb'
@@ -52,8 +58,14 @@ class apache::params inherits apache::version {
 			$apache_group='www-data'
       $load_mpm_prefork=true
       $apache24=true
+      $logdir='/var/log/apache2'
+      $rotatelogsbin='/usr/bin/rotatelogs'
+      $rundir='/var/run/apache2'
 
 			$fastcgi_dependencies=undef
+
+      $sysconfigfile='/etc/apache2/envvars'
+      $sysconfigtemplate="${module_name}/sysconfig/debian/envvars.erb"
 
       case $::operatingsystem
       {
@@ -63,7 +75,7 @@ class apache::params inherits apache::version {
           {
             /^14.*$/:
             {
-              $packagename=[ 'apache2', 'apache2-mpm-prefork' ]
+              $packagename=[ 'apache2', 'apache2-mpm-prefork', 'apache2-utils', 'lynx-cur' ]
 							$packagenamedevel=undef
               $servicename='apache2'
               $conftemplate='httpdconfcentos6.erb'
