@@ -20,7 +20,7 @@ when 'Debian'
   $defaultsiteconf = '/etc/apache2/conf.d/00_default.conf'
   $et2blogconf     = '/etc/apache2/conf.d/sites/00-et2blog-80.conf'
   $systemadminconf = '/etc/apache2/conf.d/sites/10-systemadmin.es-81.conf'
-  $defaultvhconf   = '/etc/httpd/conf.d/00_default.conf'
+  $defaultvhconf   = '/etc/apache2/conf.d/00_default.conf'
 
 else
   $packagename     = '-_-'
