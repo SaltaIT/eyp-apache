@@ -34,7 +34,7 @@ class apache::params inherits apache::version {
 
       case $::operatingsystemrelease
       {
-        /^[67].*$/:
+        /^[5-7].*$/:
         {
           $packagename=[ 'httpd' ]
           $packagenamedevel='httpd-devel'
