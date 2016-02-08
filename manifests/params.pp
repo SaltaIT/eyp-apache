@@ -8,7 +8,7 @@ class apache::params inherits apache::version {
   $extendedstatus_default=true
   $mpm_default="prefork"
   $serversignature_default=false
-	$server_admin_default='root@localhost'
+  $server_admin_default='root@localhost'
 
   case $::osfamily
   {
@@ -18,7 +18,7 @@ class apache::params inherits apache::version {
           $modulesdir='modules'
           $loadmodules_extra=true
           $apache_username='apache'
-					$apache_group='apache'
+          $apache_group='apache'
           $load_mpm_prefork=false
           $apache24=false
           $modssl_package= [ 'mod_ssl' ]
@@ -55,14 +55,14 @@ class apache::params inherits apache::version {
       $modulesdir='/usr/lib/apache2/modules'
       $loadmodules_extra=false
       $apache_username='www-data'
-			$apache_group='www-data'
+      $apache_group='www-data'
       $load_mpm_prefork=true
       $apache24=true
       $logdir='/var/log/apache2'
       $rotatelogsbin='/usr/bin/rotatelogs'
       $rundir='/var/run/apache2'
 
-			$fastcgi_dependencies=undef
+      $fastcgi_dependencies=undef
 
       $sysconfigfile='/etc/apache2/envvars'
       $sysconfigtemplate="${module_name}/sysconfig/debian/envvars.erb"
@@ -76,7 +76,7 @@ class apache::params inherits apache::version {
             /^14.*$/:
             {
               $packagename=[ 'apache2', 'apache2-mpm-prefork', 'apache2-utils', 'lynx-cur' ]
-							$packagenamedevel=undef
+              $packagenamedevel=undef
               $servicename='apache2'
               $conftemplate='httpdconfcentos6.erb'
               $conffile='apache2.conf'

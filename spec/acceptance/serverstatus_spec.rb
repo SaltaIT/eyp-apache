@@ -132,6 +132,19 @@ describe 'apache class' do
         allowedip => ['1.1.1.1','2.2.2.2','4.4.4.4 5.5.5.5','127.','::1'],
       }
 
+      apache::vhost {'awscli.com':
+        order        => '11',
+        port         => '81',
+        documentroot => '/var/www/void',
+      }
+
+      apache::serverstatus {'awscli.com':
+        serverstatus_url => '/fucker_status',
+        order     => '11',
+        port      => '81',
+        allowedip => [ '1.1.1.1' ],
+      }
+
       EOF
 
       # Run it twice and test for idempotency
@@ -153,6 +166,10 @@ describe 'apache class' do
 
     it "curl port 81 http://localhost:81/random_status" do
       expect(shell("curl http://localhost:81/random_status 2>/dev/null | grep -i 'Apache Server Status for' >/dev/null").exit_code).to be_zero
+    end
+
+    it "curl port 81 http://awscli.com:81/random_status" do
+      expect(shell("curl -I http://localhost:81/random_status -H 'Host: awscli.com' 2>/dev/null | grep -i 'Apache Server Status for' >/dev/null").exit_code).to be_zero
     end
 
     describe port(80) do
