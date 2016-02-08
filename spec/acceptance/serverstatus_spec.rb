@@ -168,8 +168,8 @@ describe 'apache class' do
       expect(shell("curl http://localhost:81/random_status 2>/dev/null | grep -i 'Apache Server Status for' >/dev/null").exit_code).to be_zero
     end
 
-    it "curl port 81 http://awscli.com:81/random_status" do
-      expect(shell("curl -I http://localhost:81/random_status -H 'Host: awscli.com' 2>/dev/null | grep -i 'Apache Server Status for' >/dev/null").exit_code).to be_zero
+    it "403 forbidden curl port 81 http://awscli.com:81/random_status" do
+      expect(shell("curl -I localhost:81/fucker_status -H 'Host: awscli.com' 2>/dev/null | grep ^HTT | grep -i '403 Forbidden' > /dev/null").exit_code).to be_zero
     end
 
     describe port(80) do
