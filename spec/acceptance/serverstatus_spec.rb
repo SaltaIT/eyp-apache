@@ -13,7 +13,7 @@ describe 'apache class' do
       }
 
       apache::vhost {'default':
-        defaultvh=>true,
+        defaultvh => true,
         documentroot => '/var/www/void',
       }
 
@@ -194,7 +194,6 @@ describe 'apache class' do
     end
 
     #test vhost - /etc/httpd/conf.d/sites/00-et2blog-80.conf
-
   end
 
 end

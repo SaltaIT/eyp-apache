@@ -45,11 +45,45 @@ etc.), mention it here.
 
 ### Beginning with apache
 
-The very basic steps needed for a user to get the module up and running.
+```puppet
+class { 'apache': }
 
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you may wish to include an additional section here: Upgrading
-(For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+apache::vhost {'default':
+  defaultvh=>true,
+  documentroot => '/var/www/void',
+}
+
+apache::vhost {'et2blog':
+  documentroot => '/var/www/et2blog',
+}
+```
+
+
+```puppet
+apache::vhost {'default':
+  defaultvh => true,
+  documentroot => '/var/www/void',
+}
+
+apache::vhost {'et2blog':
+  documentroot => '/var/www/et2blog',
+}
+
+apache::serverstatus {'et2blog':}
+
+apache::vhost {'systemadmin.es':
+  order        => '10',
+  port         => '81',
+  documentroot => '/var/www/systemadmin',
+}
+
+apache::serverstatus {'systemadmin.es':
+  order     => '10',
+  port      => '81',
+  allowedip => ['1.1.1.1','2.2.2.2','4.4.4.4 5.5.5.5','127.','::1'],
+}
+```
+
 
 ## Usage
 
