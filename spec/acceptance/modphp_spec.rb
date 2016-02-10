@@ -67,4 +67,34 @@ describe 'mod_php class' do
 
   end
 
+  context 'php uninstall' do
+    # Using puppet_apply as a helper
+    it 'should work with no errors' do
+      pp = <<-EOF
+
+      class { 'apache': }
+
+    	apache::vhost {'default':
+    		defaultvh=>true,
+    		documentroot => '/var/www/void',
+    	}
+
+    	class { 'apache::mod::php':
+        ensure => 'purged',
+      }
+
+      file { '/var/www/void/phpinfo.php':
+        ensure=> 'present',
+        mode => '0666',
+        content => "<?php\n  phpinfo();\n?>\n",
+      }
+
+      EOF
+
+      # Run it twice and test for idempotency
+      expect(apply_manifest(pp).exit_code).to_not eq(1)
+      expect(apply_manifest(pp).exit_code).to eq(0)
+    end
+  end
+
 end
