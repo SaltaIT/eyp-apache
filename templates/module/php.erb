@@ -24,14 +24,3 @@
   Satisfy All
   <%- end -%>
 </FilesMatch>
-
-# Running PHP scripts in user directories is disabled by default
-#
-# To re-enable PHP in user directories comment the following lines
-# (from <IfModule ...> to </IfModule>.) Do NOT set it to On as it
-# prevents .htaccess files from disabling it.
-<IfModule mod_userdir.c>
-    <Directory /home/*/public_html>
-        php_admin_flag engine Off
-    </Directory>
-</IfModule>
