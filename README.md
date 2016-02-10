@@ -3,21 +3,19 @@
 #### Table of Contents
 
 1. [Overview](#overview)
-2. [Module Description - What the module does and why it is useful](#module-description)
-3. [Setup - The basics of getting started with apache](#setup)
+2. [Module Description](#module-description)
+3. [Setup](#setup)
     * [What apache affects](#what-apache-affects)
     * [Setup requirements](#setup-requirements)
     * [Beginning with apache](#beginning-with-apache)
-4. [Usage - Configuration options and additional functionality](#usage)
-5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
+4. [Usage](#usage)
+5. [Reference](#reference)
+5. [Limitations](#limitations)
+6. [Development](#development)
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+Apache httpd setup
 
 ## Module Description
 
@@ -38,42 +36,122 @@ management, etc.) this is the time to mention it.
 * This is a great place to stick any warnings.
 * Can be in list or paragraph form.
 
-### Setup Requirements **OPTIONAL**
+### Setup Requirements
 
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
+This module requires pluginsync enabled and eyp/nsswitch module installed
 
 ### Beginning with apache
 
-The very basic steps needed for a user to get the module up and running.
+Basic setup:
 
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you may wish to include an additional section here: Upgrading
-(For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+```puppet
+class { 'apache': }
+
+apache::vhost {'default':
+  defaultvh=>true,
+  documentroot => '/var/www/void',
+}
+
+apache::vhost {'et2blog':
+  documentroot => '/var/www/et2blog',
+}
+```
+
+server-status on a custom vhost with restricted IPs:
+
+```puppet
+apache::vhost {'default':
+  defaultvh => true,
+  documentroot => '/var/www/void',
+}
+
+apache::vhost {'et2blog':
+  documentroot => '/var/www/et2blog',
+}
+
+apache::serverstatus {'et2blog':}
+
+apache::vhost {'systemadmin.es':
+  order        => '10',
+  port         => '81',
+  documentroot => '/var/www/systemadmin',
+}
+
+apache::serverstatus {'systemadmin.es':
+  order     => '10',
+  port      => '81',
+  allowedip => ['1.1.1.1','2.2.2.2','4.4.4.4 5.5.5.5','127.','::1'],
+}
+```
+
+SSL setup using yaml:
+
+```yaml
+classes:
+  - apache
+apache::listen:
+  - 80
+  - 443
+apache::ssl: true
+apachecerts:
+  systemadmin:
+    cert_source: puppet:///customers/systemadmin/star_systemadmin_net.crt
+    pk_source: puppet:///customers/systemadmin/star_systemadmin_net.key
+    intermediate_source: puppet:///customers/systemadmin/star_systemadmin_net.intermediate
+apachevhosts:
+  systemadmin:
+    documentroot: /var/www/systemadmin
+  systemadmin_ssl:
+    documentroot: /var/www/systemadmin
+    port: 443
+    certname: systemadmin
+```
+
+FCGI:
+
+```puppet
+class {'apache::fcgi':
+  fcgihost => '192.168.56.18',
+}
+```
+
+Load custom module:
+
+```puppet
+apache::module { 'asis_module':
+  sofile => 'modules/mod_asis.so',
+}
+```
+
+mod_php:
+
+```puppet
+class { 'apache': }
+
+apache::vhost {'default':
+  defaultvh=>true,
+  documentroot => '/var/www/void',
+}
+
+class { 'apache::mod::php': }
+```
 
 ## Usage
 
-Put the classes, types, and resources for customizing, configuring, and doing
-the fancy stuff with your module here.
+TODO
 
 ## Reference
 
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+TODO
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+Tested on:
+* CentOS 5
+* CentOS 6
+* Ubuntu 14.04
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
-
-## Release Notes/Contributors/Etc **Optional**
-
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You may also add any additional sections you feel are
-necessary or important to include here. Please use the `## ` header.
+We are pushing to have acceptance testing in place, so any new feature should
+have some test to check both presence and absence of any feature

@@ -18,8 +18,8 @@ class apache::fcgi (
 
   define install_fcgi_dependencies {
     package { "dependencia fastcgi ${name}":
-      name   => $name,
       ensure => 'installed',
+      name   => $name,
     }
   }
 
@@ -50,7 +50,7 @@ class apache::fcgi (
   }
 
   exec { "make fastcgi ${srcdir}":
-    command => "make -f Makefile.AP2 top_dir =/usr/lib64/httpd/",
+    command => 'make -f Makefile.AP2 top_dir =/usr/lib64/httpd/',
     cwd     => "${srcdir}/mod_fastcgi",
     require => [
                 Package[$apache::params::packagenamedevel],
@@ -62,7 +62,7 @@ class apache::fcgi (
   exec { "install fastcgi ${srcdir}":
     require => Exec["make fastcgi ${srcdir}"],
     cwd     => "${srcdir}/mod_fastcgi",
-    command => "cp .libs/mod_fastcgi.so /usr/lib64/httpd/modules/",
+    command => 'cp .libs/mod_fastcgi.so /usr/lib64/httpd/modules/',
     creates => '/usr/lib64/httpd/modules/mod_fastcgi.so',
   }
 

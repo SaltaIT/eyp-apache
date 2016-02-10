@@ -160,7 +160,18 @@ Listen <%= val %>
 # LoadModule foo_module modules/mod_foo.so
 #
 
+
+
 <%- if scope.function_versioncmp([@version, '2.4']) >= 0 -%>
+
+#TODO: moure loadmodules a directori propi - centos 7
+<% if(@loadmodules_extra) -%>
+LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
+LoadModule unixd_module modules/mod_unixd.so
+<% end -%>
+
+
+#altres
 LoadModule authz_core_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authz_core.so
 LoadModule slotmem_shm_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_slotmem_shm.so
 <%- end -%>
@@ -176,8 +187,8 @@ LoadModule authz_user_module <%= scope.lookupvar('apache::params::modulesdir') %
 LoadModule authz_owner_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authz_owner.so
 LoadModule authz_groupfile_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authz_groupfile.so
 LoadModule authz_dbm_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authz_dbm.so
-LoadModule ldap_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_ldap.so
-LoadModule authnz_ldap_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authnz_ldap.so
+#LoadModule ldap_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_ldap.so
+#LoadModule authnz_ldap_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authnz_ldap.so
 LoadModule include_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_include.so
 
 
@@ -216,12 +227,14 @@ LoadModule cgi_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_c
 <% if(@loadmodules_extra) -%>
 #RH specific
 LoadModule log_config_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_log_config.so
+<%- if scope.function_versioncmp([@version, '2.4']) < 0 -%>
 LoadModule authn_default_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authn_default.so
 LoadModule authn_alias_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authn_alias.so
+LoadModule disk_cache_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_disk_cache.so
 LoadModule authz_default_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authz_default.so
+<%- end -%>
 LoadModule logio_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_logio.so
 LoadModule version_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_version.so
-LoadModule disk_cache_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_disk_cache.so
 <% end -%>
 
 <% if(@load_mpm_prefork) -%>
