@@ -123,6 +123,19 @@ apache::module { 'asis_module':
 }
 ```
 
+mod_php:
+
+```puppet
+class { 'apache': }
+
+apache::vhost {'default':
+  defaultvh=>true,
+  documentroot => '/var/www/void',
+}
+
+class { 'apache::mod::php': }
+```
+
 ## Usage
 
 TODO
