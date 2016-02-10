@@ -1,6 +1,6 @@
 class apache::mod::php ($ensure='installed') inherits apache::params {
 
-  if($apache::params::modphp_pkg==undef)
+  if($apache::params::modphp_so==undef)
   {
     fail('Unsupported')
   }
@@ -18,9 +18,17 @@ class apache::mod::php ($ensure='installed') inherits apache::params {
     fail("unsupported ensure: ${ensure}")
   }
 
-  package { $apache::params::modphp_pkg:
-    ensure => $ensure,
+  if($apache::params::modphp_pkg!=undef)
+  {
+    package { $apache::params::modphp_pkg:
+      ensure => $ensure,
+    }
   }
+  else
+  {
+    include ::php
+  }
+
 
   apache::module { 'php5_module':
     sofile  => "${apache::params::modulesdir}/${apache::params::modphp_so}",

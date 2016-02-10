@@ -15,6 +15,10 @@ describe 'mod_php class' do
     		documentroot => '/var/www/void',
     	}
 
+      apache::vhost {'et2blog':
+        documentroot => '/var/www/et2blog',
+      }
+
     	class { 'apache::mod::php': }
 
       file { '/var/www/void/phpinfo.php':
@@ -78,6 +82,10 @@ describe 'mod_php class' do
     		defaultvh=>true,
     		documentroot => '/var/www/void',
     	}
+
+      apache::vhost {'et2blog':
+        documentroot => '/var/www/et2blog',
+      }
 
     	class { 'apache::mod::php':
         ensure => 'purged',
