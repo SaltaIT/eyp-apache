@@ -62,7 +62,7 @@ describe 'mod_php class' do
     end
 
     it "phpinfo" do
-      expect(shell("curl -I localhost/phpinfo.php 2>/dev/null| grep 'PHP License'").exit_code).to be_zero
+      expect(shell("curl localhost/phpinfo.php 2>/dev/null| grep 'PHP License'").exit_code).to be_zero
     end
 
   end
