@@ -24,23 +24,28 @@ class apache::params inherits apache::version {
           $modssl_package= [ 'mod_ssl' ]
           $logdir='/var/log/httpd'
           $rotatelogsbin='/usr/sbin/rotatelogs'
-          $rundir='/var/run/httpd'
 
           $fastcgi_dependencies= [ 'make', 'gcc', 'gcc-c++' ]
 
           $sysconfigfile=undef
           $sysconfigtemplate=undef
 
-
-      case $::operatingsystemrelease
-      {
-        /^[5-7].*$/:
-        {
           $packagename=[ 'httpd' ]
           $packagenamedevel='httpd-devel'
           $servicename='httpd'
           $conftemplate='httpdconfcentos6.erb'
           $conffile='conf/httpd.conf'
+
+
+      case $::operatingsystemrelease
+      {
+        /^5.*/:
+        {
+          $rundir='/var/run'
+        }
+        /^[6-7].*$/:
+        {
+          $rundir='/var/run/httpd'
         }
         default: { fail("Unsupported RHEL/CentOS version!")  }
       }
