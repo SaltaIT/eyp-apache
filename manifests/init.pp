@@ -14,17 +14,17 @@ class apache (
     $ssl=false,
     $sni=true,
     $trace=false,
-		$version=$apache::version::default,
-		$apache_username=$apache::params::apache_username,
-		$apache_group=$apache::params::apache_group,
-		$server_admin=$apache::params::server_admin_default,
-		$directoty_index=['index.html'],
+    $version=$apache::version::default,
+    $apache_username=$apache::params::apache_username,
+    $apache_group=$apache::params::apache_group,
+    $server_admin=$apache::params::server_admin_default,
+    $directoty_index=['index.html'],
   )inherits apache::params {
 
-	if($version!=$apache::version::default)
-	{
-		fail("unsupported version for this system - expected: ${version} supported: ${apache::version::default}")
-	}
+  if($version!=$apache::version::default)
+  {
+    fail("unsupported version for this system - expected: ${version} supported: ${apache::version::default}")
+  }
 
   validate_array($listen)
 
@@ -34,25 +34,25 @@ class apache (
   }
 
   package { $apache::params::packagename:
-    ensure => "installed",
+    ensure => 'installed',
     notify => Service[$apache::params::servicename],
   }
 
   if($apache::params::packagenamedevel!=undef)
   {
     package { $apache::params::packagenamedevel:
-      ensure => "installed",
+      ensure => 'installed',
     }
   }
 
-  if($sysconfigfile!=undef and $sysconfigtemplate!=undef)
+  if($apache::params::sysconfigfile!=undef and $apache::params::sysconfigtemplate!=undef)
   {
-    file { $sysconfigfile:
+    file { $apache::params::sysconfigfile:
       ensure  => 'present',
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      content => template($sysconfigtemplate),
+      content => template($apache::params::sysconfigtemplate),
     }
   }
 
@@ -92,7 +92,7 @@ class apache (
     notify  => Service[$apache::params::servicename],
   }
 
-  concat::fragment { "loadmodule header":
+  concat::fragment { "loadmodule header ${apache::params::baseconf}":
     target  => "${apache::params::baseconf}/conf.d/modules.conf",
     order   => '00', #answer to life the universe and everything
     content => "#puppet managed file\n",
@@ -127,10 +127,10 @@ class apache (
   }
 
   service { $apache::params::servicename:
+    ensure  => 'running',
     name    => $apache::params::servicename,
     enable  => true,
-    ensure  => "running",
-    require => File["${baseconf}/${apache::params::conffile}"],
+    require => File["${apache::params::baseconf}/${apache::params::conffile}"],
   }
 
 }

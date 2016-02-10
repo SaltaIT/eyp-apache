@@ -1,12 +1,12 @@
 class apache::params inherits apache::version {
 
-  $servertokens_default="Prod"
+  $servertokens_default='Prod'
   $timeout_default=30
   $keepalive_default=true
   $keepalivetimeout_default=1
   $maxkeepalivereq_default=1000
   $extendedstatus_default=true
-  $mpm_default="prefork"
+  $mpm_default='prefork'
   $serversignature_default=false
   $server_admin_default='root@localhost'
 
@@ -36,6 +36,9 @@ class apache::params inherits apache::version {
           $conftemplate='httpdconfcentos6.erb'
           $conffile='conf/httpd.conf'
 
+          $modphp_pkg=undef
+          $modphp_so=undef
+
 
       case $::operatingsystemrelease
       {
@@ -47,7 +50,7 @@ class apache::params inherits apache::version {
         {
           $rundir='/var/run/httpd'
         }
-        default: { fail("Unsupported RHEL/CentOS version!")  }
+        default: { fail('Unsupported RHEL/CentOS version!')  }
       }
     }
     'Debian':
@@ -72,6 +75,9 @@ class apache::params inherits apache::version {
       $sysconfigfile='/etc/apache2/envvars'
       $sysconfigtemplate="${module_name}/sysconfig/debian/envvars.erb"
 
+      $modphp_pkg=[ 'libapache2-mod-php5' ]
+      $modphp_so='libphp5.so'
+
       case $::operatingsystem
       {
         'Ubuntu':
@@ -86,7 +92,7 @@ class apache::params inherits apache::version {
               $conftemplate='httpdconfcentos6.erb'
               $conffile='apache2.conf'
             }
-            default: { fail("Unsupported Ubuntu version! - $::operatingsystemrelease")  }
+            default: { fail("Unsupported Ubuntu version! - ${::operatingsystemrelease}")  }
           }
         }
         'Debian': { fail('Unsupported')  }
