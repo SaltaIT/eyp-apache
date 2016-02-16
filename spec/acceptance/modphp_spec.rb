@@ -57,6 +57,12 @@ describe 'mod_php class' do
       its(:content) { should match 'DocumentRoot /var/www/void' }
     end
 
+    #et2blog
+    describe file($et2blogconf) do
+      it { should be_file }
+      its(:content) { should match 'DocumentRoot /var/www/et2blog' }
+    end
+
     it "php module loaded" do
       expect(shell("apachectl -M | grep php").exit_code).to be_zero
     end
@@ -103,6 +109,43 @@ describe 'mod_php class' do
       expect(apply_manifest(pp).exit_code).to_not eq(1)
       expect(apply_manifest(pp).exit_code).to eq(0)
     end
+
+    it "sleep 10 to make sure apache is started" do
+      expect(shell("sleep 10").exit_code).to be_zero
+    end
+
+    describe port(80) do
+      it { should be_listening }
+    end
+
+    describe package($packagename) do
+      it { is_expected.to be_installed }
+    end
+
+    describe service($servicename) do
+      it { should be_enabled }
+      it { is_expected.to be_running }
+    end
+
+    #default vhost
+    describe file($defaultsiteconf) do
+      it { should be_file }
+      its(:content) { should match 'DocumentRoot /var/www/void' }
+    end
+
+    it "php module loaded" do
+      expect(shell("apachectl -M | grep php").exit_code).to be_zero
+    end
+
+    it "phpinfo HTTP 200" do
+      expect(shell("curl -I localhost/phpinfo.php 2>/dev/null| grep ^HTTP | grep 200").exit_code).to be_zero
+    end
+
+    it "phpinfo" do
+      expect(shell("curl localhost/phpinfo.php 2>/dev/null| grep 'PHP License'").exit_code).to be_zero
+    end
+
+
   end
 
 end
