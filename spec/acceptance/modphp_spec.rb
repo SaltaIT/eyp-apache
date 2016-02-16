@@ -141,10 +141,6 @@ describe 'mod_php class' do
       expect(shell("apachectl configtest").exit_code).to be_zero
     end
 
-    it "php module loaded" do
-      expect(shell("apachectl -M | grep php").exit_code).not_to be_zero
-    end
-
     it "phpinfo HTTP 200" do
       expect(shell("curl -I localhost/phpinfo.php 2>/dev/null| grep ^HTTP | grep 200").exit_code).to be_zero
     end
