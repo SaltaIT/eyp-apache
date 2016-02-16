@@ -12,23 +12,18 @@ class apache::fcgi (
   #   FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -host 127.0.0.1:9000 -pass-header Authorization
   # </IfModule>
 
+  if($::eyp_apache_gcc==undef or $::eyp_apache_make==undef)
+  {
+    fail("unmet dependencies: GCC: ${::eyp_apache_gcc} - make: ${::eyp_apache_make}")
+  }
+
   Exec {
     path => '/usr/sbin:/usr/bin:/sbin:/bin',
   }
 
-  define install_fcgi_dependencies {
-    package { "dependencia fastcgi ${name}":
-      ensure => 'installed',
-      name   => $name,
-    }
-  }
-
-  install_fcgi_dependencies { $apache::params::fastcgi_dependencies: }
-
   exec { "mkdir ${srcdir} fastcgi":
     command => "mkdir -p ${srcdir}",
     creates => $srcdir,
-    require => Install_fcgi_dependencies[$apache::params::fastcgi_dependencies],
   }
 
   exec { "mkdir ${srcdir} fastcgifastcgi":

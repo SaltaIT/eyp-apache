@@ -13,31 +13,31 @@ class apache::params inherits apache::version {
   case $::osfamily
   {
     'redhat':
-        {
-          $baseconf='/etc/httpd'
-          $modulesdir='modules'
-          $loadmodules_extra=true
-          $apache_username='apache'
-          $apache_group='apache'
-          $load_mpm_prefork=false
-          $apache24=false
-          $modssl_package= [ 'mod_ssl' ]
-          $logdir='/var/log/httpd'
-          $rotatelogsbin='/usr/sbin/rotatelogs'
+    {
+      $baseconf='/etc/httpd'
+      $modulesdir='modules'
+      $loadmodules_extra=true
+      $apache_username='apache'
+      $apache_group='apache'
+      $load_mpm_prefork=false
+      $apache24=false
+      $modssl_package= [ 'mod_ssl' ]
+      $logdir='/var/log/httpd'
+      $rotatelogsbin='/usr/sbin/rotatelogs'
 
-          $fastcgi_dependencies= [ 'make', 'gcc', 'gcc-c++' ]
+      $fastcgi_dependencies= [ 'make', 'gcc', 'gcc-c++' ]
 
-          $sysconfigfile=undef
-          $sysconfigtemplate=undef
+      $sysconfigfile=undef
+      $sysconfigtemplate=undef
 
-          $packagename=[ 'httpd' ]
-          $packagenamedevel='httpd-devel'
-          $servicename='httpd'
-          $conftemplate='httpdconfcentos6.erb'
-          $conffile='conf/httpd.conf'
+      $packagename=[ 'httpd' ]
+      $packagenamedevel='httpd-devel'
+      $servicename='httpd'
+      $conftemplate='httpdconfcentos6.erb'
+      $conffile='conf/httpd.conf'
 
-          $modphp_pkg=undef
-          $modphp_so=undef
+      $modphp_pkg=undef
+      $modphp_so=undef
 
 
       case $::operatingsystemrelease
