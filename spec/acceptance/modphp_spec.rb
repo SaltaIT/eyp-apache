@@ -63,6 +63,10 @@ describe 'mod_php class' do
       its(:content) { should match 'DocumentRoot /var/www/et2blog' }
     end
 
+    it "apache configtest" do
+      expect(shell("apachectl configtest").exit_code).to be_zero
+    end
+
     it "php module loaded" do
       expect(shell("apachectl -M | grep php").exit_code).to be_zero
     end
@@ -133,16 +137,20 @@ describe 'mod_php class' do
       its(:content) { should match 'DocumentRoot /var/www/void' }
     end
 
+    it "apache configtest" do
+      expect(shell("apachectl configtest").exit_code).to be_zero
+    end
+
     it "php module loaded" do
-      expect(shell("apachectl -M | grep php").exit_code).to be_zero
+      expect(shell("apachectl -M | grep php").exit_code).not_to be_zero
     end
 
     it "phpinfo HTTP 200" do
       expect(shell("curl -I localhost/phpinfo.php 2>/dev/null| grep ^HTTP | grep 200").exit_code).to be_zero
     end
 
-    it "phpinfo" do
-      expect(shell("curl localhost/phpinfo.php 2>/dev/null| grep 'PHP License'").exit_code).to be_zero
+    it "phpinfo contents" do
+      expect(shell("curl localhost/phpinfo.php 2>/dev/null| grep 'phpinfo()'").exit_code).to be_zero
     end
 
 
