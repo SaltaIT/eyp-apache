@@ -30,9 +30,12 @@ class apache::mod::php ($ensure='installed') inherits apache::params {
   }
 
 
-  apache::module { 'php5_module':
-    sofile  => "${apache::params::modulesdir}/${apache::params::modphp_so}",
-    require => Package[$apache::params::modphp_pkg],
+  if($ensure=='installed')
+  {
+    apache::module { 'php5_module':
+      sofile  => "${apache::params::modulesdir}/${apache::params::modphp_so}",
+      require => Package[$apache::params::modphp_pkg],
+    }    
   }
 
   file { "${apache::params::baseconf}/conf.d/php.conf":
