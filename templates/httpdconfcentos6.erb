@@ -259,8 +259,14 @@ LoadModule mpm_prefork_module /usr/lib/apache2/modules/mod_mpm_prefork.so
 #
 # Load config files from the config directory "/etc/httpd/conf.d".
 #
+<%- if scope.function_versioncmp([@version, '2.4']) >= 0 -%>
+IncludeOptional conf.d/*.conf
+IncludeOptional conf.d/sites/*.conf
+<%- else -%>
 Include conf.d/*.conf
 Include conf.d/sites/*.conf
+<%- end -%>
+
 
 #
 # ExtendedStatus controls whether Apache will generate "full" status
