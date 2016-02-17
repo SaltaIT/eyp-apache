@@ -39,6 +39,11 @@ define apache::vhost   (
       validate_array($rewrites)
     }
 
+    if($allowedip)
+    {
+      validate_array($allowedip)
+    }
+
     validate_array($directoryindex)
 
     Exec {
