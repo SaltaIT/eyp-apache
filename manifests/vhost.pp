@@ -15,6 +15,7 @@ define apache::vhost   (
         $rewrites_source  = undef,
         $certname         = undef,
         $serveradmin      = undef,
+        $aliasmatch       = undef,
       ) {
 
     #TODO: allowedip s'ignora
@@ -43,6 +44,11 @@ define apache::vhost   (
     if($allowedip)
     {
       validate_array($allowedip)
+    }
+
+    if($aliasmatch)
+    {
+      validate_hash($aliasmatch)
     }
 
     validate_array($directoryindex)
@@ -166,6 +172,27 @@ define apache::vhost   (
           target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
           content => "\n\n  ## END Rewrite rules ##\n\n",
           order   => '08',
+        }
+
+      }
+
+      if($aliasmatch!=undef)
+      {
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf aliasmatch BEGIN":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+          content => "\n  ## AliasMatch BEGIN ##\n\n  <IfModule alias_module>\n\n",
+          order   => '09',
+        }
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf aliasmatch":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+          content => template("${module_name}/aliasmatch/aliasmatch.erb"),
+          order   => '10',
+        }
+
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf aliasmatch END":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+          content => "\n  </IfModule>\n\n  ## AliasMatch END##\n\n",
+          order   => '11',
         }
 
       }
