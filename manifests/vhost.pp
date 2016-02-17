@@ -11,12 +11,15 @@ define apache::vhost   (
         $servername       = $name,
         $serveralias      = undef,
         $allowedip        = undef,
+        $denyip           = undef,
         $rewrites         = undef,
         $rewrites_source  = undef,
         $certname         = undef,
         $serveradmin      = undef,
         $aliasmatch       = undef,
         $scriptalias      = undef,
+        $options          = $apache::params::options_default,
+        $allowoverride    = $apache::params::allowoverride_default,
       ) {
 
     #TODO: allowedip s'ignora
@@ -24,6 +27,15 @@ define apache::vhost   (
     if ! defined(Class['apache'])
     {
       fail('You must include the apache base class before using any apache defined resources')
+    }
+
+    validate_array($options)
+
+    validate_string($allowoverride)
+
+    if($denyip)
+    {
+      validate_array($denyip)
     }
 
     validate_string($servername)

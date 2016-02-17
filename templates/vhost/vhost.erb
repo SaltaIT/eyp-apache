@@ -1,26 +1,45 @@
 <VirtualHost *:<%= @port %>>
   DocumentRoot <%= @documentroot %>
   ServerName <%= @servername %>
-  <% if @serveralias -%>
-    <% @serveralias.each do |val| -%>
+  <%- if @serveralias -%>
+    <%- @serveralias.each do |val| -%>
   ServerAlias <%= val %>
-    <% end -%>
-  <% if @serveradmin -%>
+    <%- end -%>
+  <%- if @serveradmin -%>
   ServerAdmin <%= @serveradmin %>
-  <% end -%>
-  <% end -%>
+  <%- end -%>
+  <%- end -%>
   DirectoryIndex <%= @directoryindex.join(' ') %>
 
   ErrorLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::params::logdir') %>/<%= @servername %>.error.%Y.%m.%d.log 86400"
   CustomLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::params::logdir') %>/<%= @servername %>.access.%Y.%m.%d.log 86400" combined
 
   <Directory <%= @documentroot %>>
-    AllowOverride None
-    Options FollowSymLinks
-    <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
-    Require all granted
+    AllowOverride <%= @allowoverride %>
+    Options <%= @options.join(' ') %>
+  <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
+    <%- if @allowedip -%>
+    Require all denied
+    Require ip <%= @allowedip.join(' ') %>
+    <%- elsif @denyip -%>
+    <RequireAll>
+      Require all granted
+      Require not ip <%= @denyip.join(' ') %>
+    </RequireAll>
     <%- else -%>
-    Order Deny,Allow
-    Allow from all
+    Require all granted
     <%- end -%>
+  <%- else -%>
+    <%- if @allowedip -%>
+    Order Deny, Allow
+    Deny from all
+    Allow from <%= @allowedip.join(' ') %>
+    <%- else -%>
+    Order Allow, Deny
+    Allow from all
+      <%- if @denyip -%>
+    Deny from <%= @denyip.join(' ') %>
+      <%- end -%>
+    <%- end -%>
+  <%- end -%>
   </Directory>

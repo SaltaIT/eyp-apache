@@ -10,6 +10,10 @@ class apache::params inherits apache::version {
   $serversignature_default=false
   $server_admin_default='root@localhost'
 
+  # Default directory options
+  $options_default= [ 'FollowSymlinks' ]
+  $allowoverride_default='None'
+
   case $::osfamily
   {
     'redhat':
