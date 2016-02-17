@@ -14,6 +14,7 @@ define apache::vhost   (
         $rewrites         = undef,
         $rewrites_source  = undef,
         $certname         = undef,
+        $serveradmin      = undef,
       ) {
 
     #TODO: allowedip s'ignora

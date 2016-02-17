@@ -5,6 +5,9 @@
     <% @serveralias.each do |val| -%>
   ServerAlias <%= val %>
     <% end -%>
+  <% if @serveradmin -%>
+  ServerAdmin <%= @serveradmin %>
+  <% end -%>
   <% end -%>
   DirectoryIndex <%= @directoryindex.join(' ') %>
 
