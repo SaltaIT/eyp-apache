@@ -1,0 +1,5 @@
+<% if defined?(@scriptalias) -%>
+<% @scriptalias.each do | key, value | -%>
+    ScriptAlias <%= key %> <%= value %>
+<% end -%>
+<% end -%>
