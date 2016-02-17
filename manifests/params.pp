@@ -25,8 +25,6 @@ class apache::params inherits apache::version {
       $logdir='/var/log/httpd'
       $rotatelogsbin='/usr/sbin/rotatelogs'
 
-      $fastcgi_dependencies= [ 'make', 'gcc', 'gcc-c++' ]
-
       $sysconfigfile=undef
       $sysconfigtemplate=undef
 
@@ -69,8 +67,6 @@ class apache::params inherits apache::version {
       $logdir='/var/log/apache2'
       $rotatelogsbin='/usr/bin/rotatelogs'
       $rundir='/var/run/apache2'
-
-      $fastcgi_dependencies=undef
 
       $sysconfigfile='/etc/apache2/envvars'
       $sysconfigtemplate="${module_name}/sysconfig/debian/envvars.erb"
