@@ -29,7 +29,7 @@ define apache::directory (
 
   validate_string($allowoverride)
 
-  concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf $directory":
+  concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf ${directory}":
     target  => "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf",
     content => template("${module_name}/directory/directory.erb"),
     order   => '15',
