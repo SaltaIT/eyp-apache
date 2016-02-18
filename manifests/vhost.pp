@@ -42,8 +42,6 @@ define apache::vhost   (
 
     validate_absolute_path($documentroot)
 
-    validate_string($servername)
-
     if($serveralias)
     {
       validate_array($serveralias)
@@ -235,6 +233,7 @@ define apache::vhost   (
         }
 
       }
+      # Order 15 taken by directory manifest
 
       concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}.conf tanco vhost":
         target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",

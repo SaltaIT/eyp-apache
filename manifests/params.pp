@@ -13,6 +13,7 @@ class apache::params inherits apache::version {
   # Default directory options
   $options_default= [ 'FollowSymlinks' ]
   $allowoverride_default='None'
+  $directory_default='/var/www/undef'
 
   case $::osfamily
   {
