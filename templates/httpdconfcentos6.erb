@@ -111,9 +111,9 @@ MaxKeepAliveRequests <%= @maxkeepalivereq %>
 StartServers       8
 MinSpareServers    5
 MaxSpareServers   20
-ServerLimit      256
-MaxClients       256
-MaxRequestsPerChild  4000
+ServerLimit      <%= @maxclients %>
+MaxClients       <%= @maxclients %>
+MaxRequestsPerChild  <%= @maxrequestsperchild %>
 </IfModule>
 
 <% else -%>
@@ -126,11 +126,11 @@ MaxRequestsPerChild  4000
 # MaxRequestsPerChild: maximum number of requests a server process serves
 <IfModule worker.c>
 StartServers         4
-MaxClients         300
+MaxClients         <%= @maxclients %>
 MinSpareThreads     25
 MaxSpareThreads     75
 ThreadsPerChild     25
-MaxRequestsPerChild  0
+MaxRequestsPerChild  <%= @maxrequestsperchild %>
 </IfModule>
 <% end -%>
 
@@ -309,7 +309,7 @@ Group <%= @apache_group %>
 # e-mailed.  This address appears on some server-generated pages, such
 # as error documents.  e.g. admin@your-domain.com
 #
-ServerAdmin <%= @server_admin_default %>
+ServerAdmin <%= @server_admin %>
 
 #
 # ServerName gives the name and port that the server uses to identify itself.

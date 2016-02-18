@@ -19,6 +19,8 @@ class apache (
     $apache_group=$apache::params::apache_group,
     $server_admin=$apache::params::server_admin_default,
     $directoty_index=['index.html'],
+    $maxclients=$apache::params::maxclients_default,
+    $maxrequestsperchild=$apache::params::maxrequestsperchild_default,
   )inherits apache::params {
 
   if($version!=$apache::version::default)

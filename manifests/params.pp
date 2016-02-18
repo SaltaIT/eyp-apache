@@ -9,6 +9,8 @@ class apache::params inherits apache::version {
   $mpm_default='prefork'
   $serversignature_default=false
   $server_admin_default='root@localhost'
+  $maxclients_default='256'
+  $maxrequestsperchild='4000'
 
   # Default directory options
   $options_default= [ 'FollowSymlinks' ]
