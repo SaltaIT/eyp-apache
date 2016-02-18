@@ -10,7 +10,7 @@ class apache::params inherits apache::version {
   $serversignature_default=false
   $server_admin_default='root@localhost'
   $maxclients_default='256'
-  $maxrequestsperchild='4000'
+  $maxrequestsperchild_default='4000'
   $customlog_type_default='combined'
 
   # Default directory options
