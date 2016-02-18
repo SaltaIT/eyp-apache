@@ -21,6 +21,8 @@ class apache (
     $directoty_index=['index.html'],
     $maxclients=$apache::params::maxclients_default,
     $maxrequestsperchild=$apache::params::maxrequestsperchild_default,
+    $customlog_type=$apache::params::customlog_type_default,
+    $logformats=undef,
   )inherits apache::params {
 
   if($version!=$apache::version::default)

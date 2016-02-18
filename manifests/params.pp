@@ -11,6 +11,7 @@ class apache::params inherits apache::version {
   $server_admin_default='root@localhost'
   $maxclients_default='256'
   $maxrequestsperchild='4000'
+  $customlog_type_default='combined'
 
   # Default directory options
   $options_default= [ 'FollowSymlinks' ]

@@ -547,6 +547,9 @@ LogLevel warn
 # The following directives define some format nicknames for use with
 # a CustomLog directive (see below).
 #
+<%- @logformats.each do |key, value| -%>
+LogFormat <%= value %> <%= key %>
+<%- end -%>
 LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
 LogFormat "%h %l %u %t \"%r\" %>s %b" common
 LogFormat "%{Referer}i -> %U" referer
@@ -576,7 +579,7 @@ LogFormat "%{User-agent}i" agent
 # For a single logfile with access, agent, and referer information
 # (Combined Logfile Format), use the following directive:
 #
-CustomLog <%= scope.lookupvar('apache::params::logdir') %>/access_log combined
+CustomLog <%= scope.lookupvar('apache::params::logdir') %>/access_log <%= @customlog_type %>
 
 #
 # Optionally add a line containing the server version and virtual host
