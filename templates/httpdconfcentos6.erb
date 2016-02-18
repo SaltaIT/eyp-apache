@@ -223,6 +223,10 @@ LoadModule proxy_connect_module <%= scope.lookupvar('apache::params::modulesdir'
 LoadModule cache_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_cache.so
 LoadModule suexec_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_suexec.so
 LoadModule cgi_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_cgi.so
+<%- if(@ssl) -%>
+LoadModule socache_shmcb_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_socache_shmcb.so
+<%- end -%>
+
 
 <% if(@loadmodules_extra) -%>
 #RH specific
@@ -323,7 +327,7 @@ ServerAdmin <%= @server_admin %>
 # You will have to access it by its address anyway, and this will make
 # redirections work in a sensible way.
 #
-#ServerName www.example.com:80
+ServerName <%= @server_name %>
 
 #
 # UseCanonicalName: Determines how Apache constructs self-referencing

@@ -6,10 +6,25 @@ AddType application/x-pkcs7-crl    .crl
 SSLPassPhraseDialog  builtin
 SSLSessionCache         shmcb:/var/cache/mod_ssl/scache(512000)
 SSLSessionCacheTimeout  300
+<%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
+Mutex default
+<%- else -%>
 SSLMutex default
+<%- end -%>
 SSLRandomSeed startup file:/dev/urandom  256
 SSLRandomSeed connect builtin
 SSLCryptoDevice builtin
+
+<%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.2']) >= 0 -%>
+SSLProtocol -ALL +TLSv1 +TLSv1.1 +TLSv1.2
+<%- else -%>
+SSLProtocol -ALL +TLSv1
+<%- end -%>
+SSLHonorCipherOrder on
+SSLCipherSuite ECDHE-RSA-AES256-SHA384:AES256-SHA256:RC4:HIGH:!MD5:!aNULL:!EDH:!AESGCM
+<%- if(scope.lookupvar('::osfamily') != 'redhat') -%> 
+SSLCompression off
+<%- end -%>
 
 # SNI - virtualhosting SSL
 SSLStrictSNIVHostCheck <%= scope.function_bool2httpd([@sni]) %>

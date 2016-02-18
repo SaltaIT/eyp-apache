@@ -12,6 +12,7 @@ class apache::params inherits apache::version {
   $maxclients_default='256'
   $maxrequestsperchild_default='4000'
   $customlog_type_default='combined'
+  $server_name_default = $::fqdn
 
   # Default directory options
   $options_default= [ 'FollowSymlinks' ]
@@ -95,6 +96,7 @@ class apache::params inherits apache::version {
               $servicename='apache2'
               $conftemplate='httpdconfcentos6.erb'
               $conffile='apache2.conf'
+              $modssl_package=[ 'apache2-bin' ]
             }
             default: { fail("Unsupported Ubuntu version! - ${::operatingsystemrelease}")  }
           }
