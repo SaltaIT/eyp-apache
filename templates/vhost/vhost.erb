@@ -31,11 +31,11 @@
     <%- end -%>
   <%- else -%>
     <%- if @allowedip -%>
-    Order Deny, Allow
+    Order Deny,Allow
     Deny from all
     Allow from <%= @allowedip.join(' ') %>
     <%- else -%>
-    Order Allow, Deny
+    Order Allow,Deny
     Allow from all
       <%- if @denyip -%>
     Deny from <%= @denyip.join(' ') %>
