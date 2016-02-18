@@ -547,8 +547,10 @@ LogLevel warn
 # The following directives define some format nicknames for use with
 # a CustomLog directive (see below).
 #
-<%- @logformats.each do |key, value| -%>
+<%- if @logformats -%>
+  <%- @logformats.each do |key, value| -%>
 LogFormat <%= value %> <%= key %>
+  <%- end -%>
 <%- end -%>
 LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
 LogFormat "%h %l %u %t \"%r\" %>s %b" common
