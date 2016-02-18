@@ -20,6 +20,7 @@ define apache::vhost   (
         $scriptalias      = undef,
         $options          = $apache::params::options_default,
         $allowoverride    = $apache::params::allowoverride_default,
+        $aliases          = undef,
       ) {
 
     #TODO: allowedip s'ignora
@@ -60,6 +61,11 @@ define apache::vhost   (
     if($aliasmatch)
     {
       validate_hash($aliasmatch)
+    }
+
+    if($aliases)
+    {
+      validate_hash($aliases)
     }
 
     if($scriptalias)
@@ -233,7 +239,27 @@ define apache::vhost   (
         }
 
       }
-      # Order 15 taken by directory manifest
+      # Order 15 taken by directory define
+      if($aliases!=undef)
+      {
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf aliases BEGIN":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+          content => "\n  ## Alias BEGIN ##\n\n  <IfModule alias_module>\n\n",
+          order   => '16',
+        }
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf aliases":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+          content => template("${module_name}/aliases/aliases.erb"),
+          order   => '17',
+        }
+
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf aliases END":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+          content => "\n  </IfModule>\n\n  ## Alias END##\n\n",
+          order   => '18',
+        }
+
+      }
 
       concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}.conf tanco vhost":
         target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
