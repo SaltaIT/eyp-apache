@@ -69,6 +69,7 @@ class apache (
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
+    recurse => true,
     require => Package[$apache::params::packagename],
   }
 
@@ -77,6 +78,7 @@ class apache (
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
+    recurse => true,
     require => File["${apache::params::baseconf}/conf.d"],
   }
 
@@ -116,6 +118,7 @@ class apache (
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
+      recurse => true,
       require => Package[$apache::params::packagename],
     }
 
