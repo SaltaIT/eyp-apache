@@ -1,0 +1,5 @@
+<% if defined?(@aliasmatch) -%>
+<% @aliasmatch.each do | key, value | -%>
+    AliasMatch <%= key %> <%= value %>
+<% end -%>
+<% end -%>
