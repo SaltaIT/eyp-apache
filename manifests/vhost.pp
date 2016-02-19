@@ -48,9 +48,9 @@ define apache::vhost   (
 
     validate_string($allowoverride)
 
-    if($denyip)
+    if($deniedip)
     {
-      validate_array($denyip)
+      validate_array($deniedip)
     }
 
     validate_string($servername)
