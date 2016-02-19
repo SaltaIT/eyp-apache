@@ -11,10 +11,16 @@ define apache::vhost   (
         $servername       = $name,
         $serveralias      = undef,
         $allowedip        = undef,
+        $denyip           = undef,
         $rewrites         = undef,
         $rewrites_source  = undef,
         $certname         = undef,
         $serveradmin      = undef,
+        $aliasmatch       = undef,
+        $scriptalias      = undef,
+        $options          = $apache::params::options_default,
+        $allowoverride    = $apache::params::allowoverride_default,
+        $aliases          = undef,
       ) {
 
     #TODO: allowedip s'ignora
@@ -24,11 +30,18 @@ define apache::vhost   (
       fail('You must include the apache base class before using any apache defined resources')
     }
 
+    validate_array($options)
+
+    validate_string($allowoverride)
+
+    if($denyip)
+    {
+      validate_array($denyip)
+    }
+
     validate_string($servername)
 
     validate_absolute_path($documentroot)
-
-    validate_string($servername)
 
     if($serveralias)
     {
@@ -43,6 +56,21 @@ define apache::vhost   (
     if($allowedip)
     {
       validate_array($allowedip)
+    }
+
+    if($aliasmatch)
+    {
+      validate_hash($aliasmatch)
+    }
+
+    if($aliases)
+    {
+      validate_hash($aliases)
+    }
+
+    if($scriptalias)
+    {
+      validate_hash($scriptalias)
     }
 
     validate_array($directoryindex)
@@ -143,7 +171,7 @@ define apache::vhost   (
       {
         concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf rewrite engine on":
           target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
-          content => "\n  ## Rewrite rules ##\n  RewriteEngine On\n\n",
+          content => "\n  ## Rewrite rules ##\n\n  RewriteEngine On\n\n",
           order   => '05',
         }
 
@@ -164,8 +192,71 @@ define apache::vhost   (
 
         concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf rewrite END":
           target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
-          content => "\n\n  ## END Rewrite rules ##\n\n",
+          content => "\n  ## END Rewrite rules ##\n\n",
           order   => '08',
+        }
+
+      }
+
+      if($aliasmatch!=undef)
+      {
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf aliasmatch BEGIN":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+          content => "\n  ## AliasMatch BEGIN ##\n\n  <IfModule alias_module>\n\n",
+          order   => '09',
+        }
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf aliasmatch":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+          content => template("${module_name}/aliasmatch/aliasmatch.erb"),
+          order   => '10',
+        }
+
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf aliasmatch END":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+          content => "\n  </IfModule>\n\n  ## AliasMatch END##\n\n",
+          order   => '11',
+        }
+
+      }
+
+      if($scriptalias!=undef)
+      {
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf scriptalias BEGIN":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+          content => "\n  ## ScriptAlias BEGIN ##\n\n",
+          order   => '12',
+        }
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf scriptalias":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+          content => template("${module_name}/scriptalias/scriptalias.erb"),
+          order   => '13',
+        }
+
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf scriptalias END":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+          content => "\n  ## ScriptAlias END##\n\n",
+          order   => '14',
+        }
+
+      }
+      # Order 15 taken by directory define
+      if($aliases!=undef)
+      {
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf aliases BEGIN":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+          content => "\n  ## Alias BEGIN ##\n\n  <IfModule alias_module>\n\n",
+          order   => '16',
+        }
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf aliases":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+          content => template("${module_name}/aliases/aliases.erb"),
+          order   => '17',
+        }
+
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf aliases END":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+          content => "\n  </IfModule>\n\n  ## Alias END##\n\n",
+          order   => '18',
         }
 
       }

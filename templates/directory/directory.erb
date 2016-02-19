@@ -1,20 +1,5 @@
-<VirtualHost *:<%= @port %>>
-  DocumentRoot <%= @documentroot %>
-  ServerName <%= @servername %>
-  <%- if @serveralias -%>
-    <%- @serveralias.each do |val| -%>
-  ServerAlias <%= val %>
-    <%- end -%>
-  <%- if @serveradmin -%>
-  ServerAdmin <%= @serveradmin %>
-  <%- end -%>
-  <%- end -%>
-  DirectoryIndex <%= @directoryindex.join(' ') %>
 
-  ErrorLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::params::logdir') %>/<%= @servername %>.error.%Y.%m.%d.log 86400"
-  CustomLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::params::logdir') %>/<%= @servername %>.access.%Y.%m.%d.log 86400" combined
-
-  <Directory <%= @documentroot %>>
+  <Directory <%= @directory %>>
     AllowOverride <%= @allowoverride %>
     Options <%= @options.join(' ') %>
   <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>

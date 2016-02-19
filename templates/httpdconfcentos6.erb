@@ -111,9 +111,9 @@ MaxKeepAliveRequests <%= @maxkeepalivereq %>
 StartServers       8
 MinSpareServers    5
 MaxSpareServers   20
-ServerLimit      256
-MaxClients       256
-MaxRequestsPerChild  4000
+ServerLimit      <%= @maxclients %>
+MaxClients       <%= @maxclients %>
+MaxRequestsPerChild  <%= @maxrequestsperchild %>
 </IfModule>
 
 <% else -%>
@@ -126,11 +126,11 @@ MaxRequestsPerChild  4000
 # MaxRequestsPerChild: maximum number of requests a server process serves
 <IfModule worker.c>
 StartServers         4
-MaxClients         300
+MaxClients         <%= @maxclients %>
 MinSpareThreads     25
 MaxSpareThreads     75
 ThreadsPerChild     25
-MaxRequestsPerChild  0
+MaxRequestsPerChild  <%= @maxrequestsperchild %>
 </IfModule>
 <% end -%>
 
@@ -223,6 +223,10 @@ LoadModule proxy_connect_module <%= scope.lookupvar('apache::params::modulesdir'
 LoadModule cache_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_cache.so
 LoadModule suexec_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_suexec.so
 LoadModule cgi_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_cgi.so
+<%- if(@ssl) -%>
+LoadModule socache_shmcb_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_socache_shmcb.so
+<%- end -%>
+
 
 <% if(@loadmodules_extra) -%>
 #RH specific
@@ -309,7 +313,7 @@ Group <%= @apache_group %>
 # e-mailed.  This address appears on some server-generated pages, such
 # as error documents.  e.g. admin@your-domain.com
 #
-ServerAdmin <%= @server_admin_default %>
+ServerAdmin <%= @server_admin %>
 
 #
 # ServerName gives the name and port that the server uses to identify itself.
@@ -323,7 +327,7 @@ ServerAdmin <%= @server_admin_default %>
 # You will have to access it by its address anyway, and this will make
 # redirections work in a sensible way.
 #
-#ServerName www.example.com:80
+ServerName <%= @server_name %>
 
 #
 # UseCanonicalName: Determines how Apache constructs self-referencing
@@ -547,6 +551,11 @@ LogLevel warn
 # The following directives define some format nicknames for use with
 # a CustomLog directive (see below).
 #
+<%- if @logformats -%>
+  <%- @logformats.each do |key, value| -%>
+LogFormat <%= value %> <%= key %>
+  <%- end -%>
+<%- end -%>
 LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
 LogFormat "%h %l %u %t \"%r\" %>s %b" common
 LogFormat "%{Referer}i -> %U" referer
@@ -576,7 +585,7 @@ LogFormat "%{User-agent}i" agent
 # For a single logfile with access, agent, and referer information
 # (Combined Logfile Format), use the following directive:
 #
-CustomLog <%= scope.lookupvar('apache::params::logdir') %>/access_log combined
+CustomLog <%= scope.lookupvar('apache::params::logdir') %>/access_log <%= @customlog_type %>
 
 #
 # Optionally add a line containing the server version and virtual host

@@ -19,12 +19,19 @@ class apache (
     $apache_group=$apache::params::apache_group,
     $server_admin=$apache::params::server_admin_default,
     $directoty_index=['index.html'],
+    $maxclients=$apache::params::maxclients_default,
+    $maxrequestsperchild=$apache::params::maxrequestsperchild_default,
+    $customlog_type=$apache::params::customlog_type_default,
+    $logformats=undef,
+    $server_name=$apache::params::server_name_default,
   )inherits apache::params {
 
   if($version!=$apache::version::default)
   {
     fail("unsupported version for this system - expected: ${version} supported: ${apache::version::default}")
   }
+
+  validate_string($server_name)
 
   validate_array($listen)
 
