@@ -21,10 +21,10 @@
     <%- if defined?(@allowedip) -%>
     Require all denied
     Require ip <%= @allowedip.join(' ') %>
-    <%- elsif defined?(@denyip) -%>
+    <%- elsif defined?(@deniedip) -%>
     <RequireAll>
       Require all granted
-      Require not ip <%= @denyip.join(' ') %>
+      Require not ip <%= @deniedip.join(' ') %>
     </RequireAll>
     <%- else -%>
     Require all granted
@@ -37,8 +37,8 @@
     <%- else -%>
     Order Allow,Deny
     Allow from all
-      <%- if defined?(@denyip) -%>
-    Deny from <%= @denyip.join(' ') %>
+      <%- if defined?(@deniedip) -%>
+    Deny from <%= @deniedip.join(' ') %>
       <%- end -%>
     <%- end -%>
   <%- end -%>
