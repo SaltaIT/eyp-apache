@@ -22,7 +22,7 @@ define apache::vhost   (
         $servername       = $name,
         $serveralias      = undef,
         $allowedip        = undef,
-        $denyip           = undef,
+        $deniedip         = undef,
         $rewrites         = undef,
         $rewrites_source  = undef,
         $certname         = undef,
@@ -33,8 +33,6 @@ define apache::vhost   (
         $allowoverride    = $apache::params::allowoverride_default,
         $aliases          = undef,
       ) {
-
-    #TODO: allowedip s'ignora
 
     if ! defined(Class['apache'])
     {
@@ -50,9 +48,9 @@ define apache::vhost   (
 
     validate_string($allowoverride)
 
-    if($denyip)
+    if($deniedip)
     {
-      validate_array($denyip)
+      validate_array($deniedip)
     }
 
     validate_string($servername)
