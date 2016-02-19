@@ -22,7 +22,7 @@ define apache::vhost   (
         $servername       = $name,
         $serveralias      = undef,
         $allowedip        = undef,
-        $denyip           = undef,
+        $deniedip         = undef,
         $rewrites         = undef,
         $rewrites_source  = undef,
         $certname         = undef,
