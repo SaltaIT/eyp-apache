@@ -17,7 +17,7 @@ define apache::serverstatus (
     concat::fragment{ "${apache::params::baseconf}/conf.d/00_default.conf serverstatus":
       target  => "${apache::params::baseconf}/conf.d/00_default.conf",
       content => template("${module_name}/serverstatus/serverstatus.erb"),
-      order   => '10',
+      order   => '08',
     }
   }
   else
@@ -25,7 +25,7 @@ define apache::serverstatus (
     concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf serverstatus":
       target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
       content => template("${module_name}/serverstatus/serverstatus.erb"),
-      order   => '10',
+      order   => '08',
     }
   }
 
