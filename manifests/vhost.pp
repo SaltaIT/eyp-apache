@@ -1,4 +1,15 @@
 #
+# = vhost concat order
+# 01 - vhost definition as in vhost/vhost.erb
+# 02 - ssl configuration as in ssl/vhost_template.erb
+# 03 - directory
+# 05,06,07 - rewrite rules
+# 08 - serverstatus
+# 09,10,11 - aliasmatch
+# 12,13,14 - scriptalias
+# 16,17,18 - aliases
+# 99 - end vhost
+#
 define apache::vhost   (
         $documentroot,
         $order            = '00',
@@ -11,7 +22,7 @@ define apache::vhost   (
         $servername       = $name,
         $serveralias      = undef,
         $allowedip        = undef,
-        $denyip           = undef,
+        $deniedip         = undef,
         $rewrites         = undef,
         $rewrites_source  = undef,
         $certname         = undef,
@@ -23,20 +34,23 @@ define apache::vhost   (
         $aliases          = undef,
       ) {
 
-    #TODO: allowedip s'ignora
-
     if ! defined(Class['apache'])
     {
       fail('You must include the apache base class before using any apache defined resources')
+    }
+
+    if( $rewrites!=undef and $rewrites_source!=undef)
+    {
+      fail('Incompatible options: both rewrites and rewites_source are being defined')
     }
 
     validate_array($options)
 
     validate_string($allowoverride)
 
-    if($denyip)
+    if($deniedip)
     {
-      validate_array($denyip)
+      validate_array($deniedip)
     }
 
     validate_string($servername)
@@ -175,25 +189,27 @@ define apache::vhost   (
           order   => '05',
         }
 
-        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf rewrites":
-          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
-          content => template("${module_name}/rewrites/rewrites.erb"),
-          order   => '06',
-        }
-
         if($rewrites_source)
         {
           concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf rewrite source":
             target => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
             source => $rewrites_source,
-            order  => '07',
+            order  => '06',
+          }
+        }
+        else
+        {
+          concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf rewrites":
+            target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+            content => template("${module_name}/rewrites/rewrites.erb"),
+            order   => '06',
           }
         }
 
         concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf rewrite END":
           target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
           content => "\n  ## END Rewrite rules ##\n\n",
-          order   => '08',
+          order   => '07',
         }
 
       }

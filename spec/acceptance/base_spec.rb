@@ -50,6 +50,10 @@ describe 'apache class' do
     end
 
     #test vhost - /etc/httpd/conf.d/sites/00-et2blog-80.conf
+    describe file($et2blogconf) do
+      it { should be_file }
+      its(:content) { should match 'DocumentRoot /var/www/et2blog' }
+    end
 
   end
 
