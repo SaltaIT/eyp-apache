@@ -19,7 +19,7 @@ SSLCryptoDevice builtin
 SSLProtocol <%= @ssl_protocol.join(' ') %>
 
 SSLHonorCipherOrder on
-SSLCipherSuite <%= @ssl_protocol.join(':') %>
+SSLCipherSuite <%= @ssl_chiphersuite.join(':') %>
 <%- if(@ssl_compression) -%>
 SSLCompression On
 <%- end -%>
