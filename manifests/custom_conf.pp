@@ -14,7 +14,7 @@ define apache::custom_conf(
     group   => 'root',
     mode    => '0644',
     require => Package[$apache::params::packagename],
-    notify  => Service[$apache::params::servicename],
+    notify  => Class['apache::service'],
     source  => $source,
   }
 

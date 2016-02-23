@@ -25,7 +25,7 @@ define apache::cert (
     group   => 'root',
     mode    => '0644',
     require => [ Package[$apache::params::packagename], File["${apache::params::baseconf}/ssl"] ],
-    notify  => Service[$apache::params::servicename],
+    notify  => Class['apache::service'],
     source  => $pk_source,
   }
 
@@ -35,7 +35,7 @@ define apache::cert (
     group   => 'root',
     mode    => '0644',
     require => [ Package[$apache::params::packagename], File["${apache::params::baseconf}/ssl"] ],
-    notify  => Service[$apache::params::servicename],
+    notify  => Class['apache::service'],
     source  => $cert_source,
   }
 
@@ -49,11 +49,9 @@ define apache::cert (
       group   => 'root',
       mode    => '0644',
       require => [ Package[$apache::params::packagename], File["${apache::params::baseconf}/ssl"] ],
-      notify  => Service[$apache::params::servicename],
+      notify  => Class['apache::service'],
       source  => $intermediate_source,
     }
   }
-
-
 
 }

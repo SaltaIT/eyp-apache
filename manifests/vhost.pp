@@ -118,7 +118,7 @@ define apache::vhost   (
         owner   => 'root',
         group   => 'root',
         mode    => '0644',
-        notify  => Service[$apache::params::servicename],
+        notify  => Class['apache::service'],
         require => Exec["mkdir p ${documentroot} ${servername} ${port}"]
       }
 
@@ -157,7 +157,7 @@ define apache::vhost   (
         owner   => 'root',
         group   => 'root',
         mode    => '0644',
-        notify  => Service[$apache::params::servicename],
+        notify  => Class['apache::service'],
         require => Exec["mkdir p ${documentroot} ${servername} ${port}"],
       }
 
