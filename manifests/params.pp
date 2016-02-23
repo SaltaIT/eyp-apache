@@ -46,6 +46,8 @@ class apache::params inherits apache::version {
       $modphp_pkg=undef
       $modphp_so=undef
 
+      $ssl_compression_default=false
+
 
       case $::operatingsystemrelease
       {
@@ -82,6 +84,8 @@ class apache::params inherits apache::version {
 
       $modphp_pkg=[ 'libapache2-mod-php5' ]
       $modphp_so='libphp5.so'
+
+      $ssl_compression_default=false
 
       case $::operatingsystem
       {
