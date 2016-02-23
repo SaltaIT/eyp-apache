@@ -72,7 +72,7 @@ class apache::fcgi (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    notify  => Service[$apache::params::servicename],
+    notify  => Class['apache::service'],
     content => template("${module_name}/module/fcgihandler.erb"),
     require => Exec["install fastcgi ${srcdir}"],
   }
