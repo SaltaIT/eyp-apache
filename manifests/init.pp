@@ -25,6 +25,7 @@ class apache (
     $logformats=undef,
     $server_name=$apache::params::server_name_default,
     $manage_service=true,
+    $ssl_compression=false,
   )inherits apache::params {
 
   if($version!=$apache::version::default)
