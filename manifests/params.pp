@@ -19,6 +19,9 @@ class apache::params inherits apache::version {
   $allowoverride_default='None'
   $directory_default='/var/www/undef'
 
+  $sslprotocol_default=[ '-ALL', '+TLSv1', '+TLSv1.1', '+TLSv1.2' ]
+  $ssl_chiphersuite_default=[ 'ECDHE-RSA-AES256-SHA384', 'AES256-SHA256', 'RC4', 'HIGH', '!MD5', '!aNULL', '!EDH', '!AESGCM' ]
+
   case $::osfamily
   {
     'redhat':

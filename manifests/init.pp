@@ -26,6 +26,8 @@ class apache (
     $server_name=$apache::params::server_name_default,
     $manage_service=true,
     $ssl_compression=$apache::params::ssl_compression_default,
+    $ssl_protocol=$apache::params::ssl_protocol_default,
+    $ssl_chiphersuite=$apache::params::ssl_chiphersuite_default,
   )inherits apache::params {
 
   if($version!=$apache::version::default)

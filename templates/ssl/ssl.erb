@@ -15,13 +15,11 @@ SSLRandomSeed startup file:/dev/urandom  256
 SSLRandomSeed connect builtin
 SSLCryptoDevice builtin
 
-<%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.2']) >= 0 -%>
-SSLProtocol -ALL +TLSv1 +TLSv1.1 +TLSv1.2
-<%- else -%>
-SSLProtocol -ALL +TLSv1
-<%- end -%>
+
+SSLProtocol <%= @ssl_protocol.join(' ') %>
+
 SSLHonorCipherOrder on
-SSLCipherSuite ECDHE-RSA-AES256-SHA384:AES256-SHA256:RC4:HIGH:!MD5:!aNULL:!EDH:!AESGCM
+SSLCipherSuite <%= @ssl_protocol.join(':') %>
 <%- if(@ssl_compression) -%>
 SSLCompression On
 <%- end -%>
