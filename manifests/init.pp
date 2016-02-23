@@ -71,6 +71,7 @@ class apache (
     group   => 'root',
     mode    => '0755',
     recurse => true,
+    purge   => true,
     require => Package[$apache::params::packagename],
   }
 
@@ -80,6 +81,7 @@ class apache (
     group   => 'root',
     mode    => '0755',
     recurse => true,
+    purge   => true,
     require => File["${apache::params::baseconf}/conf.d"],
   }
 
@@ -120,6 +122,7 @@ class apache (
       group   => 'root',
       mode    => '0755',
       recurse => true,
+      purge   => true,
       require => Package[$apache::params::packagename],
     }
 
