@@ -10,6 +10,7 @@ when 'RedHat'
   $baseconf        = '/etc/httpd'
   $defaultsiteconf = '/etc/httpd/conf.d/00_default.conf'
   $et2blogconf     = '/etc/httpd/conf.d/sites/00-et2blog-80.conf'
+  $et2blogconfssl  = '/etc/httpd/conf.d/sites/00-et2blog-443.conf'
   $systemadminconf = '/etc/httpd/conf.d/sites/10-systemadmin.es-81.conf'
   $defaultvhconf   = '/etc/httpd/conf.d/00_default.conf'
 
@@ -19,6 +20,7 @@ when 'Debian'
   $baseconf        = '/etc/apache2'
   $defaultsiteconf = '/etc/apache2/conf.d/00_default.conf'
   $et2blogconf     = '/etc/apache2/conf.d/sites/00-et2blog-80.conf'
+  $et2blogconfssl  = '/etc/apache2/conf.d/sites/00-et2blog-443.conf'
   $systemadminconf = '/etc/apache2/conf.d/sites/10-systemadmin.es-81.conf'
   $defaultvhconf   = '/etc/apache2/conf.d/00_default.conf'
 
@@ -28,6 +30,7 @@ else
   $baseconf        = '-_-'
   $defaultsiteconf = '-_-'
   $et2blogconf     = '-_-'
+  $et2blogconfssl  = '-_-'
   $systemadminconf = '-_-'
   $defaultvhconf   = '-_-'
 
