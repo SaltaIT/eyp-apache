@@ -101,6 +101,7 @@ describe 'apache class' do
     describe file($et2blogconfssl) do
       it { should be_file }
       its(:content) { should match 'DocumentRoot /var/www/et2blog' }
+      its(:content) { should match 'SSLEngine on' }
     end
 
     it "HTTP 200 SSL et2blog" do
