@@ -108,6 +108,22 @@ describe 'apache class' do
       expect(shell("curl -I https://localhost/check.rspec --insecure 2>/dev/null | head -n1 | grep 'HTTP/1.1 200 OK'").exit_code).to be_zero
     end
 
+    it "cname SSL cert et2blog" do
+      expect(shell("echo | openssl s_client -connect localhost:443 2>/dev/null  | openssl x509 -noout -subject | grep 'CN=et2blog'").exit_code).to be_zero
+    end
+
+    it "TLSv1 supported" do
+      expect(shell("echo | openssl s_client -connect localhost:443 -tls1 2>&1 | grep 'Session-ID:' | awk '{ print $NF }' | grep -v 'Session-ID:'").exit_code).to be_zero
+    end
+
+    it "SSLv3 disabled" do
+      expect(shell("echo | openssl s_client -connect localhost:443 -ssl3 2>&1 | grep 'Session-ID:' | awk '{ print $NF }' | grep  'Session-ID:'").exit_code).to be_zero
+    end
+
+    it "key size: 2048" do
+      expect(shell("echo | openssl s_client -connect localhost:443 2>&1 | grep 'Server public key' | grep 2048").exit_code).to be_zero
+    end
+
   end
 
 end
