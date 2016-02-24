@@ -25,6 +25,9 @@ class apache (
     $logformats=undef,
     $server_name=$apache::params::server_name_default,
     $manage_service=true,
+    $ssl_compression=$apache::params::ssl_compression_default,
+    $ssl_protocol=$apache::params::ssl_protocol_default,
+    $ssl_chiphersuite=$apache::params::ssl_chiphersuite_default,
   )inherits apache::params {
 
   if($version!=$apache::version::default)
@@ -71,6 +74,7 @@ class apache (
     group   => 'root',
     mode    => '0755',
     recurse => true,
+    purge   => true,
     require => Package[$apache::params::packagename],
   }
 
@@ -80,6 +84,7 @@ class apache (
     group   => 'root',
     mode    => '0755',
     recurse => true,
+    purge   => true,
     require => File["${apache::params::baseconf}/conf.d"],
   }
 
@@ -120,6 +125,7 @@ class apache (
       group   => 'root',
       mode    => '0755',
       recurse => true,
+      purge   => true,
       require => Package[$apache::params::packagename],
     }
 
