@@ -57,12 +57,12 @@ class apache::params inherits apache::version {
         /^5.*/:
         {
           $rundir='/var/run'
-          $sslprotocol_default=[ '-ALL', '+TLSv1' ]
+          $ssl_protocol_default=[ '-ALL', '+TLSv1' ]
         }
         /^[6-7].*$/:
         {
           $rundir='/var/run/httpd'
-          $sslprotocol_default=[ '-ALL', '+TLSv1', '+TLSv1.1', '+TLSv1.2' ]
+          $ssl_protocol_default=[ '-ALL', '+TLSv1', '+TLSv1.1', '+TLSv1.2' ]
         }
         default: { fail('Unsupported RHEL/CentOS version!')  }
       }
@@ -107,7 +107,7 @@ class apache::params inherits apache::version {
               $conffile='apache2.conf'
               $modssl_package=[ 'apache2-bin' ]
 
-              $sslprotocol_default=[ '-ALL', '+TLSv1', '+TLSv1.1', '+TLSv1.2' ]
+              $ssl_protocol_default=[ '-ALL', '+TLSv1', '+TLSv1.1', '+TLSv1.2' ]
             }
             default: { fail("Unsupported Ubuntu version! - ${::operatingsystemrelease}")  }
           }
