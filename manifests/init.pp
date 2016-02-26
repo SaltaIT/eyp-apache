@@ -24,6 +24,10 @@ class apache (
     $customlog_type=$apache::params::customlog_type_default,
     $logformats=undef,
     $server_name=$apache::params::server_name_default,
+    $manage_service=true,
+    $ssl_compression=$apache::params::ssl_compression_default,
+    $ssl_protocol=$apache::params::ssl_protocol_default,
+    $ssl_chiphersuite=$apache::params::ssl_chiphersuite_default,
   )inherits apache::params {
 
   if($version!=$apache::version::default)
@@ -42,7 +46,7 @@ class apache (
 
   package { $apache::params::packagename:
     ensure => 'installed',
-    notify => Service[$apache::params::servicename],
+    notify => Class['apache::service'],
   }
 
   if($apache::params::packagenamedevel!=undef)
@@ -70,6 +74,7 @@ class apache (
     group   => 'root',
     mode    => '0755',
     recurse => true,
+    purge   => true,
     require => Package[$apache::params::packagename],
   }
 
@@ -79,6 +84,7 @@ class apache (
     group   => 'root',
     mode    => '0755',
     recurse => true,
+    purge   => true,
     require => File["${apache::params::baseconf}/conf.d"],
   }
 
@@ -89,7 +95,7 @@ class apache (
     mode    => '0644',
     content => template("apache/${apache::params::conftemplate}"),
     require => File["${apache::params::baseconf}/conf.d/sites"],
-    notify  => Service[$apache::params::servicename],
+    notify  => Class['apache::service'],
   }
 
   concat { "${apache::params::baseconf}/conf.d/modules.conf":
@@ -98,7 +104,7 @@ class apache (
     group   => 'root',
     mode    => '0644',
     require => Package[$apache::params::packagename],
-    notify  => Service[$apache::params::servicename],
+    notify  => Class['apache::service'],
   }
 
   concat::fragment { "loadmodule header ${apache::params::baseconf}":
@@ -119,6 +125,7 @@ class apache (
       group   => 'root',
       mode    => '0755',
       recurse => true,
+      purge   => true,
       require => Package[$apache::params::packagename],
     }
 
@@ -131,16 +138,13 @@ class apache (
                     File["${apache::params::baseconf}/conf.d"],
                     Package[[$apache::params::packagename, $apache::params::modssl_package]]
                   ],
-      notify  => Service[$apache::params::servicename],
+      notify  => Class['apache::service'],
       content => template("${module_name}/ssl/ssl.erb"),
     }
   }
 
-  service { $apache::params::servicename:
-    ensure  => 'running',
-    name    => $apache::params::servicename,
-    enable  => true,
-    require => File["${apache::params::baseconf}/${apache::params::conffile}"],
+  class { '::apache::service':
+    manage_service => $manage_service,
   }
 
 }

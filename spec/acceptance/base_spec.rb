@@ -26,6 +26,10 @@ describe 'apache class' do
       expect(apply_manifest(pp).exit_code).to eq(0)
     end
 
+    it "apache configtest" do
+      expect(shell("apachectl configtest").exit_code).to be_zero
+    end
+
     it "sleep 10 to make sure apache is started" do
       expect(shell("sleep 10").exit_code).to be_zero
     end

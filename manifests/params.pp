@@ -19,6 +19,9 @@ class apache::params inherits apache::version {
   $allowoverride_default='None'
   $directory_default='/var/www/undef'
 
+
+  $ssl_chiphersuite_default=[ 'ECDHE-RSA-AES256-SHA384', 'AES256-SHA256', 'RC4', 'HIGH', '!MD5', '!aNULL', '!EDH', '!AESGCM' ]
+
   case $::osfamily
   {
     'redhat':
@@ -46,16 +49,22 @@ class apache::params inherits apache::version {
       $modphp_pkg=undef
       $modphp_so=undef
 
+      $ssl_compression_default=false
+
 
       case $::operatingsystemrelease
       {
         /^5.*/:
         {
           $rundir='/var/run'
+          $ssl_protocol_default=[ '-ALL', '+TLSv1' ]
+          $snisupported=false
         }
         /^[6-7].*$/:
         {
           $rundir='/var/run/httpd'
+          $ssl_protocol_default=[ '-ALL', '+TLSv1', '+TLSv1.1', '+TLSv1.2' ]
+          $snisupported=true
         }
         default: { fail('Unsupported RHEL/CentOS version!')  }
       }
@@ -83,6 +92,8 @@ class apache::params inherits apache::version {
       $modphp_pkg=[ 'libapache2-mod-php5' ]
       $modphp_so='libphp5.so'
 
+      $ssl_compression_default=false
+
       case $::operatingsystem
       {
         'Ubuntu':
@@ -97,6 +108,9 @@ class apache::params inherits apache::version {
               $conftemplate='httpdconfcentos6.erb'
               $conffile='apache2.conf'
               $modssl_package=[ 'apache2-bin' ]
+
+              $ssl_protocol_default=[ '-ALL', '+TLSv1', '+TLSv1.1', '+TLSv1.2' ]
+              $snisupported=true
             }
             default: { fail("Unsupported Ubuntu version! - ${::operatingsystemrelease}")  }
           }

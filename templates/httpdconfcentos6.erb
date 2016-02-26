@@ -224,7 +224,9 @@ LoadModule cache_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod
 LoadModule suexec_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_suexec.so
 LoadModule cgi_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_cgi.so
 <%- if(@ssl) -%>
+<%- if scope.function_versioncmp([@version, '2.4']) >= 0 -%>
 LoadModule socache_shmcb_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_socache_shmcb.so
+<%- end -%>
 <%- end -%>
 
 
