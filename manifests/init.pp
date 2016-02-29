@@ -63,6 +63,7 @@ class apache (
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
+      require => Package[$apache::params::packagename],
       content => template($apache::params::sysconfigtemplate),
     }
   }
