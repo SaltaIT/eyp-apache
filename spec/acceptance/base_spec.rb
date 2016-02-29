@@ -14,6 +14,7 @@ describe 'apache class' do
         maxrequestsperchild=>'1000',
         customlog_type=>'vhost_combined',
         logformats=>{ 'vhost_combined' => '%v:%p %h %l %u %t \\"%r\\" %>s %O \\"%{Referer}i\\" \\"%{User-Agent}i\\"' },
+        add_defult_logformats=>true,
       }
 
       apache::vhost {'default':
@@ -81,6 +82,7 @@ describe 'apache class' do
       its(:content) { should match 'ServerLimit      150' }
       its(:content) { should match 'ServerAdmin webmaster@localhost' }
       its(:content) { should match 'access_log vhost_combined' }
+      its(:content) { should match 'LogFormat "%{User-agent}i" agent' }
       its(:content) { should match 'LogFormat "%v:%p %h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" vhost_combined' }
     end
 
