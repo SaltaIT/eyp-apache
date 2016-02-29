@@ -32,6 +32,7 @@ define apache::vhost   (
         $options          = $apache::params::options_default,
         $allowoverride    = $apache::params::allowoverride_default,
         $aliases          = undef,
+        $add_default_logs = true,
       ) {
 
     if ! defined(Class['apache'])
