@@ -141,6 +141,44 @@ apache::vhost {'default':
 class { 'apache::mod::php': }
 ```
 
+logformats example:
+
+```puppet
+class { 'apache':
+  server_admin=> 'webmaster@localhost',
+  maxclients=> '150',
+  maxrequestsperchild=>'1000',
+  customlog_type=>'vhost_combined',
+  logformats=>{ 'vhost_combined' => '%v:%p %h %l %u %t \\"%r\\" %>s %O \\"%{Referer}i\\" \\"%{User-Agent}i\\"' },
+  add_defult_logformats=>true,
+}
+
+```
+
+aliasmatch, scriptalias, rewrites and directory example:
+
+```puppet
+apache::vhost {'testing.lol':
+        order => '77',
+        serveradmin => 'root@lolcathost.lol',
+        serveralias => [ '1.testing.lol', '2.testing.lol' ],
+        documentroot => '/var/www/testing/',
+        options => [ 'Indexes', 'FollowSymLinks', 'MultiViews' ],
+        rewrites => [ 'RewriteCond %{HTTP_HOST} !^testing\.lol', 'RewriteRule ^/(.*)$ http://www\.testing\.lol/$1 [R=301,L]' ],
+        aliasmatch => { 'RUC/lol' => '/var/www/testing/hc.php',
+                        '(.*)' => '/var/www/testing/cc.php'},
+        scriptalias => { '/cgi-bin/' => '"/var/www/testing/cgi-bin/"' },
+        directoryindex => [ 'index.php', 'lolindex.php', 'lol.html' ],
+}
+
+apache::directory {'/var/www/testing/cgi-bin/':
+                      vhost_order      => '77',
+                      servername       => 'testing.lol',
+                      options          => [ '+ExecCGI', '-Includes' ],
+                      allowoverride    => 'None',
+}
+```
+
 ## Usage
 
 TODO
