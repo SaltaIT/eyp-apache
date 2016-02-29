@@ -83,7 +83,7 @@ describe 'apache class' do
       its(:content) { should match 'ServerAdmin webmaster@localhost' }
       its(:content) { should match 'access_log vhost_combined' }
       its(:content) { should match 'LogFormat "%{User-agent}i" agent' }
-      its(:content) { should match 'LogFormat "%v:%p %h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" vhost_combined' }
+      its(:content) { should match /LogFormat "%v:%p %h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" vhost_combined/ }
     end
 
     #default vhost
@@ -101,7 +101,7 @@ describe 'apache class' do
     #testing vhost
     describe file($testingconf) do
       it { should be_file }
-      its(:content) { should match '<VirtualHost *:80>' }
+      its(:content) { should match /<VirtualHost *:80>/ }
       its(:content) { should match 'DocumentRoot /var/www/testing' }
       its(:content) { should match 'ServerName testing.lol' }
       its(:content) { should match 'ServerAlias 1.testing.lol' }
@@ -110,8 +110,8 @@ describe 'apache class' do
       its(:content) { should match 'DirectoryIndex index.php lolindex.php lol.html' }
       its(:content) { should match 'Options Indexes FollowSymLinks MultiViews' }
       its(:content) { should match 'RewriteEngine On' }
-      its(:content) { should match 'RewriteCond %{HTTP_HOST} !^testing\.lol' }
-      its(:content) { should match 'RewriteRule ^/(.*)$ http://www\.testing\.lol/$1 [R=301,L]' }
+      its(:content) { should match /RewriteCond %{HTTP_HOST} !^testing\.lol/ }
+      its(:content) { should match /RewriteRule ^\/(.*)$ http:\/\/www\.testing\.lol\/$1 [R=301,L]/ }
       its(:content) { should match 'AliasMatch RUC/lol /var/www/testing/hc.php' }
       its(:content) { should match 'AliasMatch (.*) /var/www/testing/cc.php' }
       its(:content) { should match 'ScriptAlias /cgi-bin/ "/var/www/testing/cgi-bin/"' }
@@ -119,7 +119,7 @@ describe 'apache class' do
       its(:content) { should match '</VirtualHost>' }
       its(:content) { should match '<Directory /var/www/testing/cgi-bin/>' }
       its(:content) { should match 'AllowOverride None' }
-      its(:content) { should match 'Options +ExecCGI -Includes' }
+      its(:content) { should match /Options +ExecCGI -Includes/ }
       its(:content) { should match '</Directory>' }
     end
 
