@@ -13,7 +13,7 @@ describe 'apache class' do
         maxclients=> '150',
         maxrequestsperchild=>'1000',
         customlog_type=>'vhost_combined',
-        logformats=>{ 'vhost_combined' => '%v:%p %h %l %u %t \\"%r\\" %>s %O \\"%{Referer}i\\" \\"%{User-Agent}i\\"' },
+        logformats=>{ 'vhost_combined' => '%v:%p %h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"' },
       }
 
       apache::vhost {'default':
