@@ -23,6 +23,7 @@ class apache (
     $maxrequestsperchild=$apache::params::maxrequestsperchild_default,
     $customlog_type=$apache::params::customlog_type_default,
     $logformats=undef,
+    $add_defult_logformats=true,
     $server_name=$apache::params::server_name_default,
     $manage_service=true,
     $ssl_compression=$apache::params::ssl_compression_default,
