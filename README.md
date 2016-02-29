@@ -1,5 +1,9 @@
 # apache
 
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+
+**AtlasIT-AM/eyp-apache**: [![Build Status](https://travis-ci.org/AtlasIT-AM/eyp-apache.png?branch=master)](https://travis-ci.org/AtlasIT-AM/eyp-apache)
+
 #### Table of Contents
 
 1. [Overview](#overview)

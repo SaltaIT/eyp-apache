@@ -553,15 +553,17 @@ LogLevel warn
 # The following directives define some format nicknames for use with
 # a CustomLog directive (see below).
 #
-<%- if @logformats -%>
+<%- if defined?(@logformats) -%>
   <%- @logformats.each do |key, value| -%>
-LogFormat <%= value %> <%= key %>
+LogFormat "<%= value %>" <%= key %>
   <%- end -%>
 <%- end -%>
+<% if @add_defult_logformats -%>
 LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
 LogFormat "%h %l %u %t \"%r\" %>s %b" common
 LogFormat "%{Referer}i -> %U" referer
 LogFormat "%{User-agent}i" agent
+<% end -%>
 
 # "combinedio" includes actual counts of actual bytes received (%I) and sent (%O); this
 # requires the mod_logio module to be loaded.

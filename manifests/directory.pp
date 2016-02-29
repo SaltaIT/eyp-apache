@@ -1,8 +1,8 @@
 define apache::directory (
+                              $servername,
                               $vhost_order      = '00',
                               $port             = '80',
-                              $servername       = $name,
-                              $directory        = $apache::params::directory_default,
+                              $directory        = $name,
                               $allowedip        = undef,
                               $denyip           = undef,
                               $options          = $apache::params::options_default,

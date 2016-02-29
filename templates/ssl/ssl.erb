@@ -24,7 +24,7 @@ SSLCipherSuite <%= @ssl_chiphersuite.join(':') %>
 SSLCompression On
 <%- end -%>
 
-<% if(@snisupported) -%>
+<% if(scope.lookupvar('apache::params::snisupported')) -%>
 # SNI - virtualhosting SSL
 SSLStrictSNIVHostCheck <%= scope.function_bool2httpd([@sni]) %>
 <% end -%>
