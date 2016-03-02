@@ -13,6 +13,7 @@ class apache::service (
   validate_re($ensure, [ '^running$', '^stopped$' ], "Not a valid daemon status: ${ensure}")
 
   if($eyp_docker_iscontainer==undef or
+      $eyp_docker_iscontainer==false or
       $eyp_docker_iscontainer =~ /false/ or
       $manage_docker_service)
   {
