@@ -15,6 +15,7 @@ describe 'apache class' do
         customlog_type=>'vhost_combined',
         logformats=>{ 'vhost_combined' => '%v:%p %h %l %u %t \\"%r\\" %>s %O \\"%{Referer}i\\" \\"%{User-Agent}i\\"' },
         add_defult_logformats=>true,
+        manage_docker_service => true,
       }
 
       apache::vhost {'default':

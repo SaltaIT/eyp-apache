@@ -11,6 +11,7 @@ describe 'apache class' do
       class { 'apache':
         listen => [ '80', '443' ],
         ssl => true,
+        manage_docker_service => true,
       }
 
       apache::vhost {'default':
