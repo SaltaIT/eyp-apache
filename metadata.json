@@ -1,6 +1,6 @@
 {
   "name": "eyp-apache",
-  "version": "0.2.23",
+  "version": "0.2.24",
   "author": "eyp",
   "summary": "basic apache module",
   "license": "Apache-2.0",
