@@ -10,6 +10,6 @@ class apache::service($manage_service=true,) inherits apache::params {
         enable  => true,
         require => File["${apache::params::baseconf}/${apache::params::conffile}"],
       }
-    }  
+    }
   }
 }
