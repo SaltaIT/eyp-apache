@@ -1,7 +1,14 @@
 class apache::service (
+                        $ensure ='running',
                         $manage_service=true,
                         $manage_docker_service=false,
                       ) inherits apache::params {
+
+  #
+  validate_bool($manage_docker_service)
+  validate_bool($manage_service)
+
+  validate_re($ensure, [ '^running$', '^stopped$' ], "Not a valid daemon status: ${ensure}")
 
   if($::eyp_docker_iscontainer==undef or
       $::eyp_docker_iscontainer =~ /false/ or
@@ -10,7 +17,7 @@ class apache::service (
     if($manage_service)
     {
       service { $apache::params::servicename:
-        ensure  => 'running',
+        ensure  => $ensure,
         name    => $apache::params::servicename,
         enable  => true,
         require => File["${apache::params::baseconf}/${apache::params::conffile}"],
