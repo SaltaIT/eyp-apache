@@ -10,6 +10,7 @@ describe 'apache class' do
 
       class { 'apache':
         listen => [ '80', '81' ],
+        manage_docker_service => true,
       }
 
       apache::vhost {'default':
@@ -108,6 +109,7 @@ describe 'apache class' do
 
       class { 'apache':
         listen => [ '80', '81' ],
+        manage_docker_service => true,
       }
 
       apache::vhost {'default':

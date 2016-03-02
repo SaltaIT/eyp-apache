@@ -8,7 +8,9 @@ describe 'apache class' do
     it 'should work with no errors' do
       pp = <<-EOF
 
-      class { 'apache': }
+      class { 'apache':
+        manage_docker_service => true,
+      }
 
       apache::vhost {'default':
         defaultvh=>true,
@@ -81,7 +83,9 @@ describe 'apache class' do
     it 'should work with no errors' do
       pp = <<-EOF
 
-      class { 'apache': }
+      class { 'apache':
+        manage_docker_service => true,
+      }
 
       apache::vhost {'default':
         defaultvh=>true,
@@ -150,7 +154,9 @@ describe 'apache class' do
     it 'should work with no errors' do
       pp = <<-EOF
 
-      class { 'apache': }
+      class { 'apache':
+        manage_docker_service => true,
+      }
 
       apache::vhost {'default':
         defaultvh=>true,
@@ -219,7 +225,9 @@ describe 'apache class' do
     it 'should work with no errors' do
       pp = <<-EOF
 
-      class { 'apache': }
+      class { 'apache':
+        manage_docker_service => true,
+      }
 
       apache::vhost {'default':
         defaultvh=>true,
