@@ -122,7 +122,7 @@ define apache::vhost   (
         notify  => Class['apache::service'],
         require => [
                     Exec["mkdir p ${documentroot} ${servername} ${port}"],
-                    File["${apache::params::baseconf}/conf.d/sites"]
+                    File["${apache::params::baseconf}/conf.d"]
                     ],
       }
 
@@ -162,7 +162,7 @@ define apache::vhost   (
         group   => 'root',
         mode    => '0644',
         notify  => Class['apache::service'],
-        require => Exec["mkdir p ${documentroot} ${servername} ${port}"],
+        require => [Exec["mkdir p ${documentroot} ${servername} ${port}"],File["${apache::params::baseconf}/conf.d/sites"]],
       }
 
       concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf ini vhost":
