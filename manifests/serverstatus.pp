@@ -3,7 +3,7 @@ define apache::serverstatus (
                               $port             = '80',
                               $serverstatus_url = '/server-status',
                               $servername       = $name,
-                              $allowedip        = undef,
+                              $allowedip        = hiera('eypapache::monitips', undef),
                               $defaultvh        = false,
                             ) {
 
