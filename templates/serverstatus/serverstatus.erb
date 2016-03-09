@@ -1,7 +1,7 @@
 
   <Location <%= @serverstatus_url %>>
     SetHandler server-status
-  <%- if defined?(@allowedip) -%>
+  <%- if defined?(@allowedip) and @allowedip!="" -%>
     <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
       <%- if @searchlist.kind_of?(Array) -%>
         <%- @allowedip.each do |val| -%>
