@@ -35,7 +35,7 @@ describe 'apache class' do
       apache::serverstatus {'systemadmin.es':
         order     => '10',
         port      => '81',
-        allowedip => ['1.1.1.1','2.2.2.2','4.4.4.4 5.5.5.5','127.','::1'],
+        allowedip => [ '1.1.1.1','2.2.2.2','4.4.4.4 5.5.5.5','127.','::1' ],
       }
 
       EOF
