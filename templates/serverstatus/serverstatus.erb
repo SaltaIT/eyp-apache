@@ -3,14 +3,22 @@
     SetHandler server-status
   <%- if defined?(@allowedip) -%>
     <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
-      <%- @allowedip.each do |val| -%>
+      <%- if @searchlist.kind_of?(Array) -%>
+        <%- @allowedip.each do |val| -%>
     Require ip <%= val %>
+        <%- end -%>
+      <%- else -%>
+    Require ip <%= @allowedip %>
       <%- end -%>
     <%- else %>
     Order Deny,Allow
     Deny from all
-      <%- @allowedip.each do |val| -%>
+      <%- if @searchlist.kind_of?(Array) -%>
+        <%- @allowedip.each do |val| -%>
     Allow from <%= val %>
+        <%- end -%>
+      <%- else -%>
+    Allow from <%= @allowedip %>
       <%- end -%>
     <%- end -%>
   <%- else -%>
