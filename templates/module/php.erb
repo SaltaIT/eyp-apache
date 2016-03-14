@@ -6,7 +6,7 @@
     # Deny access to raw php sources by default
     # To re-enable it's recommended to enable access to the files
     # only in specific virtual host or directory
-    <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
+    <%- if scope.function_versioncmp([scope.lookupvar('::apache::version::default'), '2.4']) >= 0 -%>
     Require all denied
     <%- else -%>
     Order allow,deny
@@ -16,7 +16,7 @@
 </FilesMatch>
 # Deny access to files without filename (e.g. '.php')
 <FilesMatch "^\.ph(p[345]?|t|tml|ps)$">
-  <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
+  <%- if scope.function_versioncmp([scope.lookupvar('::apache::version::default'), '2.4']) >= 0 -%>
   Require all denied
   <%- else -%>
   Order allow,deny
