@@ -12,8 +12,6 @@ describe 'apache class' do
         server_admin=> 'webmaster@localhost',
         maxclients=> '150',
         maxrequestsperchild=>'1000',
-        customlog_type=>'vhost_combined',
-        logformats=>{ 'vhost_combined' => '%v:%p %h %l %u %t \\"%r\\" %>s %O \\"%{Referer}i\\" \\"%{User-Agent}i\\"' },
         add_defult_logformats=>true,
         manage_docker_service => true,
       }
@@ -63,6 +61,15 @@ describe 'apache class' do
     describe file($et2blogconf) do
       it { should be_file }
       its(:content) { should match 'Redirect' }
+      its(:content) { should match 'http://systemadmin.es/' }
+    end
+
+    it "redirect 301" do
+      expect(shell("curl -I localhost -H 'Host: et2blog' 2>/dev/null | grep '^HTTP' | head -n1 | grep 301").exit_code).to be_zero
+    end
+
+    it "redirect url" do
+      expect(shell("curl -I localhost -H 'Host: et2blog' 2>/dev/null | grep '^Location' | head -n1  | grep systemadmin.es").exit_code).to be_zero
     end
 
   end
@@ -127,6 +134,15 @@ describe 'apache class' do
     describe file($et2blogconf) do
       it { should be_file }
       its(:content) { should match 'RedirectMatch' }
+      its(:content) { should match 'http://systemadmin.es/' }
+    end
+
+    it "redirect 301" do
+      expect(shell("curl -I localhost/lol -H 'Host: et2blog' 2>/dev/null | grep '^HTTP' | head -n1 | grep 301").exit_code).to be_zero
+    end
+
+    it "redirect url" do
+      expect(shell("curl -I localhost/lol -H 'Host: et2blog' 2>/dev/null | grep '^Location' | head -n1  | grep systemadmin.es").exit_code).to be_zero
     end
 
   end
