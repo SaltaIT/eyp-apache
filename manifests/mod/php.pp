@@ -43,7 +43,7 @@ class apache::mod::php ($ensure='installed') inherits apache::params {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    require => [ Class['apache'], File["${apache::params::baseconf}/conf.d"] ],
+    require => [ Class[['apache', 'apache::version']], File["${apache::params::baseconf}/conf.d"] ],
     content => template("${module_name}/module/php.erb"),
   }
 
