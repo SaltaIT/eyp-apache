@@ -1,0 +1,5 @@
+<% if defined?(@path) -%>
+Redirect <%= @status %> <%= @path %> <%= @url %>
+<% else -%>
+RedirectMatch <%= @status %> "<%= @match %>" "<%= @url %>"
+<% end -%>
