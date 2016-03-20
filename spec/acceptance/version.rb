@@ -15,6 +15,8 @@ when 'RedHat'
   $systemadminconf = '/etc/httpd/conf.d/sites/10-systemadmin.es-81.conf'
   $testingconf     = '/etc/httpd/conf.d/sites/77-testing.lol-80.conf'
   $defaultvhconf   = '/etc/httpd/conf.d/00_default.conf'
+  $modulesconf     = '/etc/httpd/conf.d/modules.conf'
+  $deflateconf     = '/etc/httpd/conf.d/deflate.conf'
 
 when 'Debian'
   $packagename     = 'apache2'
@@ -27,6 +29,8 @@ when 'Debian'
   $systemadminconf = '/etc/apache2/conf.d/sites/10-systemadmin.es-81.conf'
   $testingconf     = '/etc/apache2/conf.d/sites/77-testing.lol-80.conf'
   $defaultvhconf   = '/etc/apache2/conf.d/00_default.conf'
+  $modulesconf     = '/etc/apache2/conf.d/modules.conf'
+  $deflateconf     = '/etc/apache2/conf.d/deflate.conf'
 
 else
   $packagename     = '-_-'
@@ -37,5 +41,7 @@ else
   $et2blogconfssl  = '-_-'
   $systemadminconf = '-_-'
   $defaultvhconf   = '-_-'
+  $modulesconf     = '-_-'
+  $deflateconf     = '-_-'
 
 end
