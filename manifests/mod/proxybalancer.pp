@@ -5,6 +5,11 @@ class apache::mod::proxybalancer ($ensure='installed') inherits apache::params {
     fail('Unsupported')
   }
 
+  if ! defined(Class['apache::mod::proxy'])
+  {
+    fail('You must include the apache::mod::proxy class before using any mod::proxy classes')
+  }
+
   if($ensure=='installed')
   {
     $ensure_conf_file='present'
