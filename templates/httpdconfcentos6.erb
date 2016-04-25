@@ -214,12 +214,14 @@ LoadModule userdir_module <%= scope.lookupvar('apache::params::modulesdir') %>/m
 LoadModule alias_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_alias.so
 LoadModule substitute_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_substitute.so
 LoadModule rewrite_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_rewrite.so
-LoadModule proxy_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_proxy.so
-LoadModule proxy_balancer_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_proxy_balancer.so
-LoadModule proxy_ftp_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_proxy_ftp.so
-LoadModule proxy_http_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_proxy_http.so
-LoadModule proxy_ajp_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_proxy_ajp.so
-LoadModule proxy_connect_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_proxy_connect.so
+
+#LoadModule proxy_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_proxy.so
+#LoadModule proxy_balancer_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_proxy_balancer.so
+#LoadModule proxy_ftp_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_proxy_ftp.so
+#LoadModule proxy_http_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_proxy_http.so
+#LoadModule proxy_ajp_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_proxy_ajp.so
+#LoadModule proxy_connect_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_proxy_connect.so
+
 LoadModule cache_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_cache.so
 LoadModule suexec_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_suexec.so
 LoadModule cgi_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_cgi.so

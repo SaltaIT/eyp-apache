@@ -20,6 +20,13 @@ class apache::params inherits apache::version {
   $directory_default='/var/www/undef'
 
   $deflate_so='mod_deflate.so'
+  $modproxy_so='mod_proxy.so'
+  $modproxyajp_so='mod_proxy_ajp.so'
+  $modproxyftp_so='mod_proxy_ftp.so'
+  $modproxyhttp_so='mod_proxy_http.so'
+  $modproxybalancer_so='mod_proxy_balancer.so'
+  $modproxyconnect_so='mod_proxy_connect.so'
+
 
 
   $ssl_chiphersuite_default=[ 'ECDHE-RSA-AES256-SHA384', 'AES256-SHA256', 'RC4', 'HIGH', '!MD5', '!aNULL', '!EDH', '!AESGCM' ]
