@@ -28,5 +28,22 @@ class apache::mod::proxybalancer ($ensure='installed') inherits apache::params {
     apache::module { 'proxy_balancer_module':
       sofile  => "${apache::params::modulesdir}/${apache::params::modproxybalancer_so}",
     }
+
+    #TODO: testing
+    if (versioncmp($apache::version, '2.4') >= 0 )
+    {
+      # For Apache 2.4 and above add mod_lbmethod_byrequests and mod_slotmem_shm to the list.
+      # LoadModule lbmethod_byrequests_module modules/mod_lbmethod_byrequests.so
+      # LoadModule slotmem_shm_module modules/mod_slotmem_shm.so
+
+      apache::module { 'lbmethod_byrequests_module':
+        sofile  => "${apache::params::modulesdir}/mod_lbmethod_byrequests.so",
+      }
+
+      # apache::module { 'slotmem_shm_module':
+      #   sofile  => "${apache::params::modulesdir}/mod_slotmem_shm.so",
+      # }
+    }
+
   }
 }
