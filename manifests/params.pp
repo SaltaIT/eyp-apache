@@ -20,6 +20,7 @@ class apache::params inherits apache::version {
   $directory_default='/var/www/undef'
 
   $deflate_so='mod_deflate.so'
+  $modexpires_so='mod_expires.so'
   $modproxy_so='mod_proxy.so'
   $modproxyajp_so='mod_proxy_ajp.so'
   $modproxyftp_so='mod_proxy_ftp.so'
