@@ -1,6 +1,6 @@
 #LoadModule expires_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_expires.so
 
-class apache::mod::deflate(
+class apache::mod::expires(
                             $ensure         = 'installed',
                             $default_expire = 'access plus 1 year'
                           ) inherits apache::params {
