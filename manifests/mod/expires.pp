@@ -2,6 +2,7 @@
 
 class apache::mod::expires(
                             $ensure         = 'installed',
+                            $expires_active = true,
                             $default_expire = 'access plus 1 year'
                           ) inherits apache::params {
 
