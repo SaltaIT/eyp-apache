@@ -1,0 +1,6 @@
+
+  <Proxy balancer://<%= @balancername %>>
+    <%- @members.each do | key, value | -%>
+    BalancerMember <%= key %>
+    <%- end -%>
+  </Proxy>
