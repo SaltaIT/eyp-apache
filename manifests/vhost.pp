@@ -9,6 +9,7 @@
 # 09,10,11 - aliasmatch
 # 12,13,14 - scriptalias
 # 16,17,18 - aliases
+# 19 - proxypass
 # 99 - end vhost
 #
 define apache::vhost   (

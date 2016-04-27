@@ -10,7 +10,11 @@ HOSTS:
     docker_cmd: '["/sbin/init"]'
     docker_image_commands:
       - 'rm -rf /var/run/network/*'
+      - 'yum clean all'
       - 'yum install -y gcc make crontabs tar wget java-1.7.0-openjdk java-1.7.0-openjdk-devel'
+      - 'wget https://yum.puppetlabs.com/RPM-GPG-KEY-puppetlabs -O /tmp/RPM-GPG-KEY-puppetlabs'
+      - 'rpm --import /tmp/RPM-GPG-KEY-puppetlabs'
+      - 'rpm --replacepkgs -ivh http://yum.puppetlabs.com/puppetlabs-release-el-5.noarch.rpm'
 CONFIG:
   type: foss
   log_level: debug
