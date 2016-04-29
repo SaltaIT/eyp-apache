@@ -30,6 +30,7 @@ class apache (
     $ssl_protocol=$apache::params::ssl_protocol_default,
     $ssl_chiphersuite=$apache::params::ssl_chiphersuite_default,
     $manage_docker_service=false,
+    $defaultcharset = 'UTF-8',
   )inherits apache::params {
 
   if($version!=$apache::version::default)
