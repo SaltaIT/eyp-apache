@@ -24,26 +24,22 @@ Apache httpd setup
 
 ## Module Description
 
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
-
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+apache httpd and apache modules management
 
 ## Setup
 
 ### What apache affects
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
+* installs httpd package
+* optionally, manages httpd service
+* puppet managed directories (purges unmanaged files):
+  * ${apache_confdir}/conf.d
+  * ${apache_confdir}/conf.d/sites
+  * ${apache_confdir}/ssl
 
 ### Setup Requirements
 
-This module requires pluginsync enabled and eyp/nsswitch module installed
+This module requires pluginsync enabled
 
 ### Beginning with apache
 
