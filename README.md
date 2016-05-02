@@ -175,6 +175,45 @@ apache::directory {'/var/www/testing/cgi-bin/':
 }
 ```
 
+mod_proxy_balancer:
+
+```yaml
+classes:
+  - apache
+  - apache::mod::expires
+  - apache::mod::proxy
+  - apache::mod::proxybalancer
+  - apache::mod::proxyajp
+apache::listen:
+  - 7790
+apachevhosts:
+  default:
+    defaultvh: true
+    documentroot: /var/www/void
+    port: 7790
+  pspstores.systemadmin.es:
+    documentroot: /var/www/void
+    port: 7790
+apachebalancers:
+  pspstores:
+    members:
+      'ajp://192.168.56.19:9509': undef
+      'ajp://192.168.56.18:9509': undef
+apacheproxypasses:
+  '/':
+    destination: 'balancer://pspstores'
+    servername: pspstores.systemadmin.es
+    port: 7790
+  '/manager':
+    destination: '!'
+    servername: pspstores.systemadmin.es
+    port: 7790
+  '/host-manager':
+    destination: '!'
+    servername: pspstores.systemadmin.es
+    port: 7790
+```
+
 ## Usage
 
 TODO
