@@ -220,7 +220,17 @@ TODO
 
 ## Reference
 
-TODO
+### global hiera settings
+
+* **eypapache::monitips**: IP list to be allowed by default in the default vhost
+
+### classes
+
+(...)
+
+### defines
+
+(...)
 
 ## Limitations
 
