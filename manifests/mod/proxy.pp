@@ -22,6 +22,7 @@ class apache::mod::proxy ($ensure='installed') inherits apache::params {
   {
     apache::module { 'proxy_module':
       sofile  => "${apache::params::modulesdir}/${apache::params::modproxy_so}",
+      order   => '00',
     }
   }
 }
