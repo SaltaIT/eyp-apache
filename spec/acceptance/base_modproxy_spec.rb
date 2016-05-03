@@ -70,27 +70,27 @@ describe 'apache class' do
     end
 
     it "sleep 10 to make sure mod_proxy is started" do
-      expect(shell("apachectl -M | grep proxy_module").exit_code).to be_zero
+      expect(shell("apachectl -M 2>&1 | grep proxy_module").exit_code).to be_zero
     end
 
     it "sleep 10 to make sure mod_proxy_ajp is started" do
-      expect(shell("apachectl -M | grep proxy_ajp_module").exit_code).to be_zero
+      expect(shell("apachectl -M 2>&1 | grep proxy_ajp_module").exit_code).to be_zero
     end
 
     it "sleep 10 to make sure mod_proxy_balancer is started" do
-      expect(shell("apachectl -M | grep proxy_balancer_module").exit_code).to be_zero
+      expect(shell("apachectl -M 2>&1 | grep proxy_balancer_module").exit_code).to be_zero
     end
 
     it "sleep 10 to make sure mod_proxy_connect is started" do
-      expect(shell("apachectl -M | grep proxy_connect_module").exit_code).to be_zero
+      expect(shell("apachectl -M 2>&1 | grep proxy_connect_module").exit_code).to be_zero
     end
 
     it "sleep 10 to make sure mod_proxy_http is started" do
-      expect(shell("apachectl -M | grep proxy_http_module").exit_code).to be_zero
+      expect(shell("apachectl -M 2>&1 | grep proxy_http_module").exit_code).to be_zero
     end
 
     it "sleep 10 to make sure mod_proxy_ftp is started" do
-      expect(shell("apachectl -M | grep proxy_ftp_module").exit_code).to be_zero
+      expect(shell("apachectl -M 2>&1 | grep proxy_ftp_module").exit_code).to be_zero
     end
 
   end
