@@ -24,26 +24,22 @@ Apache httpd setup
 
 ## Module Description
 
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
-
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+apache httpd and apache modules management
 
 ## Setup
 
 ### What apache affects
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
+* installs httpd package
+* optionally, manages httpd service
+* puppet managed directories (purges unmanaged files):
+  * ${apache_confdir}/conf.d
+  * ${apache_confdir}/conf.d/sites
+  * ${apache_confdir}/ssl
 
 ### Setup Requirements
 
-This module requires pluginsync enabled and eyp/nsswitch module installed
+This module requires pluginsync enabled
 
 ### Beginning with apache
 
@@ -179,13 +175,62 @@ apache::directory {'/var/www/testing/cgi-bin/':
 }
 ```
 
+mod_proxy_balancer:
+
+```yaml
+classes:
+  - apache
+  - apache::mod::expires
+  - apache::mod::proxy
+  - apache::mod::proxybalancer
+  - apache::mod::proxyajp
+apache::listen:
+  - 7790
+apachevhosts:
+  default:
+    defaultvh: true
+    documentroot: /var/www/void
+    port: 7790
+  pspstores.systemadmin.es:
+    documentroot: /var/www/void
+    port: 7790
+apachebalancers:
+  pspstores:
+    members:
+      'ajp://192.168.56.19:9509': undef
+      'ajp://192.168.56.18:9509': undef
+apacheproxypasses:
+  '/':
+    destination: 'balancer://pspstores'
+    servername: pspstores.systemadmin.es
+    port: 7790
+  '/manager':
+    destination: '!'
+    servername: pspstores.systemadmin.es
+    port: 7790
+  '/host-manager':
+    destination: '!'
+    servername: pspstores.systemadmin.es
+    port: 7790
+```
+
 ## Usage
 
 TODO
 
 ## Reference
 
-TODO
+### global hiera settings
+
+* **eypapache::monitips**: IP list to be allowed by default in the default vhost
+
+### classes
+
+(...)
+
+### defines
+
+(...)
 
 ## Limitations
 

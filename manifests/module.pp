@@ -1,6 +1,7 @@
 define apache::module (
                         $sofile,
-                        $modname=$name,
+                        $modname = $name,
+                        $order   = '42', #answer to life the universe and everything
                       ) {
 
   if ! defined(Class['apache'])
@@ -10,7 +11,7 @@ define apache::module (
 
   concat::fragment { "loadmodule ${sofile} ${modname}":
     target  => "${apache::params::baseconf}/conf.d/modules.conf",
-    order   => '42', #answer to life the universe and everything
+    order   => $order,
     content => template("${module_name}/module/loadmodule.erb"),
   }
 }
