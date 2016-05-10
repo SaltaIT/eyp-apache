@@ -220,17 +220,86 @@ TODO
 
 ## Reference
 
+### facts
+
+* **eyp_apache_gcc**: get gcc version
+* **eyp_apache_make**: get make version
+* **eyp_apache_opensslver**: get openssl version
+
+### functions
+
+* **bool2httpd**: bool to On/Off, pass all other values through
+
 ### global hiera settings
 
 * **eypapache::monitips**: IP list to be allowed by default in the default vhost
 
 ### classes
 
-(...)
+#### apache
+
+private classes:
+* **apache::params**: apache default values
+* **apache::service**: apache service
+* **apache::version**: detect distro's apache version
+
+#### apache::fcgi
+
+#### apache::serverstatus
+
+#### apache modules
+
+##### apache::mod::deflate
+
+* **ensure**: installed/purged (default: installed)
+
+##### apache::mod::expires
+
+* **ensure**: installed/purged (default: installed)
+* **expires_active**: true/false (default: true)
+* **default_expire**: default expire policy (default: access plus 1 year)
+
+##### apache::mod::php
+
+* **ensure**: installed/purged (default: installed)
+
+##### apache::mod::proxy
+
+* **ensure**: installed/purged (default: installed)
+
+##### apache::mod::proxyajp
+
+* **ensure**: installed/purged (default: installed)
+
+##### apache::mod::proxybalancer
+
+* **ensure**: installed/purged (default: installed)
+
+##### apache::mod::proxyconnect
+
+* **ensure**: installed/purged (default: installed)
+
+##### apache::mod::proxyftp
+
+* **ensure**: installed/purged (default: installed)
+
+##### apache::mod::proxyhttp
+
+* **ensure**: installed/purged (default: installed)
 
 ### defines
 
-(...)
+#### apache::cert
+
+#### apache::custom_conf
+
+#### apache::directory
+
+#### apache::module
+
+#### apache::redirect
+
+#### apache::vhost
 
 ## Limitations
 
