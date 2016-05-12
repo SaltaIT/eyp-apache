@@ -50,6 +50,7 @@ class apache::mod::nss(
     mode    => '0644',
     content => template("${module_name}/nss/nss_base.erb"),
     require => Package[$apache::params::package_nss],
+    notify  => Class['apache::service'],
   }
 
   #LoadModule nss_module modules/libmodnss.so

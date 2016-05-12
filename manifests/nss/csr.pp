@@ -24,7 +24,11 @@ define apache::nss::csr (
   exec { "nss csr ${certdb} ${keysize} ${aliasname} ${name} ${country} ${state} ${location} ${organization} ${cn}":
     command => "strings /dev/urandom | certutil -R -s 'CN=${cn}, O=${organization}, OU=${organization_unit}, L=${locality}, ST=${state}, C=${country}' -o ${apache::params::baseconf}/ssl/${aliasname}.csr -a -g ${keysize} -d ${certdb} -f ${certdb}/pwdfile.txt",
     creates => "${apache::params::baseconf}/ssl/${aliasname}.csr",
-    require => [Exec["generate db ${certdb}"],File["${apache::params::baseconf}/ssl"], Package[$apache::params::package_nss]],
+    require => [
+                Exec["generate db ${certdb}"],
+                File["${apache::params::baseconf}/ssl"],
+                Package[ [$apache::params::packagename, $apache::params::package_nss] ]
+                ],
   }
 
 
