@@ -214,6 +214,38 @@ apacheproxypasses:
     port: 7790
 ```
 
+mod_nss usage:
+
+```puppet
+apache::vhost {'ZnVja3RoYXRiaXRjaAo.com':
+  port         => '443',
+  documentroot => '/var/www/void',
+}
+
+apache::nss {'ZnVja3RoYXRiaXRjaAo.com':
+  port      => '443',
+}
+
+apache::nss::csr { 'test2':
+  cn => 'www.ZnVja3RoYXRiaXRjaAo.com',
+  organization => 'systemadmin.es',
+  organization_unit => 'shitty apache modules team',
+  locality => 'barcelona',
+  state => 'barcelona',
+  country => 'RC', # Republica Catalana
+}
+
+#'puppet:///openldap/masterauth/ldap-master-01.crt',
+apache::nss::intermediate { 'intermediate':
+  intermediate_source => 'puppet:///openldap/masterauth/ldap-master-01.crt',
+}
+
+apache::nss::cert { 'ZnVja3RoYXRiaXRjaAo':
+  intermediate_source => 'puppet:///openldap/masterauth/ldap-master-01.crt',
+}
+```
+
+
 ## Usage
 
 TODO
