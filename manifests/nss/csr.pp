@@ -8,6 +8,7 @@ define apache::nss::csr (
                           $aliasname = $name,
                           $keysize   = '2048',
                           $certdb    = '/etc/httpd/alias',
+                          $ensure    = 'present',
                         ) {
 
   Exec {
@@ -29,6 +30,14 @@ define apache::nss::csr (
                 File["${apache::params::baseconf}/ssl"],
                 Package[ [$apache::params::packagename, $apache::params::package_nss] ]
                 ],
+  }
+
+  file { "${apache::params::baseconf}/ssl/${aliasname}.csr":
+    ensure  => $ensure,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => Exec["nss csr ${certdb} ${keysize} ${aliasname} ${name} ${country} ${state} ${location} ${organization} ${cn}"],
   }
 
 
