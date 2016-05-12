@@ -2,6 +2,7 @@
 # = vhost concat order
 # 01 - vhost definition as in vhost/vhost.erb
 # 02 - ssl configuration as in ssl/vhost_template.erb
+# 02 - nss configuration as in nss/vhost_template.erb
 # 03 - directory
 # 04 - redirect
 # 05,06,07 - rewrite rules
@@ -286,7 +287,7 @@ define apache::vhost   (
 
       }
 
-      concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}.conf tanco vhost":
+      concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}.conf ${name} tanco vhost":
         target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
         content => "\n\n</VirtualHost>\n",
         order   => '99',

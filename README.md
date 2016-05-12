@@ -287,6 +287,17 @@ private classes:
 
 * **ensure**: installed/purged (default: installed)
 
+##### apache::mod::nss
+
+* **ensure**: installed/purged (default: installed)
+* **randomseed**: Configure a source to seed the PRNG of the SSL library. (default: builtin)
+```
+NSSRandomSeed startup builtin
+NSSRandomSeed startup file:/dev/random  512
+NSSRandomSeed startup file:/dev/urandom 512
+```
+
+
 ### defines
 
 #### apache::cert

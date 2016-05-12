@@ -1,0 +1,68 @@
+#
+# puppet managed file
+#
+
+#
+#   Some MIME-types for downloading Certificates and CRLs
+#
+AddType application/x-x509-ca-cert .crt
+AddType application/x-pkcs7-crl    .crl
+
+#   Pass Phrase Dialog:
+#   Configure the pass phrase gathering process.
+#   The filtering dialog program (`builtin' is a internal
+#   terminal dialog) has to provide the pass phrase on stdout.
+NSSPassPhraseDialog  builtin
+
+#   Pass Phrase Helper:
+#   This helper program stores the token password pins between
+#   restarts of Apache.
+NSSPassPhraseHelper /usr/libexec/nss_pcache
+
+#   Configure the SSL Session Cache.
+#   NSSSessionCacheSize is the number of entries in the cache.
+#   NSSSessionCacheTimeout is the SSL2 session timeout (in seconds).
+#   NSSSession3CacheTimeout is the SSL3/TLS session timeout (in seconds).
+NSSSessionCacheSize 10000
+NSSSessionCacheTimeout 100
+NSSSession3CacheTimeout 86400
+
+#
+# Pseudo Random Number Generator (PRNG):
+# Configure one or more sources to seed the PRNG of the SSL library.
+# The seed data should be of good random quality.
+# WARNING! On some platforms /dev/random blocks if not enough entropy
+# is available. Those platforms usually also provide a non-blocking
+# device, /dev/urandom, which may be used instead.
+#
+# This does not support seeding the RNG with each connection.
+#
+# examples:
+# NSSRandomSeed startup builtin
+# NSSRandomSeed startup file:/dev/random  512
+# NSSRandomSeed startup file:/dev/urandom 512
+
+<% @randomseed.each do |val| -%>
+NSSRandomSeed startup <%= val %>
+<% end -%>
+
+#
+# TLS Negotiation configuration under RFC 5746
+#
+# Only renegotiate if the peer's hello bears the TLS renegotiation_info
+# extension. Default off.
+NSSRenegotiation off
+
+# Peer must send Signaling Cipher Suite Value (SCSV) or
+# Renegotiation Info (RI) extension in ALL handshakes.  Default: off
+NSSRequireSafeNegotiation off
+
+#   Default SSL Cipher Suite:
+#   List the ciphers that the client is permitted to negotiate.
+#   See the mod_nss documentation for a complete list.
+
+# SSL 3 ciphers. SSL 2 is disabled by default.
+NSSCipherSuite <%= @ciphersuite %>
+
+#   Default SSL Protocol:
+NSSProtocol <%= @protocols.join(',') %>
