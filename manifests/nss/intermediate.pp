@@ -25,6 +25,4 @@ define apache::nss::intermediate(
     require => File["${apache::params::baseconf}/ssl/${aliasname}_intermediate.crt"],
     unless  => "certutil -L -d ${certdb} | grep -E '\\b${aliasname}\\b'",
   }
-
-
 }

@@ -16,6 +16,7 @@ define apache::nss(
     target  => "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf",
     order   => '02',
     content => template("${module_name}/nss/vhost_template.erb"),
+    require => Apache::Nss::Cert[$nssalias],
   }
 
 }
