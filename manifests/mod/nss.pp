@@ -76,8 +76,8 @@ class apache::mod::nss(
   file { "${certdb}/pwdfile.txt":
     ensure  => 'present',
     owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
+    group   => $apache::params::apache_group,
+    mode    => '0750',
     content => "${certdbpassword}\n",
     require => File[$certdb],
   }
@@ -86,8 +86,8 @@ class apache::mod::nss(
   file { "${certdb}/pin.txt":
     ensure  => 'present',
     owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
+    group   => $apache::params::apache_group,
+    mode    => '0750',
     content => "internal:${certdbpassword}\n",
     require => File[$certdb],
   }
