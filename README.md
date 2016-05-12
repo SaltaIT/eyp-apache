@@ -217,17 +217,17 @@ apacheproxypasses:
 mod_nss usage:
 
 ```puppet
+# vhost for ZnVja3RoYXRiaXRjaAo.com
+
 apache::vhost {'ZnVja3RoYXRiaXRjaAo.com':
   port         => '443',
   documentroot => '/var/www/void',
 }
 
-apache::nss {'ZnVja3RoYXRiaXRjaAo.com':
-  port      => '443',
-}
+# generate CSR
 
 apache::nss::csr { 'test2':
-  cn => 'www.ZnVja3RoYXRiaXRjaAo.com',
+  cn => 'ZnVja3RoYXRiaXRjaAo.com',
   organization => 'systemadmin.es',
   organization_unit => 'shitty apache modules team',
   locality => 'barcelona',
@@ -235,13 +235,22 @@ apache::nss::csr { 'test2':
   country => 'RC', # Republica Catalana
 }
 
-#'puppet:///openldap/masterauth/ldap-master-01.crt',
+# import intermediate
+
 apache::nss::intermediate { 'intermediate':
-  intermediate_source => 'puppet:///openldap/masterauth/ldap-master-01.crt',
+  intermediate_source => 'puppet:///certs/intermediate.crt',
 }
 
+# import actual certificate
+
 apache::nss::cert { 'ZnVja3RoYXRiaXRjaAo':
-  intermediate_source => 'puppet:///openldap/masterauth/ldap-master-01.crt',
+  intermediate_source => 'puppet:///certs/cert.crt',
+}
+
+# enable mod_nss for this vhost
+
+apache::nss {'ZnVja3RoYXRiaXRjaAo.com':
+  port      => '443',
 }
 ```
 
