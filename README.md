@@ -2,7 +2,7 @@
 
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
-**AtlasIT-AM/eyp-apache**: [![Build Status](https://travis-ci.org/AtlasIT-AM/eyp-apache.png?branch=master)](https://travis-ci.org/AtlasIT-AM/eyp-apache)
+**NTTCom-MS/eyp-apache**: [![Build Status](https://travis-ci.org/NTTCom-MS/eyp-apache.png?branch=master)](https://travis-ci.org/NTTCom-MS/eyp-apache)
 
 #### Table of Contents
 
@@ -214,11 +214,58 @@ apacheproxypasses:
     port: 7790
 ```
 
+mod_nss usage:
+
+```puppet
+# vhost for ZnVja3RoYXRiaXRjaAo.com
+
+apache::vhost {'ZnVja3RoYXRiaXRjaAo.com':
+  port         => '443',
+  documentroot => '/var/www/void',
+}
+
+# generate CSR
+
+apache::nss::csr { 'test2':
+  cn => 'ZnVja3RoYXRiaXRjaAo.com',
+  organization => 'systemadmin.es',
+  organization_unit => 'shitty apache modules team',
+  locality => 'barcelona',
+  state => 'barcelona',
+  country => 'RC', # Republica Catalana
+}
+
+# import intermediate
+
+apache::nss::intermediate { 'intermediate':
+  intermediate_source => 'puppet:///certs/intermediate.crt',
+}
+
+# import actual certificate
+
+apache::nss::cert { 'ZnVja3RoYXRiaXRjaAo':
+  intermediate_source => 'puppet:///certs/cert.crt',
+}
+
+# enable mod_nss for this vhost
+
+apache::nss {'ZnVja3RoYXRiaXRjaAo.com':
+  port      => '443',
+}
+```
+
+
 ## Usage
 
 TODO
 
 ## Reference
+
+### facts
+
+* **eyp_apache_gcc**: get gcc version
+* **eyp_apache_make**: get make version
+* **eyp_apache_opensslver**: get openssl version
 
 ### global hiera settings
 
@@ -226,11 +273,81 @@ TODO
 
 ### classes
 
-(...)
+#### apache
+
+private classes:
+* **apache::params**: apache default values
+* **apache::service**: apache service
+* **apache::version**: detect distro's apache version
+
+#### apache::fcgi
+
+#### apache::serverstatus
+
+#### apache modules
+
+##### apache::mod::deflate
+
+* **ensure**: installed/purged (default: installed)
+
+##### apache::mod::expires
+
+* **ensure**: installed/purged (default: installed)
+* **expires_active**: true/false (default: true)
+* **default_expire**: default expire policy (default: access plus 1 year)
+
+##### apache::mod::php
+
+* **ensure**: installed/purged (default: installed)
+
+##### apache::mod::proxy
+
+* **ensure**: installed/purged (default: installed)
+
+##### apache::mod::proxyajp
+
+* **ensure**: installed/purged (default: installed)
+
+##### apache::mod::proxybalancer
+
+* **ensure**: installed/purged (default: installed)
+
+##### apache::mod::proxyconnect
+
+* **ensure**: installed/purged (default: installed)
+
+##### apache::mod::proxyftp
+
+* **ensure**: installed/purged (default: installed)
+
+##### apache::mod::proxyhttp
+
+* **ensure**: installed/purged (default: installed)
+
+##### apache::mod::nss
+
+* **ensure**: installed/purged (default: installed)
+* **randomseed**: Configure a source to seed the PRNG of the SSL library. (default: builtin)
+```
+NSSRandomSeed startup builtin
+NSSRandomSeed startup file:/dev/random  512
+NSSRandomSeed startup file:/dev/urandom 512
+```
+
 
 ### defines
 
-(...)
+#### apache::cert
+
+#### apache::custom_conf
+
+#### apache::directory
+
+#### apache::module
+
+#### apache::redirect
+
+#### apache::vhost
 
 ## Limitations
 

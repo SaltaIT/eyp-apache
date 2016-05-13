@@ -28,7 +28,8 @@ class apache::params inherits apache::version {
   $modproxybalancer_so='mod_proxy_balancer.so'
   $modproxyconnect_so='mod_proxy_connect.so'
 
-
+  #mod_nss
+  #package: centos: mod_nss ubuntu: libapache2-mod-nss
 
   $ssl_chiphersuite_default=[ 'ECDHE-RSA-AES256-SHA384', 'AES256-SHA256', 'RC4', 'HIGH', '!MD5', '!aNULL', '!EDH', '!AESGCM' ]
 
@@ -60,6 +61,8 @@ class apache::params inherits apache::version {
       $modphp_so=undef
 
       $ssl_compression_default=false
+
+      $package_nss=[ 'mod_nss', 'nss-tools' ]
 
 
       case $::operatingsystemrelease
@@ -103,6 +106,8 @@ class apache::params inherits apache::version {
       $modphp_so='libphp5.so'
 
       $ssl_compression_default=false
+
+      $package_nss=[ 'libapache2-mod-nss' ]
 
       case $::operatingsystem
       {
