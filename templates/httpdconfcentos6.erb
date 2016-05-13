@@ -282,7 +282,7 @@ Include conf.d/sites/*.conf
 # Off) when the "server-status" handler is called. The default is Off.
 #
 
-ExtendedStatus <%= scope.function_bool2httpd([@extendedstatus]) %>
+ExtendedStatus <%= scope.function_bool2onoff([@extendedstatus]) %>
 
 
 #
