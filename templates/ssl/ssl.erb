@@ -26,5 +26,5 @@ SSLCompression On
 
 <% if(scope.lookupvar('apache::params::snisupported')) -%>
 # SNI - virtualhosting SSL
-SSLStrictSNIVHostCheck <%= scope.function_bool2httpd([@sni]) %>
+SSLStrictSNIVHostCheck <%= scope.function_bool2onoff([@sni]) %>
 <% end -%>

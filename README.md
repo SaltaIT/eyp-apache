@@ -267,10 +267,6 @@ TODO
 * **eyp_apache_make**: get make version
 * **eyp_apache_opensslver**: get openssl version
 
-### functions
-
-* **bool2httpd**: bool to On/Off, pass all other values through
-
 ### global hiera settings
 
 * **eypapache::monitips**: IP list to be allowed by default in the default vhost
