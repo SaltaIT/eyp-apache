@@ -153,7 +153,6 @@ describe 'mod_php class' do
       expect(shell("curl localhost/phpinfo.php 2>/dev/null| grep 'phpinfo()'").exit_code).to be_zero
     end
 
-
   end
 
 end
