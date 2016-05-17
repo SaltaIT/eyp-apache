@@ -55,7 +55,7 @@ class apache::mod::nss(
 
   #LoadModule nss_module modules/libmodnss.so
   apache::module { 'nss_module':
-    sofile  => "${apache::params::modulesdir}/libmodnss.so",
+    sofile  => "${apache::params::modulesdir}/${apache::params::modnss_so}",
     order   => '00',
     require => Package[$apache::params::package_nss],
   }
@@ -108,5 +108,37 @@ class apache::mod::nss(
     purge   => true,
     require => Package[$apache::params::packagename],
   }
+
+  # -rw------- 1 root root   65536 May 17 09:37 cert8.db
+  # -rw------- 1 root root   16384 May 17 09:37 key3.db
+  # -rw------- 1 root root   16384 May 17 09:37 secmod.db
+
+  file { "${certdb}/cert8.db":
+    ensure  => 'present',
+    owner   => 'root',
+    group   => $apache::params::apache_username,
+    mode    => '0640',
+    before  => Class['::apache::service'],
+    require => Exec["generate db ${certdb}"],
+  }
+
+  file { "${certdb}/key3.db":
+    ensure  => 'present',
+    owner   => 'root',
+    group   => $apache::params::apache_username,
+    mode    => '0640',
+    before  => Class['::apache::service'],
+    require => Exec["generate db ${certdb}"],
+  }
+
+  file { "${certdb}/secmod.db":
+    ensure  => 'present',
+    owner   => 'root',
+    group   => $apache::params::apache_username,
+    mode    => '0640',
+    before  => Class['::apache::service'],
+    require => Exec["generate db ${certdb}"],
+  }
+
 
 }
