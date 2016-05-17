@@ -81,6 +81,10 @@ describe 'apache class' do
       expect(shell("ls -la /usr/libexec/nss_pcache").exit_code).to be_zero
     end
 
+    it "temp3" do
+      expect(shell("rpm -ql mod_nss").exit_code).to be_zero
+    end
+
     it "sleep 10 to make sure apache is started" do
       expect(shell("sleep 10").exit_code).to be_zero
     end
