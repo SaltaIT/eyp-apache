@@ -107,26 +107,22 @@ describe 'apache class' do
     end
 
     #test vhost - /etc/httpd/conf.d/sites/00-et2blog-443.conf
-    describe file($et2blogconfssl) do
+    describe file($nssvhostconf) do
       it { should be_file }
       its(:content) { should match 'DocumentRoot /var/www/et2blog' }
       its(:content) { should_not match 'SSLEngine on' }
     end
 
-    it "HTTP 200 SSL et2blog" do
+    it "HTTP 200 SSL ZnVja3RoYXRiaXRjaAo" do
       expect(shell("curl -I https://localhost/check.rspec --insecure 2>/dev/null | head -n1 | grep 'HTTP/1.1 200 OK'").exit_code).to be_zero
     end
 
-    it "cname SSL cert et2blog" do
-      expect(shell("echo | openssl s_client -connect localhost:443 2>/dev/null  | openssl x509 -noout -subject | grep 'CN=et2blog'").exit_code).to be_zero
+    it "cname SSL cert ZnVja3RoYXRiaXRjaAo" do
+      expect(shell("echo | openssl s_client -connect localhost:443 2>/dev/null  | openssl x509 -noout -subject | grep 'CN=ZnVja3RoYXRiaXRjaAo'").exit_code).to be_zero
     end
 
     it "TLSv1 supported" do
       expect(shell("echo | openssl s_client -connect localhost:443 -tls1 2>&1 | grep 'Session-ID:' | awk '{ print $NF }' | grep -v 'Session-ID:'").exit_code).to be_zero
-    end
-
-    it "SSLv3 disabled" do
-      expect(shell("echo | openssl s_client -connect localhost:443 -ssl3 2>&1 | grep 'alert handshake failure'").exit_code).to be_zero
     end
 
     it "key size: 2048" do

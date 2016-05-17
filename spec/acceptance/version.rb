@@ -17,6 +17,7 @@ when 'RedHat'
   $defaultvhconf   = '/etc/httpd/conf.d/00_default.conf'
   $modulesconf     = '/etc/httpd/conf.d/modules.conf'
   $deflateconf     = '/etc/httpd/conf.d/deflate.conf'
+  $nssvhostconf    = '/etc/httpd/conf.d/sites/11-ZnVja3RoYXRiaXRjaAo.com-443.conf'
 
 when 'Debian'
   $packagename     = 'apache2'
@@ -31,6 +32,7 @@ when 'Debian'
   $defaultvhconf   = '/etc/apache2/conf.d/00_default.conf'
   $modulesconf     = '/etc/apache2/conf.d/modules.conf'
   $deflateconf     = '/etc/apache2/conf.d/deflate.conf'
+  $nssvhostconf    = '/etc/httpd/conf.d/sites/11-ZnVja3RoYXRiaXRjaAo.com-443.conf'
 
 else
   $packagename     = '-_-'
@@ -43,5 +45,6 @@ else
   $defaultvhconf   = '-_-'
   $modulesconf     = '-_-'
   $deflateconf     = '-_-'
+  $nssvhostconf    = '-_-'
 
 end
