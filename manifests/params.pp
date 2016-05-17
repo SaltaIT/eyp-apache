@@ -64,8 +64,6 @@ class apache::params inherits apache::version {
 
       $package_nss=[ 'mod_nss', 'nss-tools' ]
       $modnss_so='libmodnss.so'
-      $nss_pcache_path='/usr/libexec/nss_pcache'
-
 
       case $::operatingsystemrelease
       {
@@ -74,12 +72,14 @@ class apache::params inherits apache::version {
           $rundir='/var/run'
           $ssl_protocol_default=[ '-ALL', '+TLSv1' ]
           $snisupported=false
+          $nss_pcache_path='/usr/sbin/nss_pcache'
         }
         /^[6-7].*$/:
         {
           $rundir='/var/run/httpd'
           $ssl_protocol_default=[ '-ALL', '+TLSv1', '+TLSv1.1', '+TLSv1.2' ]
           $snisupported=true
+          $nss_pcache_path='/usr/libexec/nss_pcache'
         }
         default: { fail('Unsupported RHEL/CentOS version!')  }
       }
