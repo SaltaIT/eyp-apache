@@ -64,6 +64,8 @@ class apache::params inherits apache::version {
 
       $package_nss=[ 'mod_nss', 'nss-tools' ]
 
+      $modnss_so='libmodnss.so'
+
 
       case $::operatingsystemrelease
       {
@@ -108,6 +110,8 @@ class apache::params inherits apache::version {
       $ssl_compression_default=false
 
       $package_nss=[ 'libapache2-mod-nss' ]
+
+      $modnss_so='mod_nss.so'
 
       case $::operatingsystem
       {
