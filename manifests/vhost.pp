@@ -146,14 +146,16 @@ define apache::vhost   (
         fail('rewriterules for the default vhost are unsupported')
       }
 
-      file { $documentroot:
-        ensure  => 'directory',
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0755',
-        require => Exec["mkdir p ${documentroot} ${servername} ${port}"],
+      if(!defined(File[$documentroot]))
+      {
+        file { $documentroot:
+          ensure  => 'directory',
+          owner   => 'root',
+          group   => 'root',
+          mode    => '0755',
+          require => Exec["mkdir p ${documentroot} ${servername} ${port}"],
+        }
       }
-
     }
     else
     {

@@ -118,6 +118,8 @@
   #     directives are used in per-directory context.
   #NSSOptions +FakeBasicAuth +ExportCertData +CompatEnvVars +StrictRequire
 
+  NSSEnforceValidCerts <%= scope.function_bool2onoff([@enforce_validcerts]) %>
+
   ##################
   # END NSS CONFIG #
   ##################

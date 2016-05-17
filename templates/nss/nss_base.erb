@@ -12,7 +12,7 @@ AddType application/x-pkcs7-crl    .crl
 #   Configure the pass phrase gathering process.
 #   The filtering dialog program (`builtin' is a internal
 #   terminal dialog) has to provide the pass phrase on stdout.
-NSSPassPhraseDialog  builtin
+NSSPassPhraseDialog  file:<%= @certdb %>/pin.txt
 
 #   Pass Phrase Helper:
 #   This helper program stores the token password pins between
