@@ -32,7 +32,7 @@ when 'Debian'
   $defaultvhconf   = '/etc/apache2/conf.d/00_default.conf'
   $modulesconf     = '/etc/apache2/conf.d/modules.conf'
   $deflateconf     = '/etc/apache2/conf.d/deflate.conf'
-  $nssvhostconf    = '/etc/httpd/conf.d/sites/11-ZnVja3RoYXRiaXRjaAo.com-443.conf'
+  $nssvhostconf    = '/etc/apache2/conf.d/sites/11-ZnVja3RoYXRiaXRjaAo.com-443.conf'
 
 else
   $packagename     = '-_-'
