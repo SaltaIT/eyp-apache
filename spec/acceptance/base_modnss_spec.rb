@@ -30,7 +30,7 @@ describe 'apache class' do
       file { '/var/www/et2blog/check.rspec':
         ensure => 'present',
         content => "\nOK\n",
-        require => Apache::Vhost[['et2blog','et2blog_ssl']],
+        require => Apache::Vhost[['et2blog','ssl ZnVja3RoYXRiaXRjaAo.com']],
       }
 
       apache::nss::cert { 'ZnVja3RoYXRiaXRjaAo':
@@ -70,7 +70,7 @@ describe 'apache class' do
     end
 
     it "apache configtest mod_nss" do
-      expect(shell("apachectl -M | grep nss_module").exit_code).to be_zero
+      expect(shell("apachectl -M 2>&1 | grep nss_module").exit_code).to be_zero
     end
 
     it "sleep 10 to make sure apache is started" do
