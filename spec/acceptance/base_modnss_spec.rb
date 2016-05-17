@@ -118,7 +118,7 @@ describe 'apache class' do
     end
 
     it "cname SSL cert ZnVja3RoYXRiaXRjaAo" do
-      expect(shell("echo | openssl s_client -connect localhost:443 2>/dev/null  | openssl x509 -noout -subject | grep 'CN=ZnVja3RoYXRiaXRjaAo'").exit_code).to be_zero
+      expect(shell("echo | openssl s_client -connect localhost:443 2>/dev/null  | openssl x509 -noout -subject | grep 'CN=www.ZnVja3RoYXRiaXRjaAo.com'").exit_code).to be_zero
     end
 
     it "TLSv1 supported" do
