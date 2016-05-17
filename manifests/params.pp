@@ -63,8 +63,8 @@ class apache::params inherits apache::version {
       $ssl_compression_default=false
 
       $package_nss=[ 'mod_nss', 'nss-tools' ]
-
       $modnss_so='libmodnss.so'
+      $nss_pcache_path='/usr/libexec/nss_pcache'
 
 
       case $::operatingsystemrelease
@@ -110,8 +110,8 @@ class apache::params inherits apache::version {
       $ssl_compression_default=false
 
       $package_nss=[ 'libapache2-mod-nss' ]
-
       $modnss_so='mod_nss.so'
+      $nss_pcache_path='/usr/sbin/nss_pcache'
 
       case $::operatingsystem
       {
