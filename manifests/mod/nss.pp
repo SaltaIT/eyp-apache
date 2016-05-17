@@ -55,7 +55,7 @@ class apache::mod::nss(
 
   #LoadModule nss_module modules/libmodnss.so
   apache::module { 'nss_module':
-    sofile  => "${apache::params::modulesdir}/${apache::params::$modnss_so}",
+    sofile  => "${apache::params::modulesdir}/${apache::params::modnss_so}",
     order   => '00',
     require => Package[$apache::params::package_nss],
   }
