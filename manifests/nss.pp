@@ -13,8 +13,8 @@ define apache::nss(
     path => '/usr/sbin:/usr/bin:/sbin:/bin',
   }
 
-  concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf nss":
-    target  => "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf",
+  concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run nss":
+    target  => "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run",
     order   => '02',
     content => template("${module_name}/nss/vhost_template.erb"),
     require => Apache::Nss::Cert[$nssalias],
