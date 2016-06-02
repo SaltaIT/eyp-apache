@@ -46,10 +46,18 @@ define apache::vhost   (
       if !has_key($custom_sorrypage, 'path')
       {
         fail("Custom sorry page hash ${custom_sorrypage} does not contain 'path' key.")
+      } else {
+        validate_string($custom_sorrypage['path'])
       }
       if !has_key($custom_sorrypage, 'errordocument')
       {
         fail("Custom sorry page hash ${custom_sorrypage} does not contain 'errordocument' key.")
+      } else {
+        validate_string($custom_sorrypage['errordocument'])
+      }
+      if has_key($custom_sorrypage, 'healthcheck')
+      {
+        validate_string($custom_sorrypage['healthcheck'])
       }
     }
 
@@ -226,7 +234,7 @@ define apache::vhost   (
         }
         else
         {
-          concat::fragment{ "${aGpache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run rewrites":
+          concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run rewrites":
             target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
             content => template("${module_name}/rewrites/rewrites.erb"),
             order   => '06',
@@ -348,14 +356,23 @@ define apache::vhost   (
       {
         concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage custom sorrypage end":
           target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage",
-          order   => '04',
+          order   => '05',
           content => "\n  RewriteCond %{REQUEST_URI} !/sorrypage/.*\n",
+        }
+        if(has_key($custom_sorrypage, 'healthcheck'))
+        {
+          concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage custom healtcheck":
+            target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage",
+            order   => '04',
+            content => "\n  RewriteCond %{REQUEST_URI} !/${custom_sorrypage['healthcheck']}",
+        }
+          
         }
       }
 
       concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage redirect 503":
         target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage",
-        order   => '05',
+        order   => '06',
         content => "  RewriteRule .* - [R=503,L]\n",
       }
 

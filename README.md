@@ -256,18 +256,17 @@ apache::nss {'ZnVja3RoYXRiaXRjaAo.com':
 
 
 ## Usage
-
-**Enable sorry page**
+### Sory page
+#### Enable sorry page
 ```sorrypage
 apache::vhost {'systemadmin.es':
   order        => '10',
   port         => '81',
   documentroot => '/var/www/systemadmin',
   site_running => false,
-  
 }
 ```
-**Custom sorry page**
+#### Custom sorry page
 custom_sorrypage hash must contain both variables
 ```customsorrypage
 apache::vhost {'systemadmin.es':
@@ -275,13 +274,23 @@ apache::vhost {'systemadmin.es':
   port         => '81',
   documentroot => '/var/www/systemadmin',
   custom_sorrypage => { 'path': '/var/www/systemadmin/maintenance',
-                        'errordocument': 'maintenance.html'
+                        'errordocument': 'maintenance.html',
   }
-  
 }
 
 ```
-
+#### Exclude healthcheck
+```
+apache::vhost {'systemadmin.es':
+  order        => '10',
+  port         => '81',
+  documentroot => '/var/www/systemadmin',
+  custom_sorrypage => { 'path': '/var/www/systemadmin/maintenance',
+                        'errordocument': 'maintenance.html',
+                        'healthcheck': 'healthcheck/healthcheck.html',
+  }
+}
+```
 
 ## Reference
 
@@ -395,7 +404,7 @@ NSSRandomSeed startup file:/dev/urandom 512
 * **aliases**: Alias list (default: undef)
 * **add_default_logs**: Add default logging (default: true)
 * **site_running**: Define if site should be running (true) or sorrypage should be shown (false) (default: true)
-* **custom_sorrypage**: Define a custom sorry page. A hash with 'path' (where sorrypage document is stored) and 'errordocument' (document to load as sorry page) must be provided (see Usage documentation) (default: undef)
+* **custom_sorrypage**: Define a custom sorry page. A hash with 'path' (where sorrypage document is stored) and 'errordocument' (document to load as sorry page) must be provided. If the vhost is load balanced and needs to serve a healthcheck page we can exclude it from 503 adding it to the key 'healthcheck'. (see Usage documentation) (default: undef)
 
 ## Limitations
 
