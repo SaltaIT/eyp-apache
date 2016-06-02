@@ -256,7 +256,7 @@ apache::nss {'ZnVja3RoYXRiaXRjaAo.com':
 
 
 ## Usage
-### Sory page
+### Sorry page
 #### Enable sorry page
 ```sorrypage
 apache::vhost {'systemadmin.es':
