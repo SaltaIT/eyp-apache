@@ -74,7 +74,7 @@ describe 'apache class' do
     end
 
     it "check 503 et2blog" do
-      expect(shell("curl -I 127.0.0.1/ -H 'Host: et2blog' 2>/dev/null | head -n1 | grep 'HTTP/1.1 503 Service Temporarily Unavailable'").exit_code).to be_zero
+      expect(shell("curl -I 127.0.0.1/ -H 'Host: et2blog' 2>/dev/null | head -n1 | grep 'HTTP/1.1 503'").exit_code).to be_zero
     end
 
     it "check content et2blog" do
@@ -160,7 +160,7 @@ describe 'apache class' do
     end
 
     it "check 503 et2blog" do
-      expect(shell("curl -I 127.0.0.1/ -H 'Host: et2blog' 2>/dev/null | head -n1 | grep 'HTTP/1.1 503 Service Temporarily Unavailable'").exit_code).to be_zero
+      expect(shell("curl -I 127.0.0.1/ -H 'Host: et2blog' 2>/dev/null | head -n1 | grep 'HTTP/1.1 503'").exit_code).to be_zero
     end
 
     it "check content et2blog" do
