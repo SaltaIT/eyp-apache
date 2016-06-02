@@ -74,7 +74,7 @@ describe 'apache class' do
     end
 
     it "check 503 et2blog" do
-      expect(shell("curl -I 127.0.0.1/ -H 'Host: et2blog' 2>/dev/null | head -n1 | grep 'HTTP/1.1 503 OK'").exit_code).to be_zero
+      expect(shell("curl -I 127.0.0.1/ -H 'Host: et2blog' 2>/dev/null | head -n1 | grep 'HTTP/1.1 503 Service Temporarily Unavailable'").exit_code).to be_zero
     end
 
     it "check content et2blog" do
@@ -160,7 +160,7 @@ describe 'apache class' do
     end
 
     it "check 503 et2blog" do
-      expect(shell("curl -I 127.0.0.1/ -H 'Host: et2blog' 2>/dev/null | head -n1 | grep 'HTTP/1.1 503 OK'").exit_code).to be_zero
+      expect(shell("curl -I 127.0.0.1/ -H 'Host: et2blog' 2>/dev/null | head -n1 | grep 'HTTP/1.1 503 Service Temporarily Unavailable'").exit_code).to be_zero
     end
 
     it "check content et2blog" do
@@ -168,11 +168,11 @@ describe 'apache class' do
     end
 
     it "check content et2blog healthcheck" do
-      expect(shell("curl 127.0.0.1/healthcheck/healthcheck.html -H 'Host: et2blog' 2>/dev/null | grep HealthCheck").exit_code).to be_zero
+      expect(shell("curl 127.0.0.1/healthcheck.html -H 'Host: et2blog' 2>/dev/null | grep HealthCheck").exit_code).to be_zero
     end
 
     it "check 200 et2blog healthcheck" do
-      expect(shell("curl -I 127.0.0.1/healthcheck/healthcheck.html -H 'Host: et2blog' 2>/dev/null | head -n1 | grep 'HTTP/1.1 200 OK'").exit_code).to be_zero
+      expect(shell("curl -I 127.0.0.1/healthcheck.html -H 'Host: et2blog' 2>/dev/null | head -n1 | grep 'HTTP/1.1 200 OK'").exit_code).to be_zero
     end
 
   end
