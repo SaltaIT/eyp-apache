@@ -20,12 +20,12 @@ describe 'apache class' do
       apache::vhost {'et2blog':
         documentroot => '/var/www/et2blog',
         site_running => false,
-        custom_sorrypage => { 'path' => '/var/www/et2blog/maintenance',                    
+        custom_sorrypage => { 'path' => '/var/www/et2blog',                    
                                'errordocument' => 'maintenance.html',
         },
       }
 
-      file { '/var/www/et2blog/maintenance/maintenance.html':
+      file { '/var/www/et2blog/maintenance.html':
         ensure => 'present',
         content => "\nSorryPage\n",
         require => Apache::Vhost['et2blog'],
@@ -100,20 +100,20 @@ describe 'apache class' do
       apache::vhost {'et2blog':
         documentroot => '/var/www/et2blog',
         site_running => false,
-        custom_sorrypage => { 'path' => '/var/www/et2blog/maintenance',                    
+        custom_sorrypage => { 'path' => '/var/www/et2blog',                    
                               'errordocument' => 'maintenance.html',
-                              'healthcheck' => 'healthcheck/healthcheck.html'
+                              'healthcheck' => 'healthcheck.html'
         },
       }
 
-      file { '/var/www/et2blog/maintenance/maintenance.html':
+      file { '/var/www/et2blog/maintenance.html':
         ensure => 'present',
         content => "\nSorryPage\n",
         require => Apache::Vhost['et2blog'],
       }
 
 
-      file { '/var/www/et2blog/healthcheck/healthcheck.html':
+      file { '/var/www/et2blog/healthcheck.html':
         ensure => 'present',
         content => "\nHealthCheck\n",
         require => Apache::Vhost['et2blog'],
