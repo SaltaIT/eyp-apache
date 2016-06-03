@@ -256,8 +256,41 @@ apache::nss {'ZnVja3RoYXRiaXRjaAo.com':
 
 
 ## Usage
+### Sorry page
+#### Enable sorry page
+```sorrypage
+apache::vhost {'systemadmin.es':
+  order        => '10',
+  port         => '81',
+  documentroot => '/var/www/systemadmin',
+  site_running => false,
+}
+```
+#### Custom sorry page
+custom_sorrypage hash must contain both variables
+```customsorrypage
+apache::vhost {'systemadmin.es':
+  order        => '10',
+  port         => '81',
+  documentroot => '/var/www/systemadmin',
+  custom_sorrypage => { 'path': '/var/www/systemadmin/maintenance',
+                        'errordocument': 'maintenance.html',
+  }
+}
 
-TODO
+```
+#### Exclude healthcheck
+```
+apache::vhost {'systemadmin.es':
+  order        => '10',
+  port         => '81',
+  documentroot => '/var/www/systemadmin',
+  custom_sorrypage => { 'path': '/var/www/systemadmin/maintenance',
+                        'errordocument': 'maintenance.html',
+                        'healthcheck': 'healthcheck/healthcheck.html',
+  }
+}
+```
 
 ## Reference
 
@@ -348,6 +381,30 @@ NSSRandomSeed startup file:/dev/urandom 512
 #### apache::redirect
 
 #### apache::vhost
+* **documentroot**: DocumentRoot
+* **order**: Order (default: 00)
+* **port**: Listen port (default: 80)
+* **use_intermediate**: (default: true)
+* **certname_version**:
+* **directoryindex**: (default: [ 'index.php', 'index.html', 'index.htm' ])
+* **defaultvh**: Only for default virtual host (default: false)
+* **defaultvh_ss**: Enable or disable default virtual host server status (default: true)
+* **servername**: ServerName (default: $name)
+* **serveralias**: ServerAlias (default: undef)
+* **allowedip**: Allowed ip for DocumentRoot (default: undef)
+* **deniedip**: Denied ip for DocumentRoot (default: undef)
+* **rewrites**: Rewrites list (default: undef)
+* **rewrites_source**:  (default: undef)
+* **certname**:         (default: undef)
+* **serveradmin**: ServerAdmin     (default: undef)
+* **aliasmatch**: AliasMatch list      (default: undef)
+* **scriptalias**: ScriptAlias list     (default: undef)
+* **options**: Options for DocumentRoot directory (default: [ 'FollowSymlinks' ])     
+* **allowoverride**: AllowOverride (default: None) 
+* **aliases**: Alias list (default: undef)
+* **add_default_logs**: Add default logging (default: true)
+* **site_running**: Define if site should be running (true) or sorrypage should be shown (false) (default: true)
+* **custom_sorrypage**: Define a custom sorry page. A hash with 'path' (where sorrypage document is stored) and 'errordocument' (document to load as sorry page) must be provided. If the vhost is load balanced and needs to serve a healthcheck page we can exclude it from 503 adding it to the key 'healthcheck'. (see Usage documentation) (default: undef)
 
 ## Limitations
 
