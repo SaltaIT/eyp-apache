@@ -36,7 +36,30 @@ define apache::vhost   (
         $allowoverride    = $apache::params::allowoverride_default,
         $aliases          = undef,
         $add_default_logs = true,
+        $site_running     = $apache::params::site_enabled_default,
+        $custom_sorrypage = undef,
       ) {
+
+    if($custom_sorrypage)
+    {
+      validate_hash($custom_sorrypage)
+      if !has_key($custom_sorrypage, 'path')
+      {
+        fail("Custom sorry page hash ${custom_sorrypage} does not contain 'path' key.")
+      } else {
+        validate_string($custom_sorrypage['path'])
+      }
+      if !has_key($custom_sorrypage, 'errordocument')
+      {
+        fail("Custom sorry page hash ${custom_sorrypage} does not contain 'errordocument' key.")
+      } else {
+        validate_string($custom_sorrypage['errordocument'])
+      }
+      if has_key($custom_sorrypage, 'healthcheck')
+      {
+        validate_string($custom_sorrypage['healthcheck'])
+      }
+    }
 
     if ! defined(Class['apache'])
     {
@@ -161,7 +184,7 @@ define apache::vhost   (
     {
       #if ! defaultvh
 
-      concat { "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf":
+      concat { "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run":
         ensure  => 'present',
         owner   => 'root',
         group   => 'root',
@@ -173,16 +196,16 @@ define apache::vhost   (
                     ],
       }
 
-      concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf ini vhost":
-        target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+      concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run ini vhost":
+        target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
         order   => '01',
         content => template("${module_name}/vhost/vhost.erb"),
       }
 
       if($certname!=undef)
       {
-        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf sslcert":
-          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run sslcert":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
           order   => '02',
           content => template("${module_name}/ssl/vhost_template.erb"),
           require => File[  [
@@ -195,31 +218,31 @@ define apache::vhost   (
 
       if($rewrites!=undef) or ($rewrites_source!=undef)
       {
-        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf rewrite engine on":
-          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run rewrite engine on":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
           content => "\n  ## Rewrite rules ##\n\n  RewriteEngine On\n\n",
           order   => '05',
         }
 
         if($rewrites_source)
         {
-          concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf rewrite source":
-            target => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+          concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run rewrite source":
+            target => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
             source => $rewrites_source,
             order  => '06',
           }
         }
         else
         {
-          concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf rewrites":
-            target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+          concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run rewrites":
+            target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
             content => template("${module_name}/rewrites/rewrites.erb"),
             order   => '06',
           }
         }
 
-        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf rewrite END":
-          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run rewrite END":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
           content => "\n  ## END Rewrite rules ##\n\n",
           order   => '07',
         }
@@ -228,19 +251,19 @@ define apache::vhost   (
 
       if($aliasmatch!=undef)
       {
-        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf aliasmatch BEGIN":
-          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run aliasmatch BEGIN":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
           content => "\n  ## AliasMatch BEGIN ##\n\n  <IfModule alias_module>\n\n",
           order   => '09',
         }
-        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf aliasmatch":
-          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run aliasmatch":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
           content => template("${module_name}/aliasmatch/aliasmatch.erb"),
           order   => '10',
         }
 
-        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf aliasmatch END":
-          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run aliasmatch END":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
           content => "\n  </IfModule>\n\n  ## AliasMatch END##\n\n",
           order   => '11',
         }
@@ -249,19 +272,19 @@ define apache::vhost   (
 
       if($scriptalias!=undef)
       {
-        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf scriptalias BEGIN":
-          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run scriptalias BEGIN":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
           content => "\n  ## ScriptAlias BEGIN ##\n\n",
           order   => '12',
         }
-        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf scriptalias":
-          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run scriptalias":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
           content => template("${module_name}/scriptalias/scriptalias.erb"),
           order   => '13',
         }
 
-        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf scriptalias END":
-          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run scriptalias END":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
           content => "\n  ## ScriptAlias END##\n\n",
           order   => '14',
         }
@@ -270,29 +293,108 @@ define apache::vhost   (
       # Order 15 taken by directory define
       if($aliases!=undef)
       {
-        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf aliases BEGIN":
-          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run aliases BEGIN":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
           content => "\n  ## Alias BEGIN ##\n\n  <IfModule alias_module>\n\n",
           order   => '16',
         }
-        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf aliases":
-          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run aliases":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
           content => template("${module_name}/aliases/aliases.erb"),
           order   => '17',
         }
 
-        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf aliases END":
-          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run aliases END":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
           content => "\n  </IfModule>\n\n  ## Alias END##\n\n",
           order   => '18',
         }
 
       }
 
-      concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}.conf ${name} tanco vhost":
-        target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+      concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}.conf.run ${name} tanco vhost":
+        target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
         content => "\n\n</VirtualHost>\n",
         order   => '99',
+      }
+
+      ## Site disabled config ##
+      concat { "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage":
+        ensure  => 'present',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+        notify  => Class['apache::service'],
+        require => [
+                    Exec["mkdir p ${documentroot} ${servername} ${port}"],
+                    File["${apache::params::baseconf}/conf.d/sites"]
+                    ],
+      }
+
+      concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage ini vhost":
+        target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage",
+        order   => '01',
+        content => template("${module_name}/vhost/vhost.erb"),
+      }
+
+      if($custom_sorrypage)
+      {
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage custom sorrypage ini":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage",
+          order   => '02',
+          content => "\n  Alias /sorrypage ${custom_sorrypage['path']}\n  ErrorDocument 503 /sorrypage/${custom_sorrypage['errordocument']}\n",
+        }
+      }
+
+      concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage rewrite on":
+        target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage",
+        order   => '03',
+        content => "\n  RewriteEngine On\n",
+      }
+
+      if($custom_sorrypage)
+      {
+        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage custom sorrypage end":
+          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage",
+          order   => '05',
+          content => "\n  RewriteCond %{REQUEST_URI} !/sorrypage/.*\n",
+        }
+        if(has_key($custom_sorrypage, 'healthcheck'))
+        {
+          concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage custom healtcheck":
+            target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage",
+            order   => '04',
+            content => "\n  RewriteCond %{REQUEST_URI} !/${custom_sorrypage['healthcheck']}",
+        }
+          
+        }
+      }
+
+      concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage redirect 503":
+        target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage",
+        order   => '06',
+        content => "  RewriteRule .* - [R=503,L]\n",
+      }
+
+      concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}.conf.sorrypage ${name} tanco vhost":
+        target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage",
+        content => "\n\n</VirtualHost>\n",
+        order   => '99',
+      }
+
+      ## Vhost status ##
+
+      if($site_running)
+      {
+        $site_status = "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run"
+      } else {
+        $site_status = "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage"
+      }
+
+      file { "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf":
+        ensure => 'link',
+        target => $site_status,
+        notify => Class['apache::service'],
       }
 
       #permetre documentroots comuns

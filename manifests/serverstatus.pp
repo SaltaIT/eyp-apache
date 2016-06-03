@@ -22,8 +22,8 @@ define apache::serverstatus (
   }
   else
   {
-    concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf serverstatus":
-      target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+    concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run serverstatus":
+      target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
       content => template("${module_name}/serverstatus/serverstatus.erb"),
       order   => '08',
     }

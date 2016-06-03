@@ -19,8 +19,8 @@ define apache::redirect (
     fail('path and match cannot be defined at the same time, WTF man...')
   }
 
-  concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf redirect ${match} ${path} ${url}":
-    target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf",
+  concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run redirect ${match} ${path} ${url}":
+    target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
     content => template("${module_name}/redirects/redirects.erb"),
     order   => '04',
   }
