@@ -334,7 +334,7 @@ define apache::vhost   (
       concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage ini vhost":
         target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage",
         order   => '01',
-        content => template("${module_name}/vhost/vhost.erb"),
+        content => template("${module_name}/vhost/sorry_vhost.erb"),
       }
 
       if($custom_sorrypage)
