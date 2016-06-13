@@ -20,7 +20,11 @@
   CustomLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::params::logdir') %>/<%= @servername %>.access.%Y.%m.%d.log 86400" combined
   <%- end -%>
 
+  <%- if defined?(@custom_sorrypage) -%>
+  <Directory <%= @custom_sorrypage['path'] %>>
+  <%- else -%>
   <Directory <%= @documentroot %>>
+  <%- end -%>
     AllowOverride <%= @allowoverride %>
     Options <%= @options.join(' ') %>
   <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
