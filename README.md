@@ -85,29 +85,6 @@ apache::serverstatus {'systemadmin.es':
 }
 ```
 
-SSL setup using yaml:
-
-```yaml
-classes:
-  - apache
-apache::listen:
-  - 80
-  - 443
-apache::ssl: true
-apachecerts:
-  systemadmin:
-    cert_source: puppet:///customers/systemadmin/star_systemadmin_net.crt
-    pk_source: puppet:///customers/systemadmin/star_systemadmin_net.key
-    intermediate_source: puppet:///customers/systemadmin/star_systemadmin_net.intermediate
-apachevhosts:
-  systemadmin:
-    documentroot: /var/www/systemadmin
-  systemadmin_ssl:
-    documentroot: /var/www/systemadmin
-    port: 443
-    certname: systemadmin
-```
-
 FCGI:
 
 ```puppet
@@ -256,7 +233,45 @@ apache::nss {'ZnVja3RoYXRiaXRjaAo.com':
 
 
 ## Usage
+
+### SSL
+
+#### SSL setup using yaml
+
+```yaml
+classes:
+  - apache
+apache::listen:
+  - 80
+  - 443
+apache::ssl: true
+apachecerts:
+  systemadmin:
+    cert_source: puppet:///customers/systemadmin/star_systemadmin_net.crt
+    pk_source: puppet:///customers/systemadmin/star_systemadmin_net.key
+    intermediate_source: puppet:///customers/systemadmin/star_systemadmin_net.intermediate
+apachevhosts:
+  systemadmin:
+    documentroot: /var/www/systemadmin
+  systemadmin_ssl:
+    documentroot: /var/www/systemadmin
+    port: 443
+    certname: systemadmin
+```
+
+#### SSL without intermediate certificate
+
+```puppet
+apache::vhost {'et2blog_ssl':
+  documentroot => '/var/www/et2blog',
+  port => 443,
+  certname => 'cert_et2blog_ssl',
+  use_intermediate => false,
+}
+```
+
 ### Sorry page
+
 #### Enable sorry page
 ```sorrypage
 apache::vhost {'systemadmin.es':
@@ -266,8 +281,11 @@ apache::vhost {'systemadmin.es':
   site_running => false,
 }
 ```
+
 #### Custom sorry page
+
 custom_sorrypage hash must contain both variables
+
 ```customsorrypage
 apache::vhost {'systemadmin.es':
   order        => '10',
@@ -279,7 +297,9 @@ apache::vhost {'systemadmin.es':
 }
 
 ```
+
 #### Exclude healthcheck
+
 ```
 apache::vhost {'systemadmin.es':
   order        => '10',
@@ -400,7 +420,7 @@ NSSRandomSeed startup file:/dev/urandom 512
 * **aliasmatch**: AliasMatch list      (default: undef)
 * **scriptalias**: ScriptAlias list     (default: undef)
 * **options**: Options for DocumentRoot directory (default: [ 'FollowSymlinks' ])     
-* **allowoverride**: AllowOverride (default: None) 
+* **allowoverride**: AllowOverride (default: None)
 * **aliases**: Alias list (default: undef)
 * **add_default_logs**: Add default logging (default: true)
 * **site_running**: Define if site should be running (true) or sorrypage should be shown (false) (default: true)
