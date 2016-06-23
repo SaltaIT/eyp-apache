@@ -58,33 +58,6 @@ apache::vhost {'et2blog':
 }
 ```
 
-server-status on a custom vhost with restricted IPs:
-
-```puppet
-apache::vhost {'default':
-  defaultvh => true,
-  documentroot => '/var/www/void',
-}
-
-apache::vhost {'et2blog':
-  documentroot => '/var/www/et2blog',
-}
-
-apache::serverstatus {'et2blog':}
-
-apache::vhost {'systemadmin.es':
-  order        => '10',
-  port         => '81',
-  documentroot => '/var/www/systemadmin',
-}
-
-apache::serverstatus {'systemadmin.es':
-  order     => '10',
-  port      => '81',
-  allowedip => ['1.1.1.1','2.2.2.2','4.4.4.4 5.5.5.5','127.','::1'],
-}
-```
-
 FCGI:
 
 ```puppet
@@ -152,46 +125,74 @@ apache::directory {'/var/www/testing/cgi-bin/':
 }
 ```
 
-mod_proxy_balancer:
+## Usage
+
+### server-status
+
+#### server-status on a custom vhost with restricted IPs
+
+```puppet
+apache::vhost {'default':
+  defaultvh => true,
+  documentroot => '/var/www/void',
+}
+
+apache::vhost {'et2blog':
+  documentroot => '/var/www/et2blog',
+}
+
+apache::serverstatus {'et2blog':}
+
+apache::vhost {'systemadmin.es':
+  order        => '10',
+  port         => '81',
+  documentroot => '/var/www/systemadmin',
+}
+
+apache::serverstatus {'systemadmin.es':
+  order     => '10',
+  port      => '81',
+  allowedip => ['1.1.1.1','2.2.2.2','4.4.4.4 5.5.5.5','127.','::1'],
+}
+```
+
+### SSL
+
+#### SSL setup using yaml
 
 ```yaml
 classes:
   - apache
-  - apache::mod::expires
-  - apache::mod::proxy
-  - apache::mod::proxybalancer
-  - apache::mod::proxyajp
 apache::listen:
-  - 7790
+  - 80
+  - 443
+apache::ssl: true
+apachecerts:
+  systemadmin:
+    cert_source: puppet:///customers/systemadmin/star_systemadmin_net.crt
+    pk_source: puppet:///customers/systemadmin/star_systemadmin_net.key
+    intermediate_source: puppet:///customers/systemadmin/star_systemadmin_net.intermediate
 apachevhosts:
-  default:
-    defaultvh: true
-    documentroot: /var/www/void
-    port: 7790
-  pspstores.systemadmin.es:
-    documentroot: /var/www/void
-    port: 7790
-apachebalancers:
-  pspstores:
-    members:
-      'ajp://192.168.56.19:9509': undef
-      'ajp://192.168.56.18:9509': undef
-apacheproxypasses:
-  '/':
-    destination: 'balancer://pspstores'
-    servername: pspstores.systemadmin.es
-    port: 7790
-  '/manager':
-    destination: '!'
-    servername: pspstores.systemadmin.es
-    port: 7790
-  '/host-manager':
-    destination: '!'
-    servername: pspstores.systemadmin.es
-    port: 7790
+  systemadmin:
+    documentroot: /var/www/systemadmin
+  systemadmin_ssl:
+    documentroot: /var/www/systemadmin
+    port: 443
+    certname: systemadmin
 ```
 
-mod_nss usage:
+#### SSL without intermediate certificate
+
+```puppet
+apache::vhost {'et2blog_ssl':
+  documentroot => '/var/www/et2blog',
+  port => 443,
+  certname => 'cert_et2blog_ssl',
+  use_intermediate => false,
+}
+```
+
+#### mod_nss
 
 ```puppet
 # vhost for ZnVja3RoYXRiaXRjaAo.com
@@ -231,45 +232,6 @@ apache::nss {'ZnVja3RoYXRiaXRjaAo.com':
 }
 ```
 
-
-## Usage
-
-### SSL
-
-#### SSL setup using yaml
-
-```yaml
-classes:
-  - apache
-apache::listen:
-  - 80
-  - 443
-apache::ssl: true
-apachecerts:
-  systemadmin:
-    cert_source: puppet:///customers/systemadmin/star_systemadmin_net.crt
-    pk_source: puppet:///customers/systemadmin/star_systemadmin_net.key
-    intermediate_source: puppet:///customers/systemadmin/star_systemadmin_net.intermediate
-apachevhosts:
-  systemadmin:
-    documentroot: /var/www/systemadmin
-  systemadmin_ssl:
-    documentroot: /var/www/systemadmin
-    port: 443
-    certname: systemadmin
-```
-
-#### SSL without intermediate certificate
-
-```puppet
-apache::vhost {'et2blog_ssl':
-  documentroot => '/var/www/et2blog',
-  port => 443,
-  certname => 'cert_et2blog_ssl',
-  use_intermediate => false,
-}
-```
-
 ### Sorry page
 
 #### Enable sorry page
@@ -296,6 +258,47 @@ apache::vhost {'systemadmin.es':
   }
 }
 
+```
+
+### mod_proxy
+
+#### mod_proxy_balancer
+
+```yaml
+classes:
+  - apache
+  - apache::mod::expires
+  - apache::mod::proxy
+  - apache::mod::proxybalancer
+  - apache::mod::proxyajp
+apache::listen:
+  - 7790
+apachevhosts:
+  default:
+    defaultvh: true
+    documentroot: /var/www/void
+    port: 7790
+  pspstores.systemadmin.es:
+    documentroot: /var/www/void
+    port: 7790
+apachebalancers:
+  pspstores:
+    members:
+      'ajp://192.168.56.19:9509': undef
+      'ajp://192.168.56.18:9509': undef
+apacheproxypasses:
+  '/':
+    destination: 'balancer://pspstores'
+    servername: pspstores.systemadmin.es
+    port: 7790
+  '/manager':
+    destination: '!'
+    servername: pspstores.systemadmin.es
+    port: 7790
+  '/host-manager':
+    destination: '!'
+    servername: pspstores.systemadmin.es
+    port: 7790
 ```
 
 #### Exclude healthcheck
