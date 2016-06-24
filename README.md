@@ -58,50 +58,11 @@ apache::vhost {'et2blog':
 }
 ```
 
-FCGI:
+## Usage
 
-```puppet
-class {'apache::fcgi':
-  fcgihost => '192.168.56.18',
-}
-```
+### general Options
 
-Load custom module:
-
-```puppet
-apache::module { 'asis_module':
-  sofile => 'modules/mod_asis.so',
-}
-```
-
-mod_php:
-
-```puppet
-class { 'apache': }
-
-apache::vhost {'default':
-  defaultvh=>true,
-  documentroot => '/var/www/void',
-}
-
-class { 'apache::mod::php': }
-```
-
-logformats example:
-
-```puppet
-class { 'apache':
-  server_admin=> 'webmaster@localhost',
-  maxclients=> '150',
-  maxrequestsperchild=>'1000',
-  customlog_type=>'vhost_combined',
-  logformats=>{ 'vhost_combined' => '%v:%p %h %l %u %t \\"%r\\" %>s %O \\"%{Referer}i\\" \\"%{User-Agent}i\\"' },
-  add_defult_logformats=>true,
-}
-
-```
-
-aliasmatch, scriptalias, rewrites and directory example:
+#### aliasmatch, scriptalias, rewrites and directory directives
 
 ```puppet
 apache::vhost {'testing.lol':
@@ -125,7 +86,26 @@ apache::directory {'/var/www/testing/cgi-bin/':
 }
 ```
 
-## Usage
+#### custom logformats
+
+```puppet
+class { 'apache':
+  server_admin=> 'webmaster@localhost',
+  maxclients=> '150',
+  maxrequestsperchild=>'1000',
+  customlog_type=>'vhost_combined',
+  logformats=>{ 'vhost_combined' => '%v:%p %h %l %u %t \\"%r\\" %>s %O \\"%{Referer}i\\" \\"%{User-Agent}i\\"' },
+  add_defult_logformats=>true,
+}
+```
+
+#### Load custom module
+
+```puppet
+apache::module { 'asis_module':
+  sofile => 'modules/mod_asis.so',
+}
+```
 
 ### server-status
 
@@ -154,6 +134,19 @@ apache::serverstatus {'systemadmin.es':
   port      => '81',
   allowedip => ['1.1.1.1','2.2.2.2','4.4.4.4 5.5.5.5','127.','::1'],
 }
+```
+
+### mod_php
+
+```puppet
+class { 'apache': }
+
+apache::vhost {'default':
+  defaultvh=>true,
+  documentroot => '/var/www/void',
+}
+
+class { 'apache::mod::php': }
 ```
 
 ### SSL
@@ -312,6 +305,14 @@ apache::vhost {'systemadmin.es':
                         'errordocument': 'maintenance.html',
                         'healthcheck': 'healthcheck/healthcheck.html',
   }
+}
+```
+
+### FCGI
+
+```puppet
+class {'apache::fcgi':
+  fcgihost => '192.168.56.18',
 }
 ```
 
