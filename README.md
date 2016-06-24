@@ -339,6 +339,13 @@ private classes:
 
 #### apache::fcgi
 
+installs mod_fastcgi
+
+* **srcdir**: (default: /usr/local/src)
+* **handler_name**: (default: resource's name)
+* **fcgihost**: (default: 127.0.0.1)
+* **fcgiport**: (default: 9000)
+
 #### apache::serverstatus
 
 #### apache modules
@@ -384,7 +391,7 @@ private classes:
 ##### apache::mod::nss
 
 * **ensure**: installed/purged (default: installed)
-* **randomseed**: Configure a source to seed the PRNG of the SSL library. (default: builtin)
+* **randomseed**: Array to configure a set of sources to seed the PRNG of the SSL library. (default: builtin)
 ```
 NSSRandomSeed startup builtin
 NSSRandomSeed startup file:/dev/random  512
