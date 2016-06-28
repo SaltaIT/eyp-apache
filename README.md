@@ -41,6 +41,12 @@ apache httpd and apache modules management
 
 This module requires pluginsync enabled
 
+requirements:
+
+**eyp/eyplib** is required to be able to use helper functions like **bool2onoff**
+**puppetlabs/concat**: most config files are created using concat (beaware of file changes)
+
+
 ### Beginning with apache
 
 Basic setup:
@@ -59,6 +65,8 @@ apache::vhost {'et2blog':
 ```
 
 ## Usage
+
+In this section we have several usage examples, most were used to test module's features or acceptance testing checks (**spec/acceptance/base\*_spec.rb**)
 
 ### general Options
 
@@ -90,6 +98,8 @@ apache::directory {'/var/www/testing/cgi-bin/':
 ```
 
 #### custom logformats
+
+we can add custom log formats using **logformats** hash, for example:
 
 ```puppet
 class { 'apache':
@@ -182,6 +192,8 @@ apachevhosts:
 
 #### SSL without intermediate certificate
 
+If we don't have a intermediate certificate, we can disable it using **use_intermediate** (intended for testing only)
+
 ```puppet
 apache::vhost {'et2blog_ssl':
   documentroot => '/var/www/et2blog',
@@ -233,7 +245,12 @@ apache::nss {'ZnVja3RoYXRiaXRjaAo.com':
 
 ### Sorry page
 
-#### Enable sorry page
+every vhost created using this module have an alternative vhost to disable it (**HTTP 503**)
+
+#### enable/disable sorry page
+
+to enable or disable the sorry page for a given site we just need to flip **site_running**
+
 ```puppet
 apache::vhost {'systemadmin.es':
   order        => '10',
@@ -245,7 +262,7 @@ apache::vhost {'systemadmin.es':
 
 #### Custom sorry page
 
-custom_sorrypage hash must contain both variables
+custom_sorrypage hash must contain both variables (**path** and **errordocument**)
 
 ```puppet
 apache::vhost {'systemadmin.es':
