@@ -97,7 +97,7 @@ class { 'apache':
   maxclients=> '150',
   maxrequestsperchild=>'1000',
   customlog_type=>'vhost_combined',
-  logformats => { 
+  logformats => {
       'vhost_combined' =>
         '%v:%p %h %l %u %t \\"%r\\" %>s %O \\"%{Referer}i\\" \\"%{User-Agent}i\\"'
         },
@@ -234,7 +234,7 @@ apache::nss {'ZnVja3RoYXRiaXRjaAo.com':
 ### Sorry page
 
 #### Enable sorry page
-```sorrypage
+```puppet
 apache::vhost {'systemadmin.es':
   order        => '10',
   port         => '81',
@@ -247,7 +247,7 @@ apache::vhost {'systemadmin.es':
 
 custom_sorrypage hash must contain both variables
 
-```customsorrypage
+```puppet
 apache::vhost {'systemadmin.es':
   order        => '10',
   port         => '81',
@@ -302,7 +302,7 @@ apacheproxypasses:
 
 #### Exclude healthcheck
 
-```
+```puppet
 apache::vhost {'systemadmin.es':
   order        => '10',
   port         => '81',
