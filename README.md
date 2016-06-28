@@ -41,6 +41,12 @@ apache httpd and apache modules management
 
 This module requires pluginsync enabled
 
+requirements:
+
+**eyp/eyplib** is required to be able to use helper functions like **bool2onoff**
+**puppetlabs/concat**: most config files are created using concat (beaware of file changes)
+
+
 ### Beginning with apache
 
 Basic setup:
@@ -58,7 +64,68 @@ apache::vhost {'et2blog':
 }
 ```
 
-server-status on a custom vhost with restricted IPs:
+## Usage
+
+In this section we have several usage examples, most were used to test module's features or acceptance testing checks (**spec/acceptance/base\*_spec.rb**)
+
+### general Options
+
+#### aliasmatch, scriptalias, rewrites and directory directives
+
+```puppet
+apache::vhost {'testing.lol':
+        order => '77',
+        serveradmin => 'root@lolcathost.lol',
+        serveralias => [ '1.testing.lol', '2.testing.lol' ],
+        documentroot => '/var/www/testing/',
+        options => [ 'Indexes', 'FollowSymLinks', 'MultiViews' ],
+        rewrites => [
+          'RewriteCond %{HTTP_HOST} !^testing\.lol',
+          'RewriteRule ^/(.*)$ http://www\.testing\.lol/$1 [R=301,L]'
+          ],
+        aliasmatch => { 'RUC/lol' => '/var/www/testing/hc.php',
+                        '(.*)' => '/var/www/testing/cc.php'},
+        scriptalias => { '/cgi-bin/' => '"/var/www/testing/cgi-bin/"' },
+        directoryindex => [ 'index.php', 'lolindex.php', 'lol.html' ],
+}
+
+apache::directory {'/var/www/testing/cgi-bin/':
+                      vhost_order      => '77',
+                      servername       => 'testing.lol',
+                      options          => [ '+ExecCGI', '-Includes' ],
+                      allowoverride    => 'None',
+}
+```
+
+#### custom logformats
+
+we can add custom log formats using **logformats** hash, for example:
+
+```puppet
+class { 'apache':
+  server_admin=> 'webmaster@localhost',
+  maxclients=> '150',
+  maxrequestsperchild=>'1000',
+  customlog_type=>'vhost_combined',
+  logformats => {
+      'vhost_combined' =>
+        '%v:%p %h %l %u %t \\"%r\\" %>s %O \\"%{Referer}i\\" \\"%{User-Agent}i\\"'
+        },
+  add_defult_logformats=>true,
+}
+```
+
+#### Load custom module
+
+```puppet
+apache::module { 'asis_module':
+  sofile => 'modules/mod_asis.so',
+}
+```
+
+### server-status
+
+#### server-status on a custom vhost with restricted IPs
 
 ```puppet
 apache::vhost {'default':
@@ -85,7 +152,22 @@ apache::serverstatus {'systemadmin.es':
 }
 ```
 
-SSL setup using yaml:
+### mod_php
+
+```puppet
+class { 'apache': }
+
+apache::vhost {'default':
+  defaultvh=>true,
+  documentroot => '/var/www/void',
+}
+
+class { 'apache::mod::php': }
+```
+
+### SSL
+
+#### SSL setup using yaml
 
 ```yaml
 classes:
@@ -108,113 +190,20 @@ apachevhosts:
     certname: systemadmin
 ```
 
-FCGI:
+#### SSL without intermediate certificate
+
+If we don't have a intermediate certificate, we can disable it using **use_intermediate** (intended for testing only)
 
 ```puppet
-class {'apache::fcgi':
-  fcgihost => '192.168.56.18',
+apache::vhost {'et2blog_ssl':
+  documentroot => '/var/www/et2blog',
+  port => 443,
+  certname => 'cert_et2blog_ssl',
+  use_intermediate => false,
 }
 ```
 
-Load custom module:
-
-```puppet
-apache::module { 'asis_module':
-  sofile => 'modules/mod_asis.so',
-}
-```
-
-mod_php:
-
-```puppet
-class { 'apache': }
-
-apache::vhost {'default':
-  defaultvh=>true,
-  documentroot => '/var/www/void',
-}
-
-class { 'apache::mod::php': }
-```
-
-logformats example:
-
-```puppet
-class { 'apache':
-  server_admin=> 'webmaster@localhost',
-  maxclients=> '150',
-  maxrequestsperchild=>'1000',
-  customlog_type=>'vhost_combined',
-  logformats=>{ 'vhost_combined' => '%v:%p %h %l %u %t \\"%r\\" %>s %O \\"%{Referer}i\\" \\"%{User-Agent}i\\"' },
-  add_defult_logformats=>true,
-}
-
-```
-
-aliasmatch, scriptalias, rewrites and directory example:
-
-```puppet
-apache::vhost {'testing.lol':
-        order => '77',
-        serveradmin => 'root@lolcathost.lol',
-        serveralias => [ '1.testing.lol', '2.testing.lol' ],
-        documentroot => '/var/www/testing/',
-        options => [ 'Indexes', 'FollowSymLinks', 'MultiViews' ],
-        rewrites => [ 'RewriteCond %{HTTP_HOST} !^testing\.lol', 'RewriteRule ^/(.*)$ http://www\.testing\.lol/$1 [R=301,L]' ],
-        aliasmatch => { 'RUC/lol' => '/var/www/testing/hc.php',
-                        '(.*)' => '/var/www/testing/cc.php'},
-        scriptalias => { '/cgi-bin/' => '"/var/www/testing/cgi-bin/"' },
-        directoryindex => [ 'index.php', 'lolindex.php', 'lol.html' ],
-}
-
-apache::directory {'/var/www/testing/cgi-bin/':
-                      vhost_order      => '77',
-                      servername       => 'testing.lol',
-                      options          => [ '+ExecCGI', '-Includes' ],
-                      allowoverride    => 'None',
-}
-```
-
-mod_proxy_balancer:
-
-```yaml
-classes:
-  - apache
-  - apache::mod::expires
-  - apache::mod::proxy
-  - apache::mod::proxybalancer
-  - apache::mod::proxyajp
-apache::listen:
-  - 7790
-apachevhosts:
-  default:
-    defaultvh: true
-    documentroot: /var/www/void
-    port: 7790
-  pspstores.systemadmin.es:
-    documentroot: /var/www/void
-    port: 7790
-apachebalancers:
-  pspstores:
-    members:
-      'ajp://192.168.56.19:9509': undef
-      'ajp://192.168.56.18:9509': undef
-apacheproxypasses:
-  '/':
-    destination: 'balancer://pspstores'
-    servername: pspstores.systemadmin.es
-    port: 7790
-  '/manager':
-    destination: '!'
-    servername: pspstores.systemadmin.es
-    port: 7790
-  '/host-manager':
-    destination: '!'
-    servername: pspstores.systemadmin.es
-    port: 7790
-```
-
-mod_nss usage:
+#### mod_nss
 
 ```puppet
 # vhost for ZnVja3RoYXRiaXRjaAo.com
@@ -254,11 +243,15 @@ apache::nss {'ZnVja3RoYXRiaXRjaAo.com':
 }
 ```
 
-
-## Usage
 ### Sorry page
-#### Enable sorry page
-```sorrypage
+
+every vhost created using this module have an alternative vhost to disable it (**HTTP 503**)
+
+#### enable/disable sorry page
+
+to enable or disable the sorry page for a given site we just need to flip **site_running**
+
+```puppet
 apache::vhost {'systemadmin.es':
   order        => '10',
   port         => '81',
@@ -266,9 +259,12 @@ apache::vhost {'systemadmin.es':
   site_running => false,
 }
 ```
+
 #### Custom sorry page
-custom_sorrypage hash must contain both variables
-```customsorrypage
+
+custom_sorrypage hash must contain both variables (**path** and **errordocument**)
+
+```puppet
 apache::vhost {'systemadmin.es':
   order        => '10',
   port         => '81',
@@ -279,8 +275,51 @@ apache::vhost {'systemadmin.es':
 }
 
 ```
-#### Exclude healthcheck
+
+### mod_proxy
+
+#### mod_proxy_balancer
+
+```yaml
+classes:
+  - apache
+  - apache::mod::expires
+  - apache::mod::proxy
+  - apache::mod::proxybalancer
+  - apache::mod::proxyajp
+apache::listen:
+  - 7790
+apachevhosts:
+  default:
+    defaultvh: true
+    documentroot: /var/www/void
+    port: 7790
+  pspstores.systemadmin.es:
+    documentroot: /var/www/void
+    port: 7790
+apachebalancers:
+  pspstores:
+    members:
+      'ajp://192.168.56.19:9509': undef
+      'ajp://192.168.56.18:9509': undef
+apacheproxypasses:
+  '/':
+    destination: 'balancer://pspstores'
+    servername: pspstores.systemadmin.es
+    port: 7790
+  '/manager':
+    destination: '!'
+    servername: pspstores.systemadmin.es
+    port: 7790
+  '/host-manager':
+    destination: '!'
+    servername: pspstores.systemadmin.es
+    port: 7790
 ```
+
+#### Exclude healthcheck
+
+```puppet
 apache::vhost {'systemadmin.es':
   order        => '10',
   port         => '81',
@@ -289,6 +328,14 @@ apache::vhost {'systemadmin.es':
                         'errordocument': 'maintenance.html',
                         'healthcheck': 'healthcheck/healthcheck.html',
   }
+}
+```
+
+### FCGI
+
+```puppet
+class {'apache::fcgi':
+  fcgihost => '192.168.56.18',
 }
 ```
 
@@ -314,6 +361,13 @@ private classes:
 * **apache::version**: detect distro's apache version
 
 #### apache::fcgi
+
+installs mod_fastcgi
+
+* **srcdir**: (default: /usr/local/src)
+* **handler_name**: (default: resource's name)
+* **fcgihost**: (default: 127.0.0.1)
+* **fcgiport**: (default: 9000)
 
 #### apache::serverstatus
 
@@ -360,7 +414,7 @@ private classes:
 ##### apache::mod::nss
 
 * **ensure**: installed/purged (default: installed)
-* **randomseed**: Configure a source to seed the PRNG of the SSL library. (default: builtin)
+* **randomseed**: Array to configure a set of sources to seed the PRNG of the SSL library. (default: builtin)
 ```
 NSSRandomSeed startup builtin
 NSSRandomSeed startup file:/dev/random  512
@@ -400,7 +454,7 @@ NSSRandomSeed startup file:/dev/urandom 512
 * **aliasmatch**: AliasMatch list      (default: undef)
 * **scriptalias**: ScriptAlias list     (default: undef)
 * **options**: Options for DocumentRoot directory (default: [ 'FollowSymlinks' ])     
-* **allowoverride**: AllowOverride (default: None) 
+* **allowoverride**: AllowOverride (default: None)
 * **aliases**: Alias list (default: undef)
 * **add_default_logs**: Add default logging (default: true)
 * **site_running**: Define if site should be running (true) or sorrypage should be shown (false) (default: true)

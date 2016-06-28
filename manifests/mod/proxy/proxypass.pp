@@ -6,9 +6,9 @@ define apache::mod::proxy::proxypass(
                                       $url         = $name,
                                     ) {
   #
-  concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run proxypass ${url} ${destination}":
+  concat::fragment { "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run proxypass ${url} ${destination}":
     target  => "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run",
     content => template("${module_name}/proxy/proxypass.erb"),
     order   => '19',
-    }
+  }
 }
