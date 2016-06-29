@@ -41,7 +41,7 @@ apache httpd and apache modules management
 
 This module requires pluginsync enabled
 
-requirements:
+Requirements:
 * **eyp/eyplib** is required to be able to use helper functions like **bool2onoff**
 * **puppetlabs/concat**: most config files are created using concat (beaware of file changes)
 
@@ -443,7 +443,7 @@ NSSRandomSeed startup file:/dev/urandom 512
 * **defaultvh**: Only for default virtual host (default: false)
 * **defaultvh_ss**: Enable or disable default virtual host server status (default: true)
 * **servername**: ServerName (default: $name)
-* **serveralias**: ServerAlias (default: undef)
+* **serveralias**: ServerAlias array (default: undef)
 * **allowedip**: Allowed ip for DocumentRoot (default: undef)
 * **deniedip**: Denied ip for DocumentRoot (default: undef)
 * **rewrites**: Rewrites list (default: undef)
