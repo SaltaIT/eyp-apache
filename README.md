@@ -42,9 +42,8 @@ apache httpd and apache modules management
 This module requires pluginsync enabled
 
 requirements:
-
-**eyp/eyplib** is required to be able to use helper functions like **bool2onoff**
-**puppetlabs/concat**: most config files are created using concat (beaware of file changes)
+* **eyp/eyplib** is required to be able to use helper functions like **bool2onoff**
+* **puppetlabs/concat**: most config files are created using concat (beaware of file changes)
 
 
 ### Beginning with apache
