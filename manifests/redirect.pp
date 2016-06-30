@@ -1,8 +1,8 @@
 define apache::redirect (
                           $url,
-                          $path=undef,
-                          $match=undef,
-                          $status= 'permanent',
+                          $path             = undef,
+                          $match            = undef,
+                          $status           = 'permanent',
                           $order            = '00',
                           $port             = '80',
                           $serverstatus_url = '/server-status',
