@@ -1,8 +1,8 @@
 class apache::fcgi (
-                      $srcdir='/usr/local/src',
-                      $handler_name=$name,
-                      $fcgihost='127.0.0.1',
-                      $fcgiport='9000',
+                      $srcdir       = '/usr/local/src',
+                      $handler_name = $name,
+                      $fcgihost     = '127.0.0.1',
+                      $fcgiport     = '9000',
                     ) inherits apache::params {
 
   # <IfModule mod_fastcgi.c>

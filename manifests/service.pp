@@ -1,8 +1,8 @@
 class apache::service (
-                        $ensure ='running',
-                        $manage_service=true,
-                        $manage_docker_service=true,
-                        $enable =true,
+                        $ensure                = 'running',
+                        $manage_service        = true,
+                        $manage_docker_service = true,
+                        $enable                = true,
                       ) inherits apache::params {
 
   #

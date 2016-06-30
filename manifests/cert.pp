@@ -1,11 +1,11 @@
 define apache::cert (
-                      $pk_source=undef,
-                      $pk_file=undef,
-                      $cert_source=undef,
-                      $cert_file=undef,
-                      $intermediate_source=undef,
-                      $certname=$name,
-                      $version='',
+                      $pk_source           = undef,
+                      $pk_file             = undef,
+                      $cert_source         = undef,
+                      $cert_file           = undef,
+                      $intermediate_source = undef,
+                      $certname            = $name,
+                      $version             = '',
                     ) {
 
   if ! defined(Class['apache'])
