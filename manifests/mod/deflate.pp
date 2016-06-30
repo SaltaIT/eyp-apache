@@ -1,4 +1,6 @@
-class apache::mod::deflate ($ensure='installed') inherits apache::params {
+class apache::mod::deflate(
+                            $ensure = 'installed'
+                          ) inherits apache::params {
 
   if($apache::params::deflate_so==undef)
   {

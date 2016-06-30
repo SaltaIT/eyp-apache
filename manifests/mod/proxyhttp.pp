@@ -1,4 +1,6 @@
-class apache::mod::proxyhttp ($ensure='installed') inherits apache::params {
+class apache::mod::proxyhttp(
+                              $ensure = 'installed'
+                            ) inherits apache::params {
 
   if($apache::params::modproxyhttp_so==undef)
   {

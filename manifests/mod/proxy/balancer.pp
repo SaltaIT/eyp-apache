@@ -1,7 +1,7 @@
 define apache::mod::proxy::balancer (
                                       $members,
-                                      $balancername     = $name,
-                                      $ensure = 'present',
+                                      $balancername = $name,
+                                      $ensure       = 'present',
                                     ) {
 
   if ! defined(Class['apache::mod::proxybalancer'])

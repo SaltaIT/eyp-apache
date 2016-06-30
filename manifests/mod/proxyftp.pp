@@ -1,4 +1,6 @@
-class apache::mod::proxyftp ($ensure='installed') inherits apache::params {
+class apache::mod::proxyftp (
+                              $ensure = 'installed'
+                            ) inherits apache::params {
 
   if($apache::params::modproxyftp_so==undef)
   {
