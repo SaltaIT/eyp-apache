@@ -96,6 +96,19 @@ apache::directory {'/var/www/testing/cgi-bin/':
 }
 ```
 
+#### redirect
+
+```puppet
+apache::vhost {'et2blog':
+  documentroot => '/var/www/et2blog',
+}
+
+apache::redirect { 'et2blog':
+  path => '/',
+  url => 'http://systemadmin.es/',
+}
+```
+
 #### custom logformats
 
 we can add custom log formats using **logformats** hash, for example:
