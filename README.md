@@ -361,16 +361,52 @@ class {'apache::fcgi':
 
 ### global hiera settings
 
-* **eypapache::monitips**: IP list to be allowed by default in the default vhost
+* **eypapache::monitips**: IP list to be allowed by default in the default vhost. Used in **apache::serverstatus** as a default list of allowd IPs
 
 ### classes
 
 #### apache
 
 private classes:
-* **apache::params**: apache default values
-* **apache::service**: apache service
-* **apache::version**: detect distro's apache version
+  * **apache::params**: apache default values
+  * **apache::service**: apache service
+  * **apache::version**: detect distro's apache version
+
+apache variables:
+* operational variables:
+  * **manage_service**        = true,
+  * **manage_docker_service** = false,
+* distro related variables:
+  * **version**               = $apache::version::default,
+  * **apache_username**       = $apache::params::apache_username,
+  * **apache_group**          = $apache::params::apache_group,
+* general options:
+  * **mpm**                   = $apache::params::mpm_default,
+  * **servertokens**          = $apache::params::servertokens_default,
+  * **timeout**               = $apache::params::timeout_default,
+  * **keepalive**             = $apache::params::keepalive_default,
+  * **keepalivetimeout**      = $apache::params::keepalivetimeout_default,
+  * **maxkeepalivereq**       = $apache::params::maxkeepalivereq_default,
+  * **extendedstatus**        = $apache::params::extendedstatus_default,
+  * **serversignature**       = $apache::params::serversignature_default,
+  * **listen**                = [ '80' ],
+  * **namevirtualhosts**      = undef,
+  * **ssl**                   = false,
+  * **sni**                   = true,
+  * **trace**                 = false,
+  * **server_admin**          = $apache::params::server_admin_default,
+  * **directoty_index**       = [ 'index.html' ],
+  * **maxclients**            = $apache::params::maxclients_default,
+  * **maxrequestsperchild**   = $apache::params::maxrequestsperchild_default,
+  * **customlog_type**        = $apache::params::customlog_type_default,
+  * **logformats**            = undef,
+  * **add_defult_logformats** = true,
+  * **server_name**           = $apache::params::server_name_default,
+  * **ssl_compression**       = $apache::params::ssl_compression_default,
+  * **ssl_protocol**          = $apache::params::ssl_protocol_default,
+  * **ssl_chiphersuite**      = $apache::params::ssl_chiphersuite_default,
+  * **defaultcharset**        = 'UTF-8',
+
 
 #### apache::fcgi
 
@@ -381,9 +417,7 @@ installs mod_fastcgi
 * **fcgihost**: (default: 127.0.0.1)
 * **fcgiport**: (default: 9000)
 
-#### apache::serverstatus
-
-#### apache modules
+#### modules
 
 ##### apache::mod::deflate
 
@@ -396,6 +430,8 @@ installs mod_fastcgi
 * **default_expire**: default expire policy (default: access plus 1 year)
 
 ##### apache::mod::php
+
+**WARNING** Only works on Ubuntu 14.04
 
 * **ensure**: installed/purged (default: installed)
 
@@ -433,18 +469,69 @@ NSSRandomSeed startup file:/dev/random  512
 NSSRandomSeed startup file:/dev/urandom 512
 ```
 
-
 ### defines
 
 #### apache::cert
 
+* **pk_source**: private key certificate source, incompatible with **pk_file**
+* **pk_file**: private key certificate file path, file is already present on the fs. incompatible with **pk_source** - intended for testing only
+* **cert_source**: cert certificate source, incompatible with **cert_file**
+* **cert_file**: cert certificate file path, file is already present on the fs. incompatible with **cert_source** - intended for testing only
+* **intermediate_source**: intermediate certificate source
+* **certname**: cert name (default: resource's name)
+* **version**: optional, cert version (to be able to keep several versions)
+
 #### apache::custom_conf
+
+* **source**: file to deploy
+* **filename**: file to be deployed (default: resource's name)
+
+file will be deployed in this path: **${apache::params::baseconf}/conf.d/${filename}.conf**
 
 #### apache::directory
 
+* **order**: order of the vhost where we want to deploy the directory (default: 00)
+* **port**: port of the vhost where we want to deploy the directory (default: 80)
+* **servername**: servername on which we want to deploy the directory
+* **directory**: directory to define (default: resource's name)
+* **allowedip**: allow a given set of IPs to this directory (default: undef)
+* **denyip**: deny a given set of IPs to this directory (default: undef)
+* **options**: directory options (default: [ 'FollowSymlinks' ])
+* **allowoverride**: allow override (default: None)
+
 #### apache::module
 
+* **sofile**: file to load
+* **modname**: module name (default: resource's name)
+* **order**: just in case it's relevant
+
+#### apache::serverstatus
+
+* **order**: order of the vhost where we want to deploy the server-status (default: 00)
+* **port**: port of the vhost where we want to deploy the server-status (default: 80)
+* **serverstatus_url**: server-status URL (default: **/server-status**)
+* **servername**: servername on which we want to deploy the server-status
+* **allowedip**: (default: **eypapache::monitips**)
+* **defaultvh**: Defines whether this server-status is intended to be used in the default vhost or not (default: false)
+
 #### apache::redirect
+
+* **url**: destinarion URL
+* **path**: path to redirect,
+* **status**: redirect type (default: permanent)
+* **match**: whether use RedirectMatch or nor (default: undef)
+* **order**: order of the vhost where we want to deploy the redirect (default: 00)
+* **port**: port of the vhost where we want to deploy the redirect (default: 80)
+* **servername**: servername on which we want to deploy the redirect
+
+example:
+
+```puppet
+apache::redirect { 'et2blog':
+  path => '/',
+  url => 'http://systemadmin.es/',
+}
+```
 
 #### apache::vhost
 * **documentroot**: DocumentRoot

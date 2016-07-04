@@ -5,7 +5,6 @@ define apache::redirect (
                           $status           = 'permanent',
                           $order            = '00',
                           $port             = '80',
-                          $serverstatus_url = '/server-status',
                           $servername       = $name,
                         ) {
 
