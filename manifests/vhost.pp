@@ -366,7 +366,7 @@ define apache::vhost   (
             order   => '04',
             content => "\n  RewriteCond %{REQUEST_URI} !/${custom_sorrypage['healthcheck']}",
         }
-          
+
         }
       }
 

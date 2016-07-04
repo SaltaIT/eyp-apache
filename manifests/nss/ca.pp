@@ -2,8 +2,8 @@ define apache::nss::ca(
                           $cn,
                           $months_valid = '12000',
                           $serialnumber = '1',
-                          $caname = $name,
-                          $certdb = '/etc/httpd/alias',
+                          $caname       = $name,
+                          $certdb       = '/etc/httpd/alias',
                         ) {
   Exec {
     path => '/usr/sbin:/usr/bin:/sbin:/bin',

@@ -1,4 +1,6 @@
-class apache::mod::proxyajp ($ensure='installed') inherits apache::params {
+class apache::mod::proxyajp (
+                              $ensure = 'installed'
+                            ) inherits apache::params {
 
   if($apache::params::modproxyajp_so==undef)
   {

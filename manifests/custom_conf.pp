@@ -1,6 +1,6 @@
 define apache::custom_conf(
                     $source,
-                    $filename=$name,
+                    $filename = $name,
                   ) {
 
   if ! defined(Class['apache'])

@@ -1,4 +1,6 @@
-class apache::mod::proxybalancer ($ensure='installed') inherits apache::params {
+class apache::mod::proxybalancer(
+                                  $ensure = 'installed'
+                                ) inherits apache::params {
 
   if($apache::params::modproxybalancer_so==undef)
   {
