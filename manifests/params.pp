@@ -70,13 +70,23 @@ class apache::params inherits apache::version {
       {
         /^5.*/:
         {
+          $modsystemd=false
           $rundir='/var/run'
           $ssl_protocol_default=[ '-ALL', '+TLSv1' ]
           $snisupported=false
           $nss_pcache_path='/usr/sbin/nss_pcache'
         }
-        /^[6-7].*$/:
+        /^6.*/:
         {
+          $modsystemd=false
+          $rundir='/var/run/httpd'
+          $ssl_protocol_default=[ '-ALL', '+TLSv1', '+TLSv1.1', '+TLSv1.2' ]
+          $snisupported=true
+          $nss_pcache_path='/usr/libexec/nss_pcache'
+        }
+        /^7.*/:
+        {
+          $modsystemd=true
           $rundir='/var/run/httpd'
           $ssl_protocol_default=[ '-ALL', '+TLSv1', '+TLSv1.1', '+TLSv1.2' ]
           $snisupported=true
@@ -90,6 +100,7 @@ class apache::params inherits apache::version {
       #
       # QUICK & DIRTY
       #
+      $modsystemd=false
 
       $baseconf='/etc/apache2'
       $modulesdir='/usr/lib/apache2/modules'
