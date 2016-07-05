@@ -157,10 +157,13 @@ Listen <%= val %>
 # to be loaded here.
 #
 # Example:
-# LoadModule foo_module modules/mod_foo.so
+# LoadModule foo_module  <%= scope.lookupvar('apache::params::modulesdir') %>/mod_foo.so
 #
 
 
+<% if @modsystemd -%>
+LoadModule systemd_module  <%= scope.lookupvar('apache::params::modulesdir') %>/mod_systemd.so
+<% end -%>
 
 <%- if scope.function_versioncmp([@version, '2.4']) >= 0 -%>
 
