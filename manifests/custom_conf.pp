@@ -1,6 +1,7 @@
 define apache::custom_conf(
                     $source,
                     $filename = $name,
+                    $replace  = true,
                   ) {
 
   if ! defined(Class['apache'])
@@ -16,6 +17,7 @@ define apache::custom_conf(
     require => Package[$apache::params::packagename],
     notify  => Class['apache::service'],
     source  => $source,
+    replace => $replace,
   }
 
 }
