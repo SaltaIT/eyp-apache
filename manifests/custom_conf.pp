@@ -1,7 +1,7 @@
 define apache::custom_conf(
                     $source,
                     $filename = $name,
-                    $replace = true,
+                    $replace  = true,
                   ) {
 
   if ! defined(Class['apache'])
