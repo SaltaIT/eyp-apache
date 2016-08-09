@@ -552,7 +552,7 @@ ErrorLog <%= scope.lookupvar('apache::params::logdir') %>/error_log
 # Possible values include: debug, info, notice, warn, error, crit,
 # alert, emerg.
 #
-LogLevel warn
+LogLevel <%= @loglevel_errorlog %>
 
 #
 # The following directives define some format nicknames for use with

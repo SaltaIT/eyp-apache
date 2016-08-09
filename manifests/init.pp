@@ -31,6 +31,7 @@ class apache (
     $ssl_chiphersuite      = $apache::params::ssl_chiphersuite_default,
     $manage_docker_service = false,
     $defaultcharset        = 'UTF-8',
+    $loglevel_errorlog     = 'warn',
   )inherits apache::params {
 
   if($version!=$apache::version::default)
