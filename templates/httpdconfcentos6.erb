@@ -343,14 +343,14 @@ ServerName <%= @server_name %>
 # by the client.  When set "On", Apache will use the value of the
 # ServerName directive.
 #
-UseCanonicalName Off
+UseCanonicalName <%= scope.function_bool2onoff([@usecanonicalname]) %>
 
 #
 # DocumentRoot: The directory out of which you will serve your
 # documents. By default, all requests are taken from this directory, but
 # symbolic links and aliases may be used to point to other locations.
 #
-DocumentRoot "/var/www/html"
+DocumentRoot "<%= @default_documentroot %>"
 
 #
 # Each directory to which Apache has access can be configured with respect
@@ -382,7 +382,7 @@ DocumentRoot "/var/www/html"
 #
 # This should be changed to whatever you set DocumentRoot to.
 #
-<Directory "/var/www/html">
+<Directory "<%= @default_documentroot %>">
 
 #
 # Possible values for the Options directive are "None", "All",
@@ -464,7 +464,7 @@ DirectoryIndex <%= @directoty_index.join(' ') %>
 # for additional configuration directives.  See also the AllowOverride
 # directive.
 #
-AccessFileName .htaccess
+AccessFileName <%= @accessfilename %>
 
 #
 # The following lines prevent .htaccess and .htpasswd files from being
@@ -517,7 +517,7 @@ DefaultType text/plain
 # each client request will result in AT LEAST one lookup request to the
 # nameserver.
 #
-HostnameLookups Off
+HostnameLookups <%= scope.function_bool2onoff([@hostnamelookups]) %>
 
 #
 # EnableMMAP: Control whether memory-mapping is used to deliver

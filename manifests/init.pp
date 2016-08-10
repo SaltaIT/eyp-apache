@@ -32,6 +32,10 @@ class apache (
     $manage_docker_service = false,
     $defaultcharset        = 'UTF-8',
     $loglevel_errorlog     = 'warn',
+    $usecanonicalname      = false,
+    $default_documentroot  = '/var/www/html',
+    $accessfilename        = '.htaccess',
+    $hostnamelookups       = false,
   )inherits apache::params {
 
   if($version!=$apache::version::default)
