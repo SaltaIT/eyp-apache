@@ -406,6 +406,11 @@ apache variables:
   * **ssl_protocol**          = $apache::params::ssl_protocol_default,
   * **ssl_chiphersuite**      = $apache::params::ssl_chiphersuite_default,
   * **defaultcharset**        = 'UTF-8',
+  * **loglevel_errorlog**     = 'warn',
+  * **usecanonicalname**      = false,
+  * **default_documentroot**  = '/var/www/html',
+  * **accessfilename**        = '.htaccess',
+  * **hostnamelookups**       = false,
 
 
 #### apache::fcgi
