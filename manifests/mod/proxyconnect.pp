@@ -7,11 +7,6 @@ class apache::mod::proxyconnect (
     fail('Unsupported')
   }
 
-  if ! defined(Class['apache::mod::proxy'])
-  {
-    fail('You must include the apache::mod::proxy class before using any mod::proxy classes')
-  }
-
   if($ensure=='installed')
   {
     $ensure_conf_file='present'
@@ -29,6 +24,7 @@ class apache::mod::proxyconnect (
   {
     apache::module { 'proxy_connect_module':
       sofile  => "${apache::params::modulesdir}/${apache::params::modproxyconnect_so}",
+      require => Class['apache::mod::proxy'],
     }
   }
 }
