@@ -4,4 +4,4 @@
 
 ### Incompatible changes
 
-Changed general ErrorLog and CustomLog to use rotatelogs, deleting any related logrotate stuff
+* Changed general ErrorLog and CustomLog to use rotatelogs, deleting any related logrotate stuff
