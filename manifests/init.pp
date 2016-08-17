@@ -36,6 +36,7 @@ class apache (
     $default_documentroot  = '/var/www/html',
     $accessfilename        = '.htaccess',
     $hostnamelookups       = false,
+    $purge_logrotate       = true,
   )inherits apache::params {
 
   if($version!=$apache::version::default)
@@ -155,6 +156,17 @@ class apache (
   class { '::apache::service':
     manage_service        => $manage_service,
     manage_docker_service => $manage_docker_service,
+  }
+
+  if($purge_logrotate)
+  {
+    if(defined(Class['logrotate']))
+    {
+      logrotate::logs { $apache::params::servicename:
+        ensure      => 'absent',
+        custom_file => "/etc/logrotate.d/${apache::params::servicename}",
+      }
+    }
   }
 
 }
