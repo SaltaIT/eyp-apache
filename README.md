@@ -45,6 +45,10 @@ Requirements:
 * **eyp/eyplib** is required to be able to use helper functions like **bool2onoff**
 * **puppetlabs/concat**: most config files are created using concat (beaware of file changes)
 
+Optional:
+
+* **eyp/logrotate**: To be able to purge package's logrotate configuration files you need version 0.1.21 or greater
+
 
 ### Beginning with apache
 
@@ -376,6 +380,7 @@ apache variables:
 * operational variables:
   * **manage_service**        = true,
   * **manage_docker_service** = false,
+  * **purge_logrotate**: Purge package's related logrotate configuration (default: true)
 * distro related variables:
   * **version**               = $apache::version::default,
   * **apache_username**       = $apache::params::apache_username,
