@@ -545,8 +545,8 @@ HostnameLookups <%= scope.function_bool2onoff([@hostnamelookups]) %>
 # logged here.  If you *do* define an error logfile for a <VirtualHost>
 # container, that host's errors will be logged there and not here.
 #
-#ErrorLog <%= scope.lookupvar('apache::params::logdir') %>/error_log
-ErrorLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::params::logdir') %>/error_log.%Y.%m.%d.log 86400"
+#ErrorLog <%= scope.lookupvar('apache::logdir') %>/error_log
+ErrorLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::logdir') %>/error_log.%Y.%m.%d.log 86400"
 
 #
 # LogLevel: Control the number of messages logged to the error_log.
@@ -595,8 +595,8 @@ LogFormat "%{User-agent}i" agent
 # For a single logfile with access, agent, and referer information
 # (Combined Logfile Format), use the following directive:
 #
-#CustomLog <%= scope.lookupvar('apache::params::logdir') %>/access_log <%= @customlog_type %>
-CustomLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::params::logdir') %>/access_log.%Y.%m.%d.log 86400" <%= @customlog_type %>
+#CustomLog <%= scope.lookupvar('apache::logdir') %>/access_log <%= @customlog_type %>
+CustomLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::logdir') %>/access_log.%Y.%m.%d.log 86400" <%= @customlog_type %>
 
 #
 # Optionally add a line containing the server version and virtual host

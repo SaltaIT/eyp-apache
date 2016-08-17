@@ -16,8 +16,8 @@
   DirectoryIndex <%= @directoryindex.join(' ') %>
 
   <%- if @add_default_logs -%>
-  ErrorLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::params::logdir') %>/<%= @servername %>.error.%Y.%m.%d.log 86400"
-  CustomLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::params::logdir') %>/<%= @servername %>.access.%Y.%m.%d.log 86400" combined
+  ErrorLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::logdir') %>/<%= @servername %>.error.%Y.%m.%d.log 86400"
+  CustomLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::logdir') %>/<%= @servername %>.access.%Y.%m.%d.log 86400" combined
   <%- end -%>
 
   <%- if defined?(@custom_sorrypage) -%>

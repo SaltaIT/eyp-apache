@@ -39,6 +39,7 @@ class apache (
     $purge_logrotate       = true,
     $compress_logs_mtime   = undef,
     $delete_logs_mtime     = undef,
+    $logdir                = $apache::params::logdir,
   )inherits apache::params {
 
   if($version!=$apache::version::default)
@@ -177,14 +178,28 @@ class apache (
 
     if(defined(Class['purgefiles']))
     {
-      purgefiles::cronjob { "/var/log/${apache::params::servicename}/":
-        file_iname => "*.log",
-        mtime      => $compress_logs_mtime,
-        action => '-exec gzip {} ;',
+      purgefiles::cronjob { $logdir:
+        file_iname  => '\*.log',
+        mtime       => $compress_logs_mtime,
+        action      => '-exec gzip {} \;',
+        cronjobname => 'eyp-apache logdir compress',
       }
     }
   }
 
   #delete_logs_mtime
+  if($delete_logs_mtime!=undef)
+  {
+    validate_re($delete_logs_mtime, [ '^\+[0-9]+$' ], 'not a valid mtime value')
+
+    if(defined(Class['purgefiles']))
+    {
+      purgefiles::cronjob { $logdir:
+        file_iname  => "\\*.log",
+        mtime       => $delete_logs_mtime,
+        cronjobname => 'eyp-apache logdir purge old logs',
+      }
+    }
+  }
 
 }
