@@ -194,10 +194,22 @@ class apache (
 
     if(defined(Class['purgefiles']))
     {
-      purgefiles::cronjob { $logdir:
-        file_iname  => "\\*.log",
-        mtime       => $delete_logs_mtime,
-        cronjobname => 'eyp-apache logdir purge old logs',
+
+      if($compress_logs_mtime!=undef)
+      {
+        purgefiles::cronjob { $logdir:
+          file_iname  => "\\*.log.gz",
+          mtime       => $delete_logs_mtime,
+          cronjobname => 'eyp-apache logdir purge old logs',
+        }
+      }
+      else
+      {
+        purgefiles::cronjob { $logdir:
+          file_iname  => "\\*.log",
+          mtime       => $delete_logs_mtime,
+          cronjobname => 'eyp-apache logdir purge old logs',
+        }
       }
     }
   }
