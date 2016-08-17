@@ -37,6 +37,8 @@ class apache (
     $accessfilename        = '.htaccess',
     $hostnamelookups       = false,
     $purge_logrotate       = true,
+    $compress_logs_mtime   = undef,
+    $delete_logs_mtime     = undef,
   )inherits apache::params {
 
   if($version!=$apache::version::default)
@@ -168,5 +170,21 @@ class apache (
       }
     }
   }
+
+  if($compress_logs_mtime!=undef)
+  {
+    validate_re($compress_logs_mtime, [ '^\+[0-9]+$' ], 'not a valid mtime value')
+
+    if(defined(Class['purgefiles']))
+    {
+      purgefiles::cronjob { "/var/log/${apache::params::servicename}/":
+        file_iname => "*.log",
+        mtime      => $compress_logs_mtime,
+        action => '-exec gzip {} ;',
+      }
+    }
+  }
+
+  #delete_logs_mtime
 
 }
