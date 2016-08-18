@@ -200,7 +200,7 @@ class apache (
       {
         purgefiles::cronjob { 'eyp-apache logdir purge old logs':
           path        => $logdir,
-          file_iname  => "\\*.log.gz",
+          file_iname  => '\*.log.gz',
           mtime       => $delete_logs_mtime,
           cronjobname => 'eyp-apache logdir purge old logs',
         }
@@ -209,7 +209,7 @@ class apache (
       {
         purgefiles::cronjob { 'eyp-apache logdir purge old logs':
           path        => $logdir,
-          file_iname  => "\\*.log",
+          file_iname  => '\*.log',
           mtime       => $delete_logs_mtime,
           cronjobname => 'eyp-apache logdir purge old logs',
         }
