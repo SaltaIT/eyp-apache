@@ -5,14 +5,12 @@ HOSTS:
       strict_variables:
     platform: el-7-x86_64
     hypervisor : docker
-    image: kz8s/centos
+    image: centos:7
     docker_preserve_image: true
     docker_cmd: '["/usr/sbin/init"]'
     docker_image_commands:
       - 'rm -rf /var/run/network/*'
-      - 'yum install -y openssl gcc make crontabs tar wget iproute java-1.7.0-openjdk java-1.7.0-openjdk-devel'
-      - 'systemctl stop firewalld'
-      - 'systemctl mask firewalld'
+      - 'yum install -y openssl-devel gcc make crontabs tar wget iproute java-1.7.0-openjdk java-1.7.0-openjdk-devel'
 CONFIG:
   type: foss
   log_level: debug
