@@ -32,6 +32,14 @@ class apache (
     $manage_docker_service = false,
     $defaultcharset        = 'UTF-8',
     $loglevel_errorlog     = 'warn',
+    $usecanonicalname      = false,
+    $default_documentroot  = '/var/www/html',
+    $accessfilename        = '.htaccess',
+    $hostnamelookups       = false,
+    $purge_logrotate       = true,
+    $compress_logs_mtime   = undef,
+    $delete_logs_mtime     = undef,
+    $logdir                = $apache::params::logdir,
   )inherits apache::params {
 
   if($version!=$apache::version::default)
@@ -151,6 +159,62 @@ class apache (
   class { '::apache::service':
     manage_service        => $manage_service,
     manage_docker_service => $manage_docker_service,
+  }
+
+  if($purge_logrotate)
+  {
+    if(defined(Class['logrotate']))
+    {
+      logrotate::logs { $apache::params::servicename:
+        ensure      => 'absent',
+        custom_file => "/etc/logrotate.d/${apache::params::servicename}",
+      }
+    }
+  }
+
+  if($compress_logs_mtime!=undef)
+  {
+    validate_re($compress_logs_mtime, [ '^\+[0-9]+$' ], 'not a valid mtime value')
+
+    if(defined(Class['purgefiles']))
+    {
+      purgefiles::cronjob { 'eyp-apache logdir compress':
+        path        => $logdir,
+        file_iname  => '\*.log',
+        mtime       => $compress_logs_mtime,
+        action      => '-exec gzip {} \;',
+        cronjobname => 'eyp-apache logdir compress',
+      }
+    }
+  }
+
+  #delete_logs_mtime
+  if($delete_logs_mtime!=undef)
+  {
+    validate_re($delete_logs_mtime, [ '^\+[0-9]+$' ], 'not a valid mtime value')
+
+    if(defined(Class['purgefiles']))
+    {
+
+      if($compress_logs_mtime!=undef)
+      {
+        purgefiles::cronjob { 'eyp-apache logdir purge old logs':
+          path        => $logdir,
+          file_iname  => "\\*.log.gz",
+          mtime       => $delete_logs_mtime,
+          cronjobname => 'eyp-apache logdir purge old logs',
+        }
+      }
+      else
+      {
+        purgefiles::cronjob { 'eyp-apache logdir purge old logs':
+          path        => $logdir,
+          file_iname  => "\\*.log",
+          mtime       => $delete_logs_mtime,
+          cronjobname => 'eyp-apache logdir purge old logs',
+        }
+      }
+    }
   }
 
 }

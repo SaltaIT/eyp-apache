@@ -7,11 +7,6 @@ class apache::mod::proxyajp (
     fail('Unsupported')
   }
 
-  if ! defined(Class['apache::mod::proxy'])
-  {
-    fail('You must include the apache::mod::proxy class before using any mod::proxy classes')
-  }
-
   if($ensure=='installed')
   {
     $ensure_conf_file='present'
@@ -29,6 +24,7 @@ class apache::mod::proxyajp (
   {
     apache::module { 'proxy_ajp_module':
       sofile  => "${apache::params::modulesdir}/${apache::params::modproxyajp_so}",
+      require => Class['apache::mod::proxy'],
     }
   }
 }

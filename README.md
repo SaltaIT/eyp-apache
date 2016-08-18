@@ -45,6 +45,11 @@ Requirements:
 * **eyp/eyplib** is required to be able to use helper functions like **bool2onoff**
 * **puppetlabs/concat**: most config files are created using concat (beaware of file changes)
 
+Optional:
+
+* **eyp/logrotate**: To be able to purge package's logrotate configuration files you need version 0.1.21 or greater
+* **eyp/purgefiles**: To be able to configure cronjobs to purge apache logs you need version 0.1.4 of greater
+
 
 ### Beginning with apache
 
@@ -376,10 +381,14 @@ apache variables:
 * operational variables:
   * **manage_service**        = true,
   * **manage_docker_service** = false,
+  * **purge_logrotate**: Purge package's related logrotate configuration (default: true)
+  * **compress_logs_mtime**: compress log files after this value (for example: +3, default: undef)
+  * **delete_logs_mtime**: delete log files after this value (for example: +3, default: undef)
 * distro related variables:
   * **version**               = $apache::version::default,
   * **apache_username**       = $apache::params::apache_username,
   * **apache_group**          = $apache::params::apache_group,
+  * **logdir**                = $apache::params::logdir,
 * general options:
   * **mpm**                   = $apache::params::mpm_default,
   * **servertokens**          = $apache::params::servertokens_default,
@@ -406,6 +415,11 @@ apache variables:
   * **ssl_protocol**          = $apache::params::ssl_protocol_default,
   * **ssl_chiphersuite**      = $apache::params::ssl_chiphersuite_default,
   * **defaultcharset**        = 'UTF-8',
+  * **loglevel_errorlog**     = 'warn',
+  * **usecanonicalname**      = false,
+  * **default_documentroot**  = '/var/www/html',
+  * **accessfilename**        = '.htaccess',
+  * **hostnamelookups**       = false,
 
 
 #### apache::fcgi
