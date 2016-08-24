@@ -1,6 +1,16 @@
 # CHANGELOG
 
-## 0.4.1
+## 0.3
+
+* modules not loaded anymore by default:
+  * proxy
+  * proxy_ajp
+  * proxy_balancer
+  * proxy_connect
+  * proxy_ftp
+  * proxy_http
+
+## 0.4
 
 ### Incompatible changes
 
