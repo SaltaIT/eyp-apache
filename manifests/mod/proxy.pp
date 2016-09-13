@@ -35,6 +35,6 @@ class apache::mod::proxy(
     group   => 'root',
     mode    => '0644',
     require => [ Class[['apache', 'apache::version']], File["${apache::params::baseconf}/conf.d"] ],
-    content => template("${module_name}/module/proxy/modproxy.erb"),
+    content => template("${module_name}/proxy/modproxy.erb"),
   }
 }
