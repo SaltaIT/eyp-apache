@@ -1,5 +1,6 @@
 class apache::mod::proxy(
-                          $ensure = 'installed'
+                          $ensure      = 'installed',
+                          $proxystatus = true,
                         ) inherits apache::params {
 
   if($apache::params::modproxy_so==undef)
@@ -26,5 +27,14 @@ class apache::mod::proxy(
       sofile => "${apache::params::modulesdir}/${apache::params::modproxy_so}",
       order  => '00',
     }
+  }
+
+  file { "${apache::params::baseconf}/conf.d/mod_proxy.conf":
+    ensure  => $ensure_conf_file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => [ Class[['apache', 'apache::version']], File["${apache::params::baseconf}/conf.d"] ],
+    content => template("${module_name}/module/proxy/modproxy.erb"),
   }
 }
