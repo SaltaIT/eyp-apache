@@ -190,8 +190,7 @@ LoadModule authz_user_module <%= scope.lookupvar('apache::params::modulesdir') %
 LoadModule authz_owner_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authz_owner.so
 LoadModule authz_groupfile_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authz_groupfile.so
 LoadModule authz_dbm_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authz_dbm.so
-#LoadModule ldap_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_ldap.so
-#LoadModule authnz_ldap_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authnz_ldap.so
+#fora ldap
 LoadModule include_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_include.so
 
 
