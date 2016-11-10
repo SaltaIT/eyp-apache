@@ -11,6 +11,10 @@
 # require valid-user
 # </Location>
 #
-define apache::location() {
+define apache::location(
+                          $order            = '00',
+                          $port             = '80',
+                          $servername       = $name,
+                        ) {
 
 }
