@@ -12,9 +12,13 @@
 # </Location>
 #
 define apache::location(
-                          $order            = '00',
-                          $port             = '80',
-                          $servername       = $name,
+                          $order          = '00',
+                          $port           = '80',
+                          $servername     = $name,
+                          $authname       = undef,
+                          #Kerberos
+                          $krb_keytab     = undef,
+                          $krb_authrealms = undef,
                         ) {
 
 }
