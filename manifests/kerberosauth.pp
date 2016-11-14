@@ -13,13 +13,17 @@
 #
 define apache::kerberosauth(
                               $url,
+                              $krb_authrealms,
                               $vhost_order       = '00',
                               $port              = '80',
                               $servername        = $name,
                               $authname          = undef,
                               $krb_keytab_source = undef,
-                              $krb_authrealms    = undef,
+                              $method_negotiate  = true,
+                              $method_k5_passwd  = true,
                             ) {
+
+  validate_array($krb_authrealms)
 
   concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run ${directory}":
     target  => "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run",
@@ -27,4 +31,26 @@ define apache::kerberosauth(
     order   => '03',
   }
 
+  file { "${apache::params::baseconf}/conf.d/keytabs/${vhost_order}-${servername}-${port}.keytab":
+    ensure  => 'present',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => File["${apache::params::baseconf}/conf.d/keytabs"],
+    notify  => Class['apache::service'],
+    source  => $krb_keytab_source,
+  }
+
+  if(! defined(File["${apache::params::baseconf}/conf.d/keytabs"]))
+  {
+    file { "${apache::params::baseconf}/conf.d/keytabs":
+      ensure  => 'directory',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      recurse => true,
+      purge   => true,
+      require => File["${apache::params::baseconf}/conf.d"],
+    }
+  }
 }

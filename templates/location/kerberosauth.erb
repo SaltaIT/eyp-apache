@@ -1,10 +1,14 @@
 
-    <Location /secured>
+    <Location <%= @url %>>
       AuthType Kerberos
-      AuthName “Kerberos Login”
-      KrbMethodNegotiate On
-      KrbMethodK5Passwd On
-      KrbAuthRealms EXAMPLE.COM
-      Krb5KeyTab /etc/httpd/conf/httpd.keytab
+      <%- if defined?(@authname) -%>
+      AuthName "authentication requried"
+      <%- else -%>
+      AuthName "<%= @authname %>"
+      <%- end -%>
+      KrbMethodNegotiate <%= scope.function_bool2onoff([@method_negotiate]) %>
+      KrbMethodK5Passwd <%= scope.function_bool2onoff([@method_k5_passwd]) %>
+      KrbAuthRealms <%= @krb_authrealms.join(' ') %>
+      Krb5KeyTab <%= scope.lookupvar('apache::params::baseconf') %>/conf.d/keytabs/<%= @vhost_order %>-<%= @servername %>-<%= @port %>.keytab
       require valid-user
     </Location>
