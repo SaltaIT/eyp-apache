@@ -1,0 +1,10 @@
+
+    <Location /secured>
+      AuthType Kerberos
+      AuthName “Kerberos Login”
+      KrbMethodNegotiate On
+      KrbMethodK5Passwd On
+      KrbAuthRealms EXAMPLE.COM
+      Krb5KeyTab /etc/httpd/conf/httpd.keytab
+      require valid-user
+    </Location>

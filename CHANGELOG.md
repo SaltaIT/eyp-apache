@@ -2,7 +2,7 @@
 
 ## 0.4.7
 
-* added Location support
+* added kerberos auth support
 
 ## 0.4.6
 
