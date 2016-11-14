@@ -23,6 +23,15 @@ define apache::kerberosauth(
                               $method_k5_passwd  = true,
                             ) {
 
+  if(! defined(Package[$apache::params::kerberos_auth_package]))
+  {
+    package { $apache::params::kerberos_auth_package:
+      ensure => 'installed',
+    }
+  }
+
+  $url_cleanup = regsubst($url, '[^a-zA-Z]+$', '')
+
   validate_array($krb_authrealms)
 
   concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run ${directory}":
@@ -31,12 +40,15 @@ define apache::kerberosauth(
     order   => '03',
   }
 
-  file { "${apache::params::baseconf}/conf.d/keytabs/${vhost_order}-${servername}-${port}.keytab":
+  file { "${apache::params::baseconf}/conf.d/keytabs/${vhost_order}-${servername}-${port}-${url_cleanup}.keytab":
     ensure  => 'present',
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    require => File["${apache::params::baseconf}/conf.d/keytabs"],
+    require => [
+                Package[$apache::params::kerberos_auth_package],
+                File["${apache::params::baseconf}/conf.d/keytabs"]
+                ],
     notify  => Class['apache::service'],
     source  => $krb_keytab_source,
   }

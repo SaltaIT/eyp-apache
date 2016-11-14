@@ -66,6 +66,8 @@ class apache::params inherits apache::version {
       $package_nss=[ 'mod_nss', 'nss-tools' ]
       $modnss_so='libmodnss.so'
 
+      $kerberos_auth_package = 'mod_auth_kerb'
+
       case $::operatingsystemrelease
       {
         /^5.*/:
@@ -124,6 +126,8 @@ class apache::params inherits apache::version {
       $package_nss=[ 'libapache2-mod-nss' ]
       $modnss_so='mod_nss.so'
       $nss_pcache_path='/usr/sbin/nss_pcache'
+
+      $kerberos_auth_package = 'libapache2-mod-auth-kerb'
 
       case $::operatingsystem
       {
