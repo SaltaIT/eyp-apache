@@ -3,7 +3,7 @@
 #
 # <Location /secured>
 # AuthType Kerberos
-# AuthName “Kerberos Login”
+# AuthName "Kerberos Login"
 # KrbMethodNegotiate On
 # KrbMethodK5Passwd On
 # KrbAuthRealms EXAMPLE.COM
