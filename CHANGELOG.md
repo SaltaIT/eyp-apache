@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.7
+
+* added kerberos auth support
+
 ## 0.4.6
 
 * minor bugfix

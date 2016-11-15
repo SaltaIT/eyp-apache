@@ -33,5 +33,5 @@ define apache::directory (
     target  => "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run",
     content => template("${module_name}/directory/directory.erb"),
     order   => '03',
-    }
+  }
 }

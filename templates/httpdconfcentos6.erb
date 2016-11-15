@@ -182,6 +182,7 @@ LoadModule slotmem_shm_module <%= scope.lookupvar('apache::params::modulesdir') 
 
 LoadModule auth_basic_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_auth_basic.so
 LoadModule auth_digest_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_auth_digest.so
+LoadModule authn_core_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authn_core.so
 LoadModule authn_file_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authn_file.so
 LoadModule authn_anon_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authn_anon.so
 LoadModule authn_dbm_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authn_dbm.so

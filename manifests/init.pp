@@ -123,7 +123,7 @@ class apache (
   concat::fragment { "loadmodule header ${apache::params::baseconf}":
     target  => "${apache::params::baseconf}/conf.d/modules.conf",
     order   => '00', #answer to life the universe and everything
-    content => "#puppet managed file\n",
+    content => "# puppet managed file\n",
   }
 
   if($ssl)
