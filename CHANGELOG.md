@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.8
+
+* bugfix centos 6: /etc/httpd/modules/mod_authn_core.so
+
 ## 0.4.7
 
 * added kerberos auth support
