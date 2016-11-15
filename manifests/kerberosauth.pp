@@ -14,11 +14,11 @@
 define apache::kerberosauth(
                               $url,
                               $krb_authrealms,
+                              $krb_keytab_source,
                               $vhost_order       = '00',
                               $port              = '80',
                               $servername        = $name,
                               $authname          = undef,
-                              $krb_keytab_source = undef,
                               $method_negotiate  = true,
                               $method_k5_passwd  = true,
                             ) {
@@ -30,7 +30,7 @@ define apache::kerberosauth(
     }
   }
 
-  $url_cleanup = regsubst($url, '[^a-zA-Z]+$', '')
+  $url_cleanup = regsubst($url, '[^a-zA-Z]+', '')
 
   validate_array($krb_authrealms)
 

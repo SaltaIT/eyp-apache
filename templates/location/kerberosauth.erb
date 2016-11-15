@@ -2,9 +2,9 @@
     <Location <%= @url %>>
       AuthType Kerberos
       <%- if defined?(@authname) -%>
-      AuthName "authentication requried"
-      <%- else -%>
       AuthName "<%= @authname %>"
+      <%- else -%>
+      AuthName "authentication requried"
       <%- end -%>
       KrbMethodNegotiate <%= scope.function_bool2onoff([@method_negotiate]) %>
       KrbMethodK5Passwd <%= scope.function_bool2onoff([@method_k5_passwd]) %>
