@@ -30,6 +30,12 @@ define apache::kerberosauth(
     }
   }
 
+  #LoadModule auth_kerb_module modules/mod_auth_kerb.so
+  apache::module { 'auth_kerb_module':
+    sofile  => "${apache::params::modulesdir}/mod_auth_kerb.so",
+    require => Class['apache::mod::proxy'],
+  }
+
   $url_cleanup = regsubst($url, '[^a-zA-Z]+', '')
 
   validate_array($krb_authrealms)
