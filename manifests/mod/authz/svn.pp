@@ -7,6 +7,7 @@ class apache::mod::authz::svn(
   {
     apache::module { 'authz_svn_module':
       sofile  => "${apache::params::modulesdir}/mod_authz_svn.so",
+      require => Class['::apache::mod::davsvn'],
     }
   }
 }
