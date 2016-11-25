@@ -30,10 +30,13 @@ define apache::kerberosauth(
     }
   }
 
-  #LoadModule auth_kerb_module modules/mod_auth_kerb.so
-  apache::module { 'auth_kerb_module':
-    sofile  => "${apache::params::modulesdir}/mod_auth_kerb.so",
-    require => Package[$apache::params::kerberos_auth_package],
+  if(!defined(Apache::Module['auth_kerb_module']))
+  {
+    #LoadModule auth_kerb_module modules/mod_auth_kerb.so
+    apache::module { 'auth_kerb_module':
+      sofile  => "${apache::params::modulesdir}/mod_auth_kerb.so",
+      require => Package[$apache::params::kerberos_auth_package],
+    }
   }
 
   $url_cleanup = regsubst($url, '[^a-zA-Z]+', '')

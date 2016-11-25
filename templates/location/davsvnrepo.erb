@@ -1,0 +1,23 @@
+
+<Location <%= @url %>>
+  DAV svn
+  SVNPath <%= @snvpath %>
+
+  <%- if defined?(@svn_access_file_source) -%>
+  # Access Control via the authz module.
+  AuthzSVNAccessFile <%= scope.lookupvar('apache::params::baseconf') %>/conf.d/svnacls/<%= @vhost_order %>-<%= @servername %>-<%= @port %>-<%= @url_cleanup %>.acl
+  <%- end -%>
+
+  require valid-user
+
+  AuthType Kerberos
+  <%- if defined?(@authname) -%>
+  AuthName "<%= @authname %>"
+  <%- else -%>
+  AuthName "authentication requried"
+  <%- end -%>
+  KrbMethodNegotiate <%= scope.function_bool2onoff([@method_negotiate]) %>
+  KrbMethodK5Passwd <%= scope.function_bool2onoff([@method_k5_passwd]) %>
+  KrbAuthRealms <%= @krb_authrealms.join(' ') %>
+  Krb5KeyTab <%= scope.lookupvar('apache::params::baseconf') %>/conf.d/keytabs/<%= @vhost_order %>-<%= @servername %>-<%= @port %>-<%= @url_cleanup %>.keytab
+</Location>

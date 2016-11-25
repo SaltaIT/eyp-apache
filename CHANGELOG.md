@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.9
+
+* added **apache::davsvnrepo**
+
 ## 0.4.8
 
 * bugfix centos 6: /etc/httpd/modules/mod_authn_core.so
