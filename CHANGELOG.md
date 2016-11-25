@@ -1,11 +1,9 @@
 # CHANGELOG
 
-## 0.4.12
+## 0.4.14
 
 * typo svnpath
-
-## 0.4.10
-
+* bugfix fragment vhost
 * bugfix template **davsvnrepo.erb**
 
 ## 0.4.9

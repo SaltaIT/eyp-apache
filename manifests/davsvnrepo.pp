@@ -95,7 +95,7 @@ define apache::davsvnrepo(
 
   }
 
-  concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run ${directory}":
+  concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run ${url} ${svnpath}":
     target  => "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run",
     content => template("${module_name}/location/davsvnrepo.erb"),
     order   => '03',
