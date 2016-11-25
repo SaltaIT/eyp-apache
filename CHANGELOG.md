@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.10
+
+* bugfix template **davsvnrepo.erb**
+
 ## 0.4.9
 
 * added **apache::davsvnrepo** with kerberos auth

@@ -9,7 +9,7 @@
   <%- end -%>
 
   require valid-user
-
+  <%- if defined?(@use_kerberos) -%>
   AuthType Kerberos
   <%- if defined?(@authname) -%>
   AuthName "<%= @authname %>"
@@ -20,4 +20,5 @@
   KrbMethodK5Passwd <%= scope.function_bool2onoff([@method_k5_passwd]) %>
   KrbAuthRealms <%= @krb_authrealms.join(' ') %>
   Krb5KeyTab <%= scope.lookupvar('apache::params::baseconf') %>/conf.d/keytabs/<%= @vhost_order %>-<%= @servername %>-<%= @port %>-<%= @url_cleanup %>.davsvn.keytab
+  <%- end -%>
 </Location>
