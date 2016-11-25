@@ -1,6 +1,6 @@
 define apache::davsvnrepo(
                             $url,
-                            $snvpath,
+                            $svnpath,
                             $svn_access_file_source = undef,
                             $vhost_order            = '00',
                             $port                   = '80',
