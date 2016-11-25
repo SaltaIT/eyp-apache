@@ -2,7 +2,7 @@
 
 ## 0.4.9
 
-* added **apache::davsvnrepo**
+* added **apache::davsvnrepo** with kerberos auth
 
 ## 0.4.8
 
