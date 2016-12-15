@@ -43,7 +43,7 @@ define apache::kerberosauth(
 
   validate_array($krb_authrealms)
 
-  concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run ${directory}":
+  concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run kerberosauth ${url}":
     target  => "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run",
     content => template("${module_name}/location/kerberosauth.erb"),
     order   => '03',
