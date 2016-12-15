@@ -68,6 +68,8 @@ class apache::params inherits apache::version {
 
       $kerberos_auth_package = 'mod_auth_kerb'
 
+      $dav_svn_package = 'mod_dav_svn'
+
       case $::operatingsystemrelease
       {
         /^5.*/:

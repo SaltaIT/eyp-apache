@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## 0.4.15
+
+* changed hiera to hiera_array to merge arrays
+
+## 0.4.14
+
+* typo svnpath
+* bugfix fragment vhost
+* bugfix template **davsvnrepo.erb**
+
+## 0.4.9
+
+* added **apache::davsvnrepo** with kerberos auth
+
 ## 0.4.8
 
 * bugfix centos 6: /etc/httpd/modules/mod_authn_core.so
