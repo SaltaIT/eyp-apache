@@ -28,6 +28,7 @@ class apache::params inherits apache::version {
   $modproxyhttp_so='mod_proxy_http.so'
   $modproxybalancer_so='mod_proxy_balancer.so'
   $modproxyconnect_so='mod_proxy_connect.so'
+  $headers_so = 'headers.so'
 
   #mod_nss
   #package: centos: mod_nss ubuntu: libapache2-mod-nss
@@ -69,8 +70,6 @@ class apache::params inherits apache::version {
       $kerberos_auth_package = 'mod_auth_kerb'
 
       $dav_svn_package = 'mod_dav_svn'
-
-      $headers_so = 'headers.so'
 
       case $::operatingsystemrelease
       {
