@@ -70,6 +70,8 @@ class apache::params inherits apache::version {
 
       $dav_svn_package = 'mod_dav_svn'
 
+      $headers_so = 'headers.so'
+
       case $::operatingsystemrelease
       {
         /^5.*/:
