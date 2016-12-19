@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.16
+
+* added mod_headers support
+
 ## 0.4.15
 
 * changed hiera to hiera_array to merge arrays
