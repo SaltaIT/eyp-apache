@@ -1,1 +1,4 @@
 ProxyStatus <%= scope.function_bool2onoff([@proxystatus]) %>
+<% if defined?(@proxytimeout) -%>
+ProxyTimeout <%= @proxytimeout %>
+<% end -%>
