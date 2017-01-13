@@ -1,6 +1,7 @@
 class apache::mod::proxy(
-                          $ensure      = 'installed',
-                          $proxystatus = true,
+                          $ensure       = 'installed',
+                          $proxystatus  = true,
+                          $proxytimeout = undef,
                         ) inherits apache::params {
 
   if($apache::params::modproxy_so==undef)

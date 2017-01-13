@@ -39,6 +39,7 @@ define apache::vhost   (
         $add_default_logs = true,
         $site_running     = $apache::params::site_enabled_default,
         $custom_sorrypage = undef,
+        $defaultcharset   = undef,
       ) {
 
     if($custom_sorrypage)

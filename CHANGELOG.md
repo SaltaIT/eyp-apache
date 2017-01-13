@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 0.4.18
+
+* added **proxytimeout** to **modproxy**
+
+## 0.4.17
+
+* added **defaultcharset** to **apache::vhost**
+
 ## 0.4.16
 
 * added mod_headers support

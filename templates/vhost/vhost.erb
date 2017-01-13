@@ -10,6 +10,9 @@
   <%- end -%>
   <%- end -%>
   DirectoryIndex <%= @directoryindex.join(' ') %>
+  <% if defined?(@defaultcharset) -%>
+  AddDefaultCharset <%= @defaultcharset %>
+  <% end -%>
 
   <%- if @add_default_logs -%>
   ErrorLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::logdir') %>/<%= @servername %>.error.%Y.%m.%d.log 86400"

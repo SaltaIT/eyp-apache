@@ -1,7 +1,7 @@
 class apache::params inherits apache::version {
 
   $servertokens_default='Prod'
-  $timeout_default=30
+  $timeout_default='30'
   $keepalive_default=true
   $keepalivetimeout_default=1
   $maxkeepalivereq_default=1000
