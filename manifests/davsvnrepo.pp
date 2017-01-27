@@ -17,6 +17,8 @@ define apache::davsvnrepo(
   include ::apache::mod::davsvn
   include ::apache::mod::authz::svn
 
+  $url_cleanup = regsubst($url, '[^a-zA-Z]+', '')
+
   if($use_kerberos)
   {
     if(! defined(Package[$apache::params::kerberos_auth_package]))
@@ -34,8 +36,6 @@ define apache::davsvnrepo(
         require => Package[$apache::params::kerberos_auth_package],
       }
     }
-
-    $url_cleanup = regsubst($url, '[^a-zA-Z]+', '')
 
     validate_array($krb_authrealms)
 
