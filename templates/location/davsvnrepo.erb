@@ -8,9 +8,9 @@
     AuthzSVNAccessFile <%= scope.lookupvar('apache::params::baseconf') %>/conf.d/svnacls/<%= @vhost_order %>-<%= @servername %>-<%= @port %>-<%= @url_cleanup %>.acl
     <%- end -%>
 
-    require valid-user
-    <%- if defined?(@use_kerberos) -%>
+    <%- if @use_kerberos -%>
     AuthType Kerberos
+    require valid-user
     <%- if defined?(@authname) -%>
     AuthName "<%= @authname %>"
     <%- else -%>
