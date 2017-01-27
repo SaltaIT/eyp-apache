@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 0.4.20
+
+* bugfix to be able to disable authentication on **apache::davsvnrepo**
+
+## 0.4.19
+
+* bugfix **url_cleanup** in **apache::davsvnrepo**
+
 ## 0.4.18
 
 * added **proxytimeout** to **modproxy**
