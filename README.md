@@ -112,6 +112,26 @@ apache::redirect { 'et2blog':
 }
 ```
 
+#### proxypass
+
+```puppet
+class { 'apache::mod::proxy': }
+class { 'apache::mod::proxyajp': }
+class { 'apache::mod::proxybalancer': }
+
+apache::mod::proxy::balancer { 'test':
+  members =>  { 'ajp://app1.example.com:8009' => undef,
+                'ajp://app2.example.com:8009' => undef,
+              }
+}
+
+apache::mod::proxy::proxypass { '/lol':
+  destination => 'balancer://test',
+  servername => 'et2blog',
+
+}
+```
+
 #### custom logformats
 
 we can add custom log formats using **logformats** hash, for example:
