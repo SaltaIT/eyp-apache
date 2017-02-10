@@ -5,9 +5,9 @@
     <%- @serveralias.each do |val| -%>
   ServerAlias <%= val %>
     <%- end -%>
+  <%- end -%>
   <%- if defined?(@serveradmin) -%>
   ServerAdmin <%= @serveradmin %>
-  <%- end -%>
   <%- end -%>
   DirectoryIndex <%= @directoryindex.join(' ') %>
   <% if defined?(@defaultcharset) -%>
