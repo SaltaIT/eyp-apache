@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.21
+
+* bugfix ServerAdmin in vhost template
+
 ## 0.4.20
 
 * bugfix to be able to disable authentication on **apache::davsvnrepo**
