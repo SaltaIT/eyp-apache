@@ -590,6 +590,9 @@ apache::redirect { 'et2blog':
 * **add_default_logs**: Add default logging (default: true)
 * **site_running**: Define if site should be running (true) or sorrypage should be shown (false) (default: true)
 * **custom_sorrypage**: Define a custom sorry page. A hash with 'path' (where sorrypage document is stored) and 'errordocument' (document to load as sorry page) must be provided. If the vhost is load balanced and needs to serve a healthcheck page we can exclude it from 503 adding it to the key 'healthcheck'. (see Usage documentation) (default: undef)
+* **documentroot_owner**: documentroot's owner (default: root)
+* **documentroot_group**: documentroot's owner (default: group)
+* **documentroot_mode**: documentroot's mode (default: 0755)
 
 ## Limitations
 
