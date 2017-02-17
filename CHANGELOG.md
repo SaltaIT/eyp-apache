@@ -6,6 +6,8 @@
   * documentroot_owner
   * documentroot_group
   * documentroot_mode
+* bugfix ServerAdmin in vhost template
+
 
 ## 0.4.20
 
