@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 0.4.21
+
+* added to **apache::vhost**:
+  * documentroot_owner
+  * documentroot_group
+  * documentroot_mode
+
 ## 0.4.20
 
 * bugfix to be able to disable authentication on **apache::davsvnrepo**
