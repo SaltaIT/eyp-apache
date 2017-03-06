@@ -136,19 +136,23 @@ class apache::params inherits apache::version {
       {
         'Ubuntu':
         {
+          $packagenamedevel=undef
+          $servicename='apache2'
+          $conftemplate='httpdconfcentos6.erb'
+          $conffile='apache2.conf'
+          $modssl_package=[ 'apache2-bin' ]
+
+          $ssl_protocol_default=[ '-ALL', '+TLSv1', '+TLSv1.1', '+TLSv1.2' ]
+          $snisupported=true
           case $::operatingsystemrelease
           {
             /^14.*$/:
             {
               $packagename=[ 'apache2', 'apache2-mpm-prefork', 'apache2-utils', 'lynx-cur' ]
-              $packagenamedevel=undef
-              $servicename='apache2'
-              $conftemplate='httpdconfcentos6.erb'
-              $conffile='apache2.conf'
-              $modssl_package=[ 'apache2-bin' ]
-
-              $ssl_protocol_default=[ '-ALL', '+TLSv1', '+TLSv1.1', '+TLSv1.2' ]
-              $snisupported=true
+            }
+            /^16.*$/:
+            {
+              $packagename=[ 'apache2', 'apache2-utils', 'lynx-cur' ]
             }
             default: { fail("Unsupported Ubuntu version! - ${::operatingsystemrelease}")  }
           }
