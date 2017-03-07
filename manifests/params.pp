@@ -30,6 +30,8 @@ class apache::params inherits apache::version {
   $modproxyconnect_so='mod_proxy_connect.so'
   $headers_so = 'headers.so'
 
+  $apachectl='apachectl'
+
   #mod_nss
   #package: centos: mod_nss ubuntu: libapache2-mod-nss
 

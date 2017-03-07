@@ -36,6 +36,12 @@ class apache::service (
       }
       else
       {
+        exec { 'apachectl':
+          command     => "${apache::params::apachectl} -t",
+          refreshonly => true,
+          before      => Service[$apache::params::servicename],
+        }
+
         service { $apache::params::servicename:
           ensure  => $ensure,
           name    => $apache::params::servicename,
