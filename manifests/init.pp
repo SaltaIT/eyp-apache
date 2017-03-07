@@ -1,46 +1,47 @@
 # == Class: apache
 #
-class apache (
-    $mpm                   = $apache::params::mpm_default,
-    $servertokens          = $apache::params::servertokens_default,
-    $timeout               = $apache::params::timeout_default,
-    $keepalive             = $apache::params::keepalive_default,
-    $keepalivetimeout      = $apache::params::keepalivetimeout_default,
-    $maxkeepalivereq       = $apache::params::maxkeepalivereq_default,
-    $extendedstatus        = $apache::params::extendedstatus_default,
-    $serversignature       = $apache::params::serversignature_default,
-    $listen                = [ '80' ],
-    $namevirtualhosts      = undef,
-    $ssl                   = false,
-    $sni                   = true,
-    $trace                 = false,
-    $version               = $apache::version::default,
-    $apache_username       = $apache::params::apache_username,
-    $apache_group          = $apache::params::apache_group,
-    $server_admin          = $apache::params::server_admin_default,
-    $directoty_index       = [ 'index.html' ],
-    $maxclients            = $apache::params::maxclients_default,
-    $maxrequestsperchild   = $apache::params::maxrequestsperchild_default,
-    $customlog_type        = $apache::params::customlog_type_default,
-    $logformats            = undef,
-    $add_defult_logformats = true,
-    $server_name           = $apache::params::server_name_default,
-    $manage_service        = true,
-    $ssl_compression       = $apache::params::ssl_compression_default,
-    $ssl_protocol          = $apache::params::ssl_protocol_default,
-    $ssl_chiphersuite      = $apache::params::ssl_chiphersuite_default,
-    $manage_docker_service = false,
-    $defaultcharset        = 'UTF-8',
-    $loglevel_errorlog     = 'warn',
-    $usecanonicalname      = false,
-    $default_documentroot  = '/var/www/html',
-    $accessfilename        = '.htaccess',
-    $hostnamelookups       = false,
-    $purge_logrotate       = true,
-    $compress_logs_mtime   = undef,
-    $delete_logs_mtime     = undef,
-    $logdir                = $apache::params::logdir,
-  )inherits apache::params {
+class apache(
+              $mpm                       = $apache::params::mpm_default,
+              $servertokens              = $apache::params::servertokens_default,
+              $timeout                   = $apache::params::timeout_default,
+              $keepalive                 = $apache::params::keepalive_default,
+              $keepalivetimeout          = $apache::params::keepalivetimeout_default,
+              $maxkeepalivereq           = $apache::params::maxkeepalivereq_default,
+              $extendedstatus            = $apache::params::extendedstatus_default,
+              $serversignature           = $apache::params::serversignature_default,
+              $listen                    = [ '80' ],
+              $namevirtualhosts          = undef,
+              $ssl                       = false,
+              $sni                       = true,
+              $trace                     = false,
+              $version                   = $apache::version::default,
+              $apache_username           = $apache::params::apache_username,
+              $apache_group              = $apache::params::apache_group,
+              $server_admin              = $apache::params::server_admin_default,
+              $directoty_index           = [ 'index.html' ],
+              $maxclients                = $apache::params::maxclients_default,
+              $maxrequestsperchild       = $apache::params::maxrequestsperchild_default,
+              $customlog_type            = $apache::params::customlog_type_default,
+              $logformats                = undef,
+              $add_defult_logformats     = true,
+              $server_name               = $apache::params::server_name_default,
+              $manage_service            = true,
+              $systemd_socket_activation = false,
+              $ssl_compression           = $apache::params::ssl_compression_default,
+              $ssl_protocol              = $apache::params::ssl_protocol_default,
+              $ssl_chiphersuite          = $apache::params::ssl_chiphersuite_default,
+              $manage_docker_service     = false,
+              $defaultcharset            = 'UTF-8',
+              $loglevel_errorlog         = 'warn',
+              $usecanonicalname          = false,
+              $default_documentroot      = '/var/www/html',
+              $accessfilename            = '.htaccess',
+              $hostnamelookups           = false,
+              $purge_logrotate           = true,
+              $compress_logs_mtime       = undef,
+              $delete_logs_mtime         = undef,
+              $logdir                    = $apache::params::logdir,
+            ) inherits apache::params {
 
   if($version!=$apache::version::default)
   {
@@ -66,6 +67,35 @@ class apache (
     package { $apache::params::packagenamedevel:
       ensure => 'installed',
     }
+  }
+
+  case $::osfamily
+  {
+    'Debian':
+    {
+      case $::operatingsystem
+      {
+        'Ubuntu':
+        {
+          case $::operatingsystemrelease
+          {
+            /^16.*$/:
+            {
+              exec { 'kill zombie apache':
+                command => "systemctl stop ${apache::params::servicename} || /bin/true",
+                require => Package[$apache::params::packagename],
+                before  => File["${apache::params::baseconf}/conf.d/sites"],
+                unless  => "test -d ${apache::params::baseconf}/conf.d/sites",
+                path    => '/usr/sbin:/usr/bin:/sbin:/bin',
+              }
+            }
+            default: { }
+          }
+        }
+        default: { }
+      }
+    }
+    default: { }
   }
 
   if($apache::params::sysconfigfile!=undef and $apache::params::sysconfigtemplate!=undef)
@@ -157,8 +187,9 @@ class apache (
   }
 
   class { '::apache::service':
-    manage_service        => $manage_service,
-    manage_docker_service => $manage_docker_service,
+    manage_service            => $manage_service,
+    manage_docker_service     => $manage_docker_service,
+    systemd_socket_activation => $systemd_socket_activation,
   }
 
   if($purge_logrotate)

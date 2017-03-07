@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.22
+
+* added Ubuntu 16.04 support
+
 ## 0.4.21
 
 * added to **apache::vhost**:

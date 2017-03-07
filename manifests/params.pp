@@ -30,6 +30,8 @@ class apache::params inherits apache::version {
   $modproxyconnect_so='mod_proxy_connect.so'
   $headers_so = 'headers.so'
 
+  $apachectl='apachectl'
+
   #mod_nss
   #package: centos: mod_nss ubuntu: libapache2-mod-nss
 
@@ -71,6 +73,8 @@ class apache::params inherits apache::version {
 
       $dav_svn_package = 'mod_dav_svn'
 
+      $modphp_modulename='php5_module'
+
       case $::operatingsystemrelease
       {
         /^5.*/:
@@ -102,11 +106,6 @@ class apache::params inherits apache::version {
     }
     'Debian':
     {
-      #
-      # QUICK & DIRTY
-      #
-      $modsystemd=false
-
       $baseconf='/etc/apache2'
       $modulesdir='/usr/lib/apache2/modules'
       $loadmodules_extra=false
@@ -121,9 +120,6 @@ class apache::params inherits apache::version {
       $sysconfigfile='/etc/apache2/envvars'
       $sysconfigtemplate="${module_name}/sysconfig/debian/envvars.erb"
 
-      $modphp_pkg=[ 'libapache2-mod-php5' ]
-      $modphp_so='libphp5.so'
-
       $ssl_compression_default=false
 
       $package_nss=[ 'libapache2-mod-nss' ]
@@ -136,19 +132,31 @@ class apache::params inherits apache::version {
       {
         'Ubuntu':
         {
+          $packagenamedevel=undef
+          $servicename='apache2'
+          $conftemplate='httpdconfcentos6.erb'
+          $conffile='apache2.conf'
+          $modssl_package=[ 'apache2-bin' ]
+
+          $ssl_protocol_default=[ '-ALL', '+TLSv1', '+TLSv1.1', '+TLSv1.2' ]
+          $snisupported=true
           case $::operatingsystemrelease
           {
             /^14.*$/:
             {
               $packagename=[ 'apache2', 'apache2-mpm-prefork', 'apache2-utils', 'lynx-cur' ]
-              $packagenamedevel=undef
-              $servicename='apache2'
-              $conftemplate='httpdconfcentos6.erb'
-              $conffile='apache2.conf'
-              $modssl_package=[ 'apache2-bin' ]
-
-              $ssl_protocol_default=[ '-ALL', '+TLSv1', '+TLSv1.1', '+TLSv1.2' ]
-              $snisupported=true
+              $modsystemd=false
+              $modphp_pkg=[ 'libapache2-mod-php5' ]
+              $modphp_so='libphp5.so'
+              $modphp_modulename='php5_module'
+            }
+            /^16.*$/:
+            {
+              $packagename=[ 'apache2', 'apache2-utils', 'lynx-cur' ]
+              $modsystemd=false
+              $modphp_pkg=[ 'libapache2-mod-php' ]
+              $modphp_so='libphp7.0.so'
+              $modphp_modulename='php7_module'
             }
             default: { fail("Unsupported Ubuntu version! - ${::operatingsystemrelease}")  }
           }

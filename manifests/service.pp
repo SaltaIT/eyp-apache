@@ -1,8 +1,9 @@
 class apache::service (
-                        $ensure                = 'running',
-                        $manage_service        = true,
-                        $manage_docker_service = true,
-                        $enable                = true,
+                        $ensure                    = 'running',
+                        $manage_service            = true,
+                        $manage_docker_service     = true,
+                        $enable                    = true,
+                        $systemd_socket_activation = false,
                       ) inherits apache::params {
 
   #
@@ -20,11 +21,35 @@ class apache::service (
   {
     if($manage_service)
     {
-      service { $apache::params::servicename:
-        ensure  => $ensure,
-        name    => $apache::params::servicename,
-        enable  => $enable,
-        require => File["${apache::params::baseconf}/${apache::params::conffile}"],
+      if($systemd_socket_activation)
+      {
+        if($apache::params::modsystemd)
+        {
+          # socket activation
+          # http://unix.stackexchange.com/questions/118172/how-to-start-to-use-httpd-with-socket-activation-systemd
+          fail('TODO: currently unimplemented')
+        }
+        else
+        {
+          fail('mod_systemd not loaded, socket activation unsupported')
+        }
+      }
+      else
+      {
+        # sanity check
+        exec { 'apachectl':
+          command     => "${apache::params::apachectl} -t",
+          refreshonly => true,
+          before      => Service[$apache::params::servicename],
+          path        => '/usr/sbin:/usr/bin:/sbin:/bin',
+        }
+
+        service { $apache::params::servicename:
+          ensure  => $ensure,
+          name    => $apache::params::servicename,
+          enable  => $enable,
+          require => File["${apache::params::baseconf}/${apache::params::conffile}"],
+        }
       }
     }
   }
