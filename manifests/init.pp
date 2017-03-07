@@ -69,6 +69,34 @@ class apache(
     }
   }
 
+  case $::osfamily
+  {
+    'Debian':
+    {
+      case $::operatingsystem
+      {
+        'Ubuntu':
+        {
+          case $::operatingsystemrelease
+          {
+            /^16.*$/:
+            {
+              exec { "kill zombie apache":
+                command => "pkill ${apache::params::servicename}",
+                require => Package[$apache::params::packagename],
+                before  => File["${apache::params::baseconf}/conf.d/sites"],
+                unless  => "test -d ${apache::params::baseconf}/conf.d/sites"
+              }
+            }
+            default: { }
+          }
+        }
+        default: { }
+      }
+    }
+    default: { }
+  }
+
   if($apache::params::sysconfigfile!=undef and $apache::params::sysconfigtemplate!=undef)
   {
     file { $apache::params::sysconfigfile:
