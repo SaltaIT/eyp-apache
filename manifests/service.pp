@@ -40,6 +40,7 @@ class apache::service (
           command     => "${apache::params::apachectl} -t",
           refreshonly => true,
           before      => Service[$apache::params::servicename],
+          path        => '/usr/sbin:/usr/bin:/sbin:/bin',
         }
 
         service { $apache::params::servicename:
