@@ -26,6 +26,7 @@ class apache::service (
         if($apache::params::modsystemd)
         {
           # socket activation
+          # http://unix.stackexchange.com/questions/118172/how-to-start-to-use-httpd-with-socket-activation-systemd
           fail('TODO: currently unimplemented')
         }
         else
