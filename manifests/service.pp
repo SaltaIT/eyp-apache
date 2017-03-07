@@ -36,6 +36,7 @@ class apache::service (
       }
       else
       {
+        # sanity check
         exec { 'apachectl':
           command     => "${apache::params::apachectl} -t",
           refreshonly => true,
