@@ -149,7 +149,7 @@ class apache::params inherits apache::version {
             /^16.*$/:
             {
               $packagename=[ 'apache2', 'apache2-utils', 'lynx-cur' ]
-              $modsystemd=true
+              $modsystemd=false
             }
             default: { fail("Unsupported Ubuntu version! - ${::operatingsystemrelease}")  }
           }
