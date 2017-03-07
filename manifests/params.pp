@@ -73,6 +73,8 @@ class apache::params inherits apache::version {
 
       $dav_svn_package = 'mod_dav_svn'
 
+      $modphp_modulename='php5_module'
+
       case $::operatingsystemrelease
       {
         /^5.*/:
@@ -146,6 +148,7 @@ class apache::params inherits apache::version {
               $modsystemd=false
               $modphp_pkg=[ 'libapache2-mod-php5' ]
               $modphp_so='libphp5.so'
+              $modphp_modulename='php5_module'
             }
             /^16.*$/:
             {
@@ -153,6 +156,7 @@ class apache::params inherits apache::version {
               $modsystemd=false
               $modphp_pkg=[ 'libapache2-mod-php' ]
               $modphp_so='libphp7.0.so'
+              $modphp_modulename='php7_module'
             }
             default: { fail("Unsupported Ubuntu version! - ${::operatingsystemrelease}")  }
           }

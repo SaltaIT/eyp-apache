@@ -34,7 +34,7 @@ class apache::mod::php(
 
   if($ensure=='installed')
   {
-    apache::module { 'php5_module':
+    apache::module { $apache::params::modphp_modulename:
       sofile  => "${apache::params::modulesdir}/${apache::params::modphp_so}",
       require => Package[$apache::params::modphp_pkg],
     }
