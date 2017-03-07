@@ -102,11 +102,6 @@ class apache::params inherits apache::version {
     }
     'Debian':
     {
-      #
-      # QUICK & DIRTY
-      #
-      $modsystemd=false
-
       $baseconf='/etc/apache2'
       $modulesdir='/usr/lib/apache2/modules'
       $loadmodules_extra=false
@@ -149,10 +144,12 @@ class apache::params inherits apache::version {
             /^14.*$/:
             {
               $packagename=[ 'apache2', 'apache2-mpm-prefork', 'apache2-utils', 'lynx-cur' ]
+              $modsystemd=false
             }
             /^16.*$/:
             {
               $packagename=[ 'apache2', 'apache2-utils', 'lynx-cur' ]
+              $modsystemd=true
             }
             default: { fail("Unsupported Ubuntu version! - ${::operatingsystemrelease}")  }
           }
