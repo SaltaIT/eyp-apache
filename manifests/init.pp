@@ -82,7 +82,7 @@ class apache(
             /^16.*$/:
             {
               exec { "kill zombie apache":
-                command => "pkill ${apache::params::servicename}",
+                command => "systemctl stop apache2 || /bin/true",
                 require => Package[$apache::params::packagename],
                 before  => File["${apache::params::baseconf}/conf.d/sites"],
                 unless  => "test -d ${apache::params::baseconf}/conf.d/sites"
