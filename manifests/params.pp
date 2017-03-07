@@ -116,8 +116,6 @@ class apache::params inherits apache::version {
       $sysconfigfile='/etc/apache2/envvars'
       $sysconfigtemplate="${module_name}/sysconfig/debian/envvars.erb"
 
-      $modphp_so='libphp5.so'
-
       $ssl_compression_default=false
 
       $package_nss=[ 'libapache2-mod-nss' ]
@@ -145,12 +143,14 @@ class apache::params inherits apache::version {
               $packagename=[ 'apache2', 'apache2-mpm-prefork', 'apache2-utils', 'lynx-cur' ]
               $modsystemd=false
               $modphp_pkg=[ 'libapache2-mod-php5' ]
+              $modphp_so='libphp5.so'
             }
             /^16.*$/:
             {
               $packagename=[ 'apache2', 'apache2-utils', 'lynx-cur' ]
               $modsystemd=false
               $modphp_pkg=[ 'libapache2-mod-php' ]
+              $modphp_so='libphp7.0.so'
             }
             default: { fail("Unsupported Ubuntu version! - ${::operatingsystemrelease}")  }
           }
