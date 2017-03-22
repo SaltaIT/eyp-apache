@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.23
+
+* added variable to be able to set umask for httpd
+
 ## 0.4.22
 
 * added Ubuntu 16.04 support

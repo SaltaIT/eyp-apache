@@ -52,8 +52,8 @@ class apache::params inherits apache::version {
       $logdir='/var/log/httpd'
       $rotatelogsbin='/usr/sbin/rotatelogs'
 
-      $sysconfigfile=undef
-      $sysconfigtemplate=undef
+      $sysconfigfile='/etc/sysconfig/httpd'
+      $sysconfigtemplate="${module_name}/sysconfig/redhat/envvars.erb"
 
       $packagename=[ 'httpd' ]
       $packagenamedevel='httpd-devel'
