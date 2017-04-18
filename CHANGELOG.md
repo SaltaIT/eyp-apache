@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 0.4.24
+
+* limit puppetlabs-concat to < 3.0.0
+
+## 0.4.23
+
+* added variable to be able to set umask for httpd
+
 ## 0.4.22
 
 * added Ubuntu 16.04 support

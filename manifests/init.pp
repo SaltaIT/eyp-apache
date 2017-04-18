@@ -41,6 +41,7 @@ class apache(
               $compress_logs_mtime       = undef,
               $delete_logs_mtime         = undef,
               $logdir                    = $apache::params::logdir,
+              $umask                     = undef,
             ) inherits apache::params {
 
   if($version!=$apache::version::default)
