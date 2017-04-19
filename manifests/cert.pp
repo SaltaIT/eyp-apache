@@ -56,8 +56,8 @@ define apache::cert (
       group   => 'root',
       mode    => '0644',
       require => [ Package[$apache::params::packagename], File["${apache::params::baseconf}/ssl"] ],
-      notify  => Class['apache::service'],
       source  => $pk_source,
+      notify  => Class['apache::service'],
     }
   }
   else
@@ -65,6 +65,7 @@ define apache::cert (
     file { "${apache::params::baseconf}/ssl/${certname}_pk${version}.pk":
       ensure => 'link',
       target => $pk_file,
+      notify => Class['apache::service'],
     }
   }
 
@@ -77,8 +78,8 @@ define apache::cert (
       group   => 'root',
       mode    => '0644',
       require => [ Package[$apache::params::packagename], File["${apache::params::baseconf}/ssl"] ],
-      notify  => Class['apache::service'],
       source  => $cert_source,
+      notify  => Class['apache::service'],
     }
   }
   else
@@ -86,6 +87,7 @@ define apache::cert (
     file { "${apache::params::baseconf}/ssl/${certname}_cert${version}.cert":
       ensure => 'link',
       target => $cert_file,
+      notify => Class['apache::service'],
     }
   }
 
@@ -100,8 +102,8 @@ define apache::cert (
       group   => 'root',
       mode    => '0644',
       require => [ Package[$apache::params::packagename], File["${apache::params::baseconf}/ssl"] ],
-      notify  => Class['apache::service'],
       source  => $intermediate_source,
+      notify  => Class['apache::service'],
     }
   }
 
