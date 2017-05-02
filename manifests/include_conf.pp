@@ -19,7 +19,7 @@ define apache::include_conf (
     }
   }
 
-  concat::fragment { "include ${path} ${wildcard}":
+  concat::fragment { "include ${path} ${files}":
     target  => "${apache::params::baseconf}/conf.d/includes.conf",
     order   => $order,
     content => template("${module_name}/includes.erb"),
