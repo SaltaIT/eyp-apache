@@ -4,7 +4,6 @@ define apache::include_conf (
                               $optional = true,
                               $order    = '42',
                             ) {
-
   include ::apache
 
   if(!defined(Concat["${apache::params::baseconf}/conf.d/includes.conf"]))
