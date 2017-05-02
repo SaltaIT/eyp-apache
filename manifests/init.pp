@@ -42,6 +42,9 @@ class apache(
               $delete_logs_mtime         = undef,
               $logdir                    = $apache::params::logdir,
               $umask                     = undef,
+              $startservers              = '8',
+              $minspareservers           = '5',
+              $maxspareservers           = '20',
             ) inherits apache::params {
 
   if($version!=$apache::version::default)

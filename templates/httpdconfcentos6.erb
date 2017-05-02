@@ -108,9 +108,9 @@ MaxKeepAliveRequests <%= @maxkeepalivereq %>
 # MaxClients: maximum number of server processes allowed to start
 # MaxRequestsPerChild: maximum number of requests a server process serves
 <IfModule prefork.c>
-StartServers       8
-MinSpareServers    5
-MaxSpareServers   20
+StartServers     <%= @startservers %>
+MinSpareServers  <%= @minspareservers %>
+MaxSpareServers  <%= @maxspareservers %>
 ServerLimit      <%= @maxclients %>
 MaxClients       <%= @maxclients %>
 MaxRequestsPerChild  <%= @maxrequestsperchild %>
@@ -125,7 +125,7 @@ MaxRequestsPerChild  <%= @maxrequestsperchild %>
 # ThreadsPerChild: constant number of worker threads in each server process
 # MaxRequestsPerChild: maximum number of requests a server process serves
 <IfModule worker.c>
-StartServers         4
+StartServers       <%= @startservers %>
 MaxClients         <%= @maxclients %>
 MinSpareThreads     25
 MaxSpareThreads     75
