@@ -58,7 +58,7 @@ class apache::params inherits apache::version {
       $packagename=[ 'httpd' ]
       $packagenamedevel='httpd-devel'
       $servicename='httpd'
-      $conftemplate='httpdconfcentos6.erb'
+      $conftemplate='httpdconf_base.erb'
       $conffile='conf/httpd.conf'
 
       $modphp_pkg=undef
@@ -134,7 +134,7 @@ class apache::params inherits apache::version {
         {
           $packagenamedevel=undef
           $servicename='apache2'
-          $conftemplate='httpdconfcentos6.erb'
+          $conftemplate='httpdconf_base.erb'
           $conffile='apache2.conf'
           $modssl_package=[ 'apache2-bin' ]
 
