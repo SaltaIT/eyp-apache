@@ -1,12 +1,6 @@
 <% if scope.function_versioncmp([@version, '2.4']) >= 0 -%>
-  <%- if @optional -%>
-    <%- @files.each do |val| -%>
-IncludeOptional <%= @path %>/<%= val %>
-    <%- end -%>
-  <%- else -%>
-    <%- @files.each do |val| -%>
-Include <%= @path %>/<%= val %>
-    <%- end -%>
+  <%- @files.each do |val| -%>
+Include<% if @optional %>Optional<% end %> <%= @path %>/<%= val %>
   <%- end -%>
 <% else -%>
   <%- @files.each do |val| -%>
