@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.25
+
+*  added variable to be able to set startservers, minspareservers, maxspareservers
+
 ## 0.4.24
 
 * apache cert links will notify apache::service (which by the way sets an implicit order)

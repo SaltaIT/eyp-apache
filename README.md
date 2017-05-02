@@ -437,7 +437,9 @@ apache variables:
   * **usecanonicalname**      = false,
   * **default_documentroot**  = '/var/www/html',
   * **accessfilename**        = '.htaccess',
-  * **hostnamelookups**       = false,
+  * **startservers**          = 8,
+  * **minspareservers**       = 5,
+  * **maxspareservers**       = 20,
 
 
 #### apache::fcgi
