@@ -2,7 +2,8 @@
 
 ## 0.4.25
 
-*  added variable to be able to set startservers, minspareservers, maxspareservers
+* added variable to be able to set startservers, minspareservers, maxspareservers
+* added **apache::include_conf**
 
 ## 0.4.24
 
