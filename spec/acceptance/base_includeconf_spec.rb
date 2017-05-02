@@ -12,7 +12,7 @@ describe 'apache class' do
         ensure => 'present',
         owner => 'root',
         group => 'root',
-        content => "",
+        content => '',
       }
 
       ->
