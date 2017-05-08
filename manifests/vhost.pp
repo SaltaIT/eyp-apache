@@ -147,6 +147,10 @@ define apache::vhost(
         max_age            => $hsts_max_age,
         include_subdomains => $hsts_include_subdomains,
         preload            => $hsts_preload,
+        vhost_order        => $order,
+        port               => $port,
+        servername         => $servername,
+        description        => 'Strict-Transport-Security',
       }
     }
 
