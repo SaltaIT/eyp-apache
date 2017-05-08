@@ -16,6 +16,7 @@ when 'RedHat'
   $testingconf     = '/etc/httpd/conf.d/sites/77-testing.lol-80.conf'
   $defaultvhconf   = '/etc/httpd/conf.d/00_default.conf'
   $modulesconf     = '/etc/httpd/conf.d/modules.conf'
+  $includesconf    = '/etc/httpd/conf.d/includes.conf'
   $deflateconf     = '/etc/httpd/conf.d/deflate.conf'
   $nssvhostconf    = '/etc/httpd/conf.d/sites/11-ZnVja3RoYXRiaXRjaAo.com-443.conf'
 
@@ -31,6 +32,7 @@ when 'Debian'
   $testingconf     = '/etc/apache2/conf.d/sites/77-testing.lol-80.conf'
   $defaultvhconf   = '/etc/apache2/conf.d/00_default.conf'
   $modulesconf     = '/etc/apache2/conf.d/modules.conf'
+  $includesconf    = '/etc/apache2/conf.d/includes.conf'
   $deflateconf     = '/etc/apache2/conf.d/deflate.conf'
   $nssvhostconf    = '/etc/apache2/conf.d/sites/11-ZnVja3RoYXRiaXRjaAo.com-443.conf'
 
@@ -44,6 +46,7 @@ else
   $systemadminconf = '-_-'
   $defaultvhconf   = '-_-'
   $modulesconf     = '-_-'
+  $includesconf    = '-_-'
   $deflateconf     = '-_-'
   $nssvhostconf    = '-_-'
 

@@ -1,13 +1,10 @@
 define apache::custom_conf(
-                    $source,
-                    $filename = $name,
-                    $replace  = true,
-                  ) {
+                            $source,
+                            $filename = $name,
+                            $replace  = true,
+                          ) {
 
-  if ! defined(Class['apache'])
-  {
-    fail('You must include the apache base class before using any apache defined resources')
-  }
+  include ::apache
 
   file { "${apache::params::baseconf}/conf.d/${filename}.conf":
     ensure  => 'present',
