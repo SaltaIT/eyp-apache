@@ -5,6 +5,7 @@
 * added variable to be able to set startservers, minspareservers, maxspareservers
 * added **apache::include_conf**
 * **apache::vhost::includes** and **apache::vhost::includes_optional** to be able to include non puppet managed files to a vhost
+* added option for **SSLHonorCipherOrder**
 
 ## 0.4.24
 
