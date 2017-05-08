@@ -1,8 +1,9 @@
 define apache::include_conf (
-                              $path     = $name,
-                              $files    = [ '*.conf' ],
-                              $optional = true,
-                              $order    = '42',
+                              $path        = $name,
+                              $files       = [ '*.conf' ],
+                              $optional    = true,
+                              $order       = '42',
+                              $description = undef,
                             ) {
   include ::apache
 
