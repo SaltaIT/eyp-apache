@@ -7,6 +7,7 @@
 * **apache::vhost::includes** and **apache::vhost::includes_optional** to be able to include non puppet managed files to a vhost
 * added option for **SSLHonorCipherOrder**
 * added preliminar **HSTS** support: **apache::hsts** (using **mod_headers**)
+* added a global variable to enable **PFS**
 
 ## 0.4.24
 

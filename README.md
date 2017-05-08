@@ -424,6 +424,7 @@ class {'apache::fcgi':
 ### global hiera settings
 
 * **eypapache::monitips**: IP list to be allowed by default in the default vhost. Used in **apache::serverstatus** as a default list of allowd IPs
+* **eypapache::pfs**: enable Perfect Fordward Secrecy (PFS) - it changed default ciphers to use ECC
 
 ### classes
 

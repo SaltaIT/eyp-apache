@@ -35,7 +35,14 @@ class apache::params inherits apache::version {
   #mod_nss
   #package: centos: mod_nss ubuntu: libapache2-mod-nss
 
-  $ssl_chiphersuite_default=[ 'ECDHE-RSA-AES256-SHA384', 'AES256-SHA256', 'RC4', 'HIGH', '!MD5', '!aNULL', '!EDH', '!AESGCM' ]
+  if(hiera('eypapache::pfs',false))
+  {
+    $ssl_chiphersuite_default=[ 'EECDH+ECDSA+AESGCM', 'EECDH+aRSA+AESGCM', 'EECDH+ECDSA+SHA384', 'EECDH+ECDSA+SHA256', 'EECDH+aRSA+SHA384', 'EECDH+aRSA+SHA256', 'EECDH+aRSA+RC4', 'EECDH', 'EDH+aRSA', 'RC4', '!aNULL', '!eNULL', '!LOW', '!3DES', '!MD5', '!EXP', '!PSK', '!SRP', '!DSS' ]
+  }
+  else
+  {
+    $ssl_chiphersuite_default=[ 'ECDHE-RSA-AES256-SHA384', 'AES256-SHA256', 'RC4', 'HIGH', '!MD5', '!aNULL', '!EDH', '!AESGCM' ]
+  }
 
   case $::osfamily
   {
