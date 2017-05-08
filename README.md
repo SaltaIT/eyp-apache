@@ -308,7 +308,14 @@ apache::vhost {'systemadmin.es':
                         'errordocument': 'maintenance.html',
   }
 }
+```
 
+#### includes
+
+```puppet
+apache::include_conf { '/etc:
+  files => [ 'demo.conf' ],
+}
 ```
 
 ### mod_headers
