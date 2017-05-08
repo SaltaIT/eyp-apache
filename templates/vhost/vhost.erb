@@ -14,6 +14,16 @@
   AddDefaultCharset <%= @defaultcharset %>
   <% end -%>
 
+  <%- if @includes.any? -%>
+    <%- @includes.each do |val| -%>
+      <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
+  Include<% if @includes_optional %>Optional<% end %> <%= val %>
+      <%- else -%>
+  Include <%= val %>
+      <%- end -%>
+    <%- end -%>
+  <%- end -%>
+
   <%- if @add_default_logs -%>
   ErrorLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::logdir') %>/<%= @servername %>.error.%Y.%m.%d.log 86400"
   CustomLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::logdir') %>/<%= @servername %>.access.%Y.%m.%d.log 86400" combined

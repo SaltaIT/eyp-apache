@@ -43,6 +43,8 @@ define apache::vhost   (
         $site_running       = $apache::params::site_enabled_default,
         $custom_sorrypage   = undef,
         $defaultcharset     = undef,
+        $includes           = [],
+        $includes_optional  = true,
       ) {
 
     if($custom_sorrypage)
