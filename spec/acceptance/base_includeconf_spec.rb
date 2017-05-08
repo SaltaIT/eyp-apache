@@ -8,7 +8,7 @@ describe 'apache class' do
     it 'should work with no errors' do
       pp = <<-EOF
 
-      file { '/demo.conf':
+      file { '/etc/demo.conf':
         ensure => 'present',
         owner => 'root',
         group => 'root',
