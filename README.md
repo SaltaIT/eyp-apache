@@ -311,6 +311,28 @@ apache::vhost {'systemadmin.es':
 
 ```
 
+### mod_headers
+
+#### apache::header
+
+```puppet2
+apache::vhost {'et2blog':
+  documentroot => '/var/www/et2blog',
+}
+
+apache::header { 'et2blog':
+  header_name => 'X-Joke',
+  header_value => 'no hay MAC que por ARP no venga',
+  condition => 'always',
+}
+```
+
+this adds the following directive:
+
+```
+Header onsuccess set X-Joke "no hay MAC que por ARP no venga"
+```
+
 ### mod_proxy
 
 #### mod_proxy_balancer
