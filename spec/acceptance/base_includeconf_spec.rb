@@ -8,7 +8,7 @@ describe 'apache class' do
     it 'should work with no errors' do
       pp = <<-EOF
 
-      file { '/tmp/demo.conf':
+      file { '/demo.conf':
         ensure => 'present',
         owner => 'root',
         group => 'root',
@@ -22,7 +22,7 @@ describe 'apache class' do
         manage_docker_service => true,
       }
 
-      apache::include_conf { '/tmp':
+      apache::include_conf { '/etc:
         files => [ 'demo.conf' ],
       }
 
@@ -58,7 +58,7 @@ describe 'apache class' do
     # include
     describe file($includesconf) do
       it { should be_file }
-      its(:content) { should match '/tmp/demo.conf' }
+      its(:content) { should match '/etc/demo.conf' }
     end
 
   end
