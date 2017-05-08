@@ -22,7 +22,7 @@ describe 'apache class' do
         manage_docker_service => true,
       }
 
-      apache::include_conf { '/etc:
+      apache::include_conf { '/etc':
         files => [ 'demo.conf' ],
       }
 
