@@ -47,11 +47,6 @@ describe 'apache class' do
                             allowoverride    => 'None',
       }
 
-      apache::header { 'et2blog':
-        header_name => 'X-Joke',
-        header_value => 'no hay MAC que por ARP no venga',
-      }
-
       EOF
 
       # Run it twice and test for idempotency
@@ -131,10 +126,6 @@ describe 'apache class' do
       #TODO: arreglar
       #its(:content) { should match /Options +ExecCGI -Includes/ }
       its(:content) { should match '</Directory>' }
-    end
-
-    it "mod_headers" do
-      expect(shell("curl -Ix localhost:80 et2blog | grep \"no hay MAC que por ARP no venga\"").exit_code).to be_zero
     end
 
   end

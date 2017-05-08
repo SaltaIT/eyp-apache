@@ -21,6 +21,20 @@ describe 'apache class' do
       class { 'apache::mod::headers':
     	}
 
+      apache::vhost {'default':
+        defaultvh=>true,
+        documentroot => '/var/www/void',
+      }
+
+      apache::vhost {'et2blog':
+        documentroot => '/var/www/et2blog',
+      }
+
+      apache::header { 'et2blog':
+        header_name => 'X-Joke',
+        header_value => 'no hay MAC que por ARP no venga',
+      }
+
       EOF
 
       # Run it twice and test for idempotency
@@ -53,6 +67,10 @@ describe 'apache class' do
     describe file($modulesconf) do
       it { should be_file }
       its(:content) { should match 'headers_module' }
+    end
+
+    it "mod_headers" do
+      expect(shell("curl -Ix localhost:80 et2blog | grep \"no hay MAC que por ARP no venga\"").exit_code).to be_zero
     end
 
   end

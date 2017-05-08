@@ -3,7 +3,7 @@ require_relative './version.rb'
 
 describe 'apache class' do
 
-  context 'include' do
+  context 'includeconf' do
     # Using puppet_apply as a helper
     it 'should work with no errors' do
       pp = <<-EOF
@@ -12,7 +12,8 @@ describe 'apache class' do
         ensure => 'present',
         owner => 'root',
         group => 'root',
-        content => '',
+        mode => '0666',
+        content => '#',
       }
 
       ->
