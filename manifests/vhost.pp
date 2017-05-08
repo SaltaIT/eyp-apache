@@ -46,6 +46,7 @@ define apache::vhost   (
         $defaultcharset     = undef,
         $includes           = [],
         $includes_optional  = true,
+        # HSTS, no subdomains, max-age=31536000
       ) {
 
     if($custom_sorrypage)
