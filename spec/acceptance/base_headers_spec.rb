@@ -33,6 +33,7 @@ describe 'apache class' do
       apache::header { 'et2blog':
         header_name => 'X-Joke',
         header_value => 'no hay MAC que por ARP no venga',
+        condition => 'always',
       }
 
       EOF
