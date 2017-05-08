@@ -238,6 +238,16 @@ apache::vhost {'et2blog_ssl':
 }
 ```
 
+#### HSTS
+
+```puppet
+apache::vhost {'et2blog':
+  documentroot            => '/var/www/et2blog',
+  hsts                    => true,
+  hsts_include_subdomains => true,
+}
+```
+
 #### mod_nss
 
 ```puppet
