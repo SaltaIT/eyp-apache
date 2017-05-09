@@ -1,6 +1,6 @@
 define apache::addtype(
                         $mediatype,
-                        $extension,
+                        $extension   = $name,
                         $description = undef,
                       ) {
   include ::apache

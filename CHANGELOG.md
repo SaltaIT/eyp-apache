@@ -15,7 +15,7 @@
 
 ## 0.4.24
 
-* apache cert links will notify apache::service (which by the way sets an implicit order)
+* apache cert links will notify **apache::service** (which by the way sets an implicit order)
 * limit puppetlabs-concat to < 3.0.0
 
 ## 0.4.23
