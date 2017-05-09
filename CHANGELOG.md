@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.26
+
+* added **apache::addtype**
+
 ## 0.4.25
 
 * added variable to be able to set startservers, minspareservers, maxspareservers
