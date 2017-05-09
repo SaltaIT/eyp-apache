@@ -200,6 +200,14 @@ apache::vhost {'default':
 class { 'apache::mod::php': }
 ```
 
+### addtype
+
+```puppet
+apache::addtype { '.sinep':
+  mediatype => 'application/sinep',
+}
+```
+
 ### SSL
 
 #### SSL setup using yaml
