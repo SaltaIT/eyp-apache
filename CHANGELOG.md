@@ -1,14 +1,21 @@
 # CHANGELOG
 
+## 0.4.26
+
+* added **apache::addtype**
+
 ## 0.4.25
 
-* added variable to be able to set startservers, minspareservers, maxspareservers
+* added variable to be able to set **startservers**, **minspareservers**, **maxspareservers**
 * added **apache::include_conf**
 * **apache::vhost::includes** and **apache::vhost::includes_optional** to be able to include non puppet managed files to a vhost
+* added option for **SSLHonorCipherOrder**
+* added preliminar **HSTS** support: **apache::hsts** (using **mod_headers**)
+* added a global variable to enable **PFS**
 
 ## 0.4.24
 
-* apache cert links will notify apache::service (which by the way sets an implicit order)
+* apache cert links will notify **apache::service** (which by the way sets an implicit order)
 * limit puppetlabs-concat to < 3.0.0
 
 ## 0.4.23

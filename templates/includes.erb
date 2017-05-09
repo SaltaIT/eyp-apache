@@ -1,3 +1,9 @@
+
+<% if defined?(@description) -%>
+#
+# <%= @description %>
+#
+<% end -%>
 <% if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
   <%- @files.each do |val| -%>
 Include<% if @optional %>Optional<% end %> <%= @path %>/<%= val %>

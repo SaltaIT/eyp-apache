@@ -11,41 +11,46 @@
 # 12,13,14 - scriptalias
 # 16,17,18 - aliases
 # 19 - proxypass
+# 20 - mod_headers
 # 30 - location auth (kerberos...)
 # 99 - end vhost
 #
-define apache::vhost   (
-        $documentroot,
-        $order              = '00',
-        $port               = '80',
-        $documentroot_owner = 'root',
-        $documentroot_group = 'root',
-        $documentroot_mode  = '0755',
-        $use_intermediate   = true,
-        $certname_version   = '',
-        $directoryindex     = [ 'index.php', 'index.html', 'index.htm' ],
-        $defaultvh          = false,
-        $defaultvh_ss       = true,
-        $servername         = $name,
-        $serveralias        = undef,
-        $allowedip          = undef,
-        $deniedip           = undef,
-        $rewrites           = undef,
-        $rewrites_source    = undef,
-        $certname           = undef,
-        $serveradmin        = undef,
-        $aliasmatch         = undef,
-        $scriptalias        = undef,
-        $options            = $apache::params::options_default,
-        $allowoverride      = $apache::params::allowoverride_default,
-        $aliases            = undef,
-        $add_default_logs   = true,
-        $site_running       = $apache::params::site_enabled_default,
-        $custom_sorrypage   = undef,
-        $defaultcharset     = undef,
-        $includes           = [],
-        $includes_optional  = true,
-      ) {
+define apache::vhost(
+                      $documentroot,
+                      $order                   = '00',
+                      $port                    = '80',
+                      $documentroot_owner      = 'root',
+                      $documentroot_group      = 'root',
+                      $documentroot_mode       = '0755',
+                      $use_intermediate        = true,
+                      $certname_version        = '',
+                      $directoryindex          = [ 'index.php', 'index.html', 'index.htm' ],
+                      $defaultvh               = false,
+                      $defaultvh_ss            = true,
+                      $servername              = $name,
+                      $serveralias             = undef,
+                      $allowedip               = undef,
+                      $deniedip                = undef,
+                      $rewrites                = undef,
+                      $rewrites_source         = undef,
+                      $certname                = undef,
+                      $serveradmin             = undef,
+                      $aliasmatch              = undef,
+                      $scriptalias             = undef,
+                      $options                 = $apache::params::options_default,
+                      $allowoverride           = $apache::params::allowoverride_default,
+                      $aliases                 = undef,
+                      $add_default_logs        = true,
+                      $site_running            = $apache::params::site_enabled_default,
+                      $custom_sorrypage        = undef,
+                      $defaultcharset          = undef,
+                      $includes                = [],
+                      $includes_optional       = true,
+                      $hsts                    = false,
+                      $hsts_max_age            = '31536000',
+                      $hsts_include_subdomains = false,
+                      $hsts_preload            = false,
+                    ) {
 
     if($custom_sorrypage)
     {
@@ -131,6 +136,22 @@ define apache::vhost   (
       command => "mkdir -p ${documentroot}",
       creates => $documentroot,
       require => Package[$apache::params::packagename],
+    }
+
+    if($hsts)
+    {
+      # $hsts_max_age            = '31536000',
+      # $hsts_include_subdomains = false,
+      # $hsts_preload            = false,
+      apache::hsts { "Strict-Transport-Security ${servername} ${port} ${order}":
+        max_age            => $hsts_max_age,
+        include_subdomains => $hsts_include_subdomains,
+        preload            => $hsts_preload,
+        vhost_order        => $order,
+        port               => $port,
+        servername         => $servername,
+        description        => 'Strict-Transport-Security',
+      }
     }
 
     if($defaultvh)

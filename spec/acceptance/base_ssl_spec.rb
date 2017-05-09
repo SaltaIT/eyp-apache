@@ -118,7 +118,7 @@ describe 'apache class' do
     end
 
     it "SSLv3 disabled" do
-      expect(shell("echo | openssl s_client -connect localhost:443 -ssl3 2>&1 | grep 'alert handshake failure'").exit_code).to be_zero
+      expect(shell("echo | openssl s_client -connect localhost:443 -ssl3 2>&1 | grep -E 'null ssl method passed|alert handshake failure'").exit_code).to be_zero
     end
 
     it "key size: 2048" do

@@ -200,6 +200,14 @@ apache::vhost {'default':
 class { 'apache::mod::php': }
 ```
 
+### addtype
+
+```puppet
+apache::addtype { '.sinep':
+  mediatype => 'application/sinep',
+}
+```
+
 ### SSL
 
 #### SSL setup using yaml
@@ -235,6 +243,16 @@ apache::vhost {'et2blog_ssl':
   port => 443,
   certname => 'cert_et2blog_ssl',
   use_intermediate => false,
+}
+```
+
+#### HSTS
+
+```puppet
+apache::vhost {'et2blog':
+  documentroot            => '/var/www/et2blog',
+  hsts                    => true,
+  hsts_include_subdomains => true,
 }
 ```
 
@@ -308,7 +326,36 @@ apache::vhost {'systemadmin.es':
                         'errordocument': 'maintenance.html',
   }
 }
+```
 
+#### includes
+
+```puppet
+apache::include_conf { '/etc:
+  files => [ 'demo.conf' ],
+}
+```
+
+### mod_headers
+
+#### apache::header
+
+```puppet2
+apache::vhost {'et2blog':
+  documentroot => '/var/www/et2blog',
+}
+
+apache::header { 'et2blog':
+  header_name => 'X-Joke',
+  header_value => 'no hay MAC que por ARP no venga',
+  condition => 'always',
+}
+```
+
+this adds the following directive:
+
+```
+Header onsuccess set X-Joke "no hay MAC que por ARP no venga"
 ```
 
 ### mod_proxy
@@ -385,6 +432,7 @@ class {'apache::fcgi':
 ### global hiera settings
 
 * **eypapache::monitips**: IP list to be allowed by default in the default vhost. Used in **apache::serverstatus** as a default list of allowd IPs
+* **eypapache::pfs**: enable Perfect Fordward Secrecy (PFS) - it changed default ciphers to use ECC
 
 ### classes
 
