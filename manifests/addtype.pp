@@ -2,6 +2,7 @@ define apache::addtype(
                         $mediatype,
                         $extension   = $name,
                         $description = undef,
+                        $order       = '42',
                       ) {
   include ::apache
 
