@@ -46,6 +46,7 @@ describe 'apache class' do
 
     	apache::vhost {'ssl ZnVja3RoYXRiaXRjaAo.com':
     		servername => 'ZnVja3RoYXRiaXRjaAo.com',
+        serveralias => [ 'localhost' ],
     		order        => '11',
     		port         => '443',
     		documentroot => '/var/www/et2blog',
@@ -114,11 +115,11 @@ describe 'apache class' do
     end
 
     it "curl HTTP 200 SSL ZnVja3RoYXRiaXRjaAo" do
-      expect(shell("curl -I https://localhost/check.rspec --insecure").exit_code).to be_zero
+      expect(shell("curl -Ix localhost:80 https://www.ZnVja3RoYXRiaXRjaAo.com/check.rspec --insecure").exit_code).to be_zero
     end
 
     it "HTTP 200 SSL ZnVja3RoYXRiaXRjaAo" do
-      expect(shell("curl -I https://localhost/check.rspec --insecure 2>/dev/null | head -n1 | grep 'HTTP/1.1 200 OK'").exit_code).to be_zero
+      expect(shell("curl -Ix localhost:80 https://www.ZnVja3RoYXRiaXRjaAo.com/check.rspec --insecure 2>/dev/null | head -n1 | grep 'HTTP/1.1 200 OK'").exit_code).to be_zero
     end
 
     it "cname SSL cert ZnVja3RoYXRiaXRjaAo" do
