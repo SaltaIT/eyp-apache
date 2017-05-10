@@ -105,6 +105,10 @@ describe 'apache class' do
       its(:content) { should match 'SSLEngine on' }
     end
 
+    it "curl HTTP 200 SSL et2blog" do
+      expect(shell("curl -I https://localhost/check.rspec --insecure").exit_code).to be_zero
+    end
+
     it "HTTP 200 SSL et2blog" do
       expect(shell("curl -I https://localhost/check.rspec --insecure 2>/dev/null | head -n1 | grep 'HTTP/1.1 200 OK'").exit_code).to be_zero
     end
