@@ -46,6 +46,7 @@ describe 'apache class' do
 
     	apache::vhost {'ssl ZnVja3RoYXRiaXRjaAo.com':
     		servername => 'ZnVja3RoYXRiaXRjaAo.com',
+        serveralias => [ 'localhost' ],
     		order        => '11',
     		port         => '443',
     		documentroot => '/var/www/et2blog',
@@ -57,6 +58,10 @@ describe 'apache class' do
     		port      => '443',
     		enforce_validcerts => false,
     	}
+
+      host { 'www.ZnVja3RoYXRiaXRjaAo.com':
+        ip => '127.0.0.1',
+      }
 
       EOF
 
@@ -113,8 +118,12 @@ describe 'apache class' do
       its(:content) { should_not match 'SSLEngine on' }
     end
 
+    it "curl HTTP 200 SSL ZnVja3RoYXRiaXRjaAo" do
+      expect(shell("curl -I https://www.ZnVja3RoYXRiaXRjaAo.com/check.rspec --insecure").exit_code).to be_zero
+    end
+
     it "HTTP 200 SSL ZnVja3RoYXRiaXRjaAo" do
-      expect(shell("curl -I https://localhost/check.rspec --insecure 2>/dev/null | head -n1 | grep 'HTTP/1.1 200 OK'").exit_code).to be_zero
+      expect(shell("curl -I https://www.ZnVja3RoYXRiaXRjaAo.com/check.rspec --insecure 2>/dev/null | head -n1 | grep 'HTTP/1.1 200 OK'").exit_code).to be_zero
     end
 
     it "cname SSL cert ZnVja3RoYXRiaXRjaAo" do
