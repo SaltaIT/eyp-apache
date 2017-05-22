@@ -23,7 +23,7 @@ define apache::files(
     fail('either file or file_regex must be defined')
   }
 
-  concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run ssl proxy":
+  concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run files ${file} ${file_regex}":
     target  => "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run",
     content => template("${module_name}/vhost/files.erb"),
     order   => '03',
