@@ -1,0 +1,5 @@
+<% if @log.kind_of?(Hash) -%>
+BrowserMatch "<%= @regex %>" <% @set.each do | var, val | %><%= var %>=<%= @val %> <% end %>
+<% elsif @log.kind_of?(Array) -%>
+BrowserMatch "<%= @regex %>" <% @set.each do | val | %><%= @val %> <% end %>
+<% end %>

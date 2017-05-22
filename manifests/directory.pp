@@ -7,6 +7,7 @@ define apache::directory (
                               $denyip           = undef,
                               $options          = $apache::params::options_default,
                               $allowoverride    = $apache::params::allowoverride_default,
+                              $ssl_options      = [],
                             ) {
 
   if($allowedip!=undef)

@@ -13,6 +13,7 @@
 # 19 - proxypass, proxyssl
 # 20 - mod_headers
 # 30 - location auth (kerberos...)
+# 31 - browsermatch
 # 99 - end vhost
 #
 define apache::vhost(

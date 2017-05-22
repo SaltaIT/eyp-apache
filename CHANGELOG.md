@@ -5,6 +5,8 @@
 * added **ssl_use_stapling** variable (only available on apache 2.4)
 * added **apache::sslproxy**
 * added **apache::location**
+* added ssl_options to **apache::directory**
+* added **apache::browsermatch**
 
 ## 0.4.26
 
