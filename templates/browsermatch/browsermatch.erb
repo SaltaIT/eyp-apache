@@ -8,6 +8,4 @@
   BrowserMatch "<%= @regex %>" <% @set.each do | var, val | %><%= var %>=<%= @val %> <% end %>
 <% elsif @set.kind_of?(Array) -%>
   BrowserMatch "<%= @regex %>" <% @set.each do | val | %><%= @val %> <% end %>
-<% else %>
-caca
 <% end %>
