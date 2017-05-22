@@ -17,6 +17,7 @@
 * added ssl verify options:
   * SSLVerifyClient
   * SSLVerifyDepth
+* added **customlog_filter** to **apache::vhost** to be able to filter logs
 
 ## 0.4.26
 
