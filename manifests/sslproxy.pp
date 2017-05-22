@@ -10,7 +10,7 @@ define apache::sslproxy (
                           $description                 = undef,
                         ) {
   #
-  concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run header ${condition} ${action} ${header_name} ${header_value}":
+  concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run ssl proxy":
     target  => "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run",
     content => template("${module_name}/proxy/sslproxy.erb"),
     order   => '19',
