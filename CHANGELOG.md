@@ -14,6 +14,9 @@
   * proxy_via
   * proxy_preserve_host
 * added **apache::mod::proxy::proxypassreverse**
+* added ssl verify options:
+  * SSLVerifyClient
+  * SSLVerifyDepth
 
 ## 0.4.26
 

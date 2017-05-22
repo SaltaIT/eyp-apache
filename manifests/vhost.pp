@@ -54,6 +54,8 @@ define apache::vhost(
                       $hsts_max_age            = '31536000',
                       $hsts_include_subdomains = false,
                       $hsts_preload            = false,
+                      $ssl_verify_client       = 'none',
+                      $ssl_verify_depth        = '1',
                     ) {
 
     if($custom_sorrypage)
