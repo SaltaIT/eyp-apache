@@ -17,6 +17,7 @@ class apache(
               $ssl_compression           = $apache::params::ssl_compression_default,
               $ssl_protocol              = $apache::params::ssl_protocol_default,
               $ssl_chiphersuite          = $apache::params::ssl_chiphersuite_default,
+              $ssl_use_stapling          = false,
               $trace                     = false,
               $version                   = $apache::version::default,
               $apache_username           = $apache::params::apache_username,

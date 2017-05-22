@@ -10,7 +10,7 @@
 # 09,10,11 - aliasmatch
 # 12,13,14 - scriptalias
 # 16,17,18 - aliases
-# 19 - proxypass
+# 19 - proxypass, proxyssl
 # 20 - mod_headers
 # 30 - location auth (kerberos...)
 # 99 - end vhost

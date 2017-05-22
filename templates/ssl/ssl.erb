@@ -15,6 +15,9 @@ SSLRandomSeed startup file:/dev/urandom  256
 SSLRandomSeed connect builtin
 SSLCryptoDevice builtin
 
+<% if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
+SSLUseStapling <%= scope.function_bool2onoff([@ssl_use_stapling]) %>
+<% end -%>
 
 SSLProtocol <%= @ssl_protocol.join(' ') %>
 
