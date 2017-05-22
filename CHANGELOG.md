@@ -19,6 +19,7 @@
   * SSLVerifyDepth
 * added **customlog_filter** to **apache::vhost** to be able to filter logs
 * added **apache::files** and **apache::filesmatch**
+* added **apache::logformat**
 * **INCOMPATIBLE CHANGE**: changed default values for **apache::directory**, directory is now mandatory, servername now default's to resource's name
 
 ## 0.4.26

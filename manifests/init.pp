@@ -156,6 +156,21 @@ class apache(
     notify  => Class['apache::service'],
   }
 
+  concat { "${apache::params::baseconf}/conf.d/global.conf":
+    ensure  => 'present',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => Package[$apache::params::packagename],
+    notify  => Class['apache::service'],
+  }
+
+  concat::fragment { "globalconf header ${apache::params::baseconf}":
+    target  => "${apache::params::baseconf}/conf.d/global.conf",
+    order   => '00', #answer to life the universe and everything
+    content => "# puppet managed file\n",
+  }
+
   concat::fragment { "loadmodule header ${apache::params::baseconf}":
     target  => "${apache::params::baseconf}/conf.d/modules.conf",
     order   => '00', #answer to life the universe and everything
