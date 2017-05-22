@@ -3,7 +3,7 @@
 # 01 - vhost definition as in vhost/vhost.erb
 # 02 - ssl configuration as in ssl/vhost_template.erb
 # 02 - nss configuration as in nss/vhost_template.erb
-# 03 - directory / location
+# 03 - directory / location / files
 # 04 - redirect
 # 05,06,07 - rewrite rules
 # 08 - serverstatus
