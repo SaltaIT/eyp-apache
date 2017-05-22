@@ -45,7 +45,7 @@ define apache::vhost(
                       $allowoverride           = $apache::params::allowoverride_default,
                       $aliases                 = undef,
                       $add_default_logs        = true,
-                      $customlog_filter        = undef,        
+                      $customlog_filter        = undef,
                       $site_running            = $apache::params::site_enabled_default,
                       $custom_sorrypage        = undef,
                       $defaultcharset          = undef,
