@@ -4,6 +4,9 @@
 <% if (@use_intermediate) -%>
   SSLCertificateChainFile "<%= scope.lookupvar('apache::params::baseconf') %>/ssl/<%= @certname %>_intermediate<%= @certname_version %>.cert"
 <% end -%>
+<% if defined?(@cacertname) -%>
+  SSLCACertificateFile "<%= scope.lookupvar('apache::params::baseconf') %>/ssl/ca_<%= @cacertname %>_client_validation_<%= @cacertname_version %>.cert"
+<% end -%>
   SSLOptions +FakeBasicAuth +ExportCertData +StrictRequire
   SetEnvIf User-Agent ".*MSIE.*" \
     nokeepalive ssl-unclean-shutdown \
