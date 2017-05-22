@@ -18,6 +18,7 @@
 #
 define apache::vhost(
                       $documentroot,
+                      $description             = undef,
                       $order                   = '00',
                       $port                    = '80',
                       $documentroot_owner      = 'root',
