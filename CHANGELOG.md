@@ -7,6 +7,7 @@
 * added **apache::location**
 * added ssl_options to **apache::directory**
 * added **apache::browsermatch**
+* added description variable to **apache::vhost**
 
 ## 0.4.26
 

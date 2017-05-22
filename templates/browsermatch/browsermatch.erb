@@ -1,6 +1,8 @@
 
 <% if defined?(@description) -%>
-  # <%= @description %>  
+  #
+  # <%= @description %>
+  #
 <% end -%>
 <% if @log.kind_of?(Hash) -%>
   BrowserMatch "<%= @regex %>" <% @set.each do | var, val | %><%= var %>=<%= @val %> <% end %>
