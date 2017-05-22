@@ -9,6 +9,11 @@
 * added **apache::browsermatch**
 * added description variable to **apache::vhost**
 * added **apache::requestheader**
+* added variables to **apache::mod::proxy**:
+  * proxy_requests
+  * proxy_via
+  * proxy_preserve_host
+* added **apache::mod::proxy::proxypassreverse**
 
 ## 0.4.26
 
