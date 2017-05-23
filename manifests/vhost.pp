@@ -45,6 +45,8 @@ define apache::vhost(
                       $allowoverride           = $apache::params::allowoverride_default,
                       $aliases                 = undef,
                       $add_default_logs        = true,
+                      $log_format              = 'combined',
+                      $log_rotate_seconds      = '86400',
                       $customlog_filter        = undef,
                       $site_running            = $apache::params::site_enabled_default,
                       $custom_sorrypage        = undef,

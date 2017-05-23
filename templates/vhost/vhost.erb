@@ -30,8 +30,8 @@
   <%- end -%>
 
   <%- if @add_default_logs -%>
-  ErrorLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::logdir') %>/<%= @servername %>.error.%Y.%m.%d.log 86400"
-  CustomLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::logdir') %>/<%= @servername %>.access.%Y.%m.%d.log 86400" combined<% if defined?(@customlog_filter) %> env=<%= @customlog_filter %><% end %>
+  ErrorLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::logdir') %>/<%= @servername %>.error.%Y.%m.%d.log <%= @log_rotate_seconds %>"
+  CustomLog "|<%= scope.lookupvar('apache::params::rotatelogsbin') %> -l <%= scope.lookupvar('apache::logdir') %>/<%= @servername %>.access.%Y.%m.%d.log <%= @log_rotate_seconds %>" <%= @log_format %><% if defined?(@customlog_filter) %> env=<%= @customlog_filter %><% end %>
   <%- end -%>
 
   <Directory <%= @documentroot %>>

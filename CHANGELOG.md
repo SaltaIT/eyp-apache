@@ -20,6 +20,9 @@
 * added **customlog_filter** to **apache::vhost** to be able to filter logs
 * added **apache::files** and **apache::filesmatch**
 * added **apache::logformat**
+* added log related variables to **apache::vhost**:
+  * log_format
+  * log_rotate_seconds
 * **INCOMPATIBLE CHANGE**: changed default values for **apache::directory**, directory is now mandatory, servername now default's to resource's name
 
 ## 0.4.26
