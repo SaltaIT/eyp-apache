@@ -2,7 +2,6 @@
 define apache::logformat(
                           $logformat,
                           $logformat_name,
-                          $description = undef,
                           $vhost_order = '00',
                           $port        = '80',
                           $servername  = $name,
