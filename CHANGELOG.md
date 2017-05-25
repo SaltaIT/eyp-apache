@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 0.4.27
+## 0.5.1
 
 * added **ssl_use_stapling** variable (only available on apache 2.4)
 * added **apache::sslproxy**

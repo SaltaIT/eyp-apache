@@ -91,9 +91,9 @@ apache::vhost {'testing.lol':
         directoryindex => [ 'index.php', 'lolindex.php', 'lol.html' ],
 }
 
-apache::directory {'/var/www/testing/cgi-bin/':
+apache::directory {'testing.lol':
                       vhost_order      => '77',
-                      servername       => 'testing.lol',
+                      directory       => '/var/www/testing/cgi-bin/',
                       options          => [ '+ExecCGI', '-Includes' ],
                       allowoverride    => 'None',
 }
@@ -575,8 +575,8 @@ file will be deployed in this path: **${apache::params::baseconf}/conf.d/${filen
 
 * **order**: order of the vhost where we want to deploy the directory (default: 00)
 * **port**: port of the vhost where we want to deploy the directory (default: 80)
-* **servername**: servername on which we want to deploy the directory
-* **directory**: directory to define (default: resource's name)
+* **servername**: servername on which we want to deploy the directory (default: resource's name)
+* **directory**: directory to define (mandatory)
 * **allowedip**: allow a given set of IPs to this directory (default: undef)
 * **denyip**: deny a given set of IPs to this directory (default: undef)
 * **options**: directory options (default: [ 'FollowSymlinks' ])

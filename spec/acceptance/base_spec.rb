@@ -40,11 +40,11 @@ describe 'apache class' do
               directoryindex => [ 'index.php', 'lolindex.php', 'lol.html' ],
       }
 
-      apache::directory {'/var/www/testing/cgi-bin/':
-                            vhost_order      => '77',
-                            servername       => 'testing.lol',
-                            options          => [ '+ExecCGI', '-Includes' ],
-                            allowoverride    => 'None',
+      apache::directory { 'testing.lol':
+                            directory     => '/var/www/testing/cgi-bin/',
+                            vhost_order   => '77',
+                            options       => [ '+ExecCGI', '-Includes' ],
+                            allowoverride => 'None',
       }
 
       EOF
