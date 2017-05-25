@@ -112,9 +112,7 @@
 
 ## 0.4
 
-### Incompatible changes
-
-* Changed general ErrorLog and CustomLog to use rotatelogs, deleting any related logrotate stuff
+* **INCOMPATIBLE CHANGE**: Changed general ErrorLog and CustomLog to use rotatelogs, deleting any related logrotate stuff
 
 ## 0.3
 
