@@ -1,0 +1,11 @@
+<% if scope.lookupvar('apache::ssl') -%>
+
+  #
+  # SSL poxy
+  #
+  SSLProxyEngine <%= scope.function_bool2onoff([@ssl_proxy_enabled]) %>
+  SSLProxyVerify <%= @ssl_proxy_verify %>
+  SSLProxyCheckPeerCN <%= scope.function_bool2onoff([@ssl_proxy_check_peer_cn]) %>
+  SSLProxyCheckPeerName <%= scope.function_bool2onoff([@ssl_proxy_check_peer_name]) %>
+  SSLProxyCheckPeerExpire <%= scope.function_bool2onoff([@ssl_proxy_check_peer_expire]) %>
+<% end -%>

@@ -1,9 +1,13 @@
 
-  <Directory <%= @directory %>>
+  <Location <%= @location %>>
+    <%- if defined?(@allowoverride) -%>
     AllowOverride <%= @allowoverride %>
+    <%- end -%>
+    <%- if @options.any? -%>
     Options <%= @options.join(' ') %>
-    <%- if @ssl_options.any? -%>
-    SSLOptions <%= @ssl_options.join(' ') %>
+    <%- end -%>
+    <%- if defined?(@ssl_require) -%>
+    SSLRequire <%= @ssl_require %>
     <%- end -%>
   <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
     <%- if @allowedip -%>
@@ -30,4 +34,4 @@
       <%- end -%>
     <%- end -%>
   <%- end -%>
-  </Directory>
+  </Location>

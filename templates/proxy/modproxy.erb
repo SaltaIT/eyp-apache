@@ -2,3 +2,6 @@ ProxyStatus <%= scope.function_bool2onoff([@proxystatus]) %>
 <% if defined?(@proxytimeout) -%>
 ProxyTimeout <%= @proxytimeout %>
 <% end -%>
+ProxyRequests <%= scope.function_bool2onoff([@proxy_requests]) %>
+ProxyVia <%= scope.function_bool2onoff([@proxy_via]) %>
+ProxyPreserveHost <%= scope.function_bool2onoff([@proxy_preserve_host]) %>

@@ -1,0 +1,11 @@
+
+<% if defined?(@description) -%>
+  #
+  # <%= @description %>
+  #
+<% end -%>
+  <FilesMatch "<%= @file_regex %>">
+    <%- if @ssl_options.any? -%>
+    SSLOptions <%= @ssl_options.join(' ') %>
+    <%- end -%>
+  </FilesMatch>

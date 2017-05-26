@@ -3,27 +3,28 @@
 # 01 - vhost definition as in vhost/vhost.erb
 # 02 - ssl configuration as in ssl/vhost_template.erb
 # 02 - nss configuration as in nss/vhost_template.erb
-# 03 - directory / location
+# 03 - directory / location / files
 # 04 - redirect
 # 05,06,07 - rewrite rules
 # 08 - serverstatus
 # 09,10,11 - aliasmatch
 # 12,13,14 - scriptalias
 # 16,17,18 - aliases
-# 19 - proxypass
+# 19 - proxypass, proxypassreverse, proxyssl
 # 20 - mod_headers
 # 30 - location auth (kerberos...)
+# 31 - browsermatch
 # 99 - end vhost
 #
 define apache::vhost(
                       $documentroot,
+                      $description             = undef,
                       $order                   = '00',
                       $port                    = '80',
                       $documentroot_owner      = 'root',
                       $documentroot_group      = 'root',
                       $documentroot_mode       = '0755',
                       $use_intermediate        = true,
-                      $certname_version        = '',
                       $directoryindex          = [ 'index.php', 'index.html', 'index.htm' ],
                       $defaultvh               = false,
                       $defaultvh_ss            = true,
@@ -34,6 +35,9 @@ define apache::vhost(
                       $rewrites                = undef,
                       $rewrites_source         = undef,
                       $certname                = undef,
+                      $certname_version        = '',
+                      $cacertname              = undef,
+                      $cacertname_version      = '',
                       $serveradmin             = undef,
                       $aliasmatch              = undef,
                       $scriptalias             = undef,
@@ -41,6 +45,9 @@ define apache::vhost(
                       $allowoverride           = $apache::params::allowoverride_default,
                       $aliases                 = undef,
                       $add_default_logs        = true,
+                      $log_format              = 'combined',
+                      $log_rotate_seconds      = '86400',
+                      $customlog_filter        = undef,
                       $site_running            = $apache::params::site_enabled_default,
                       $custom_sorrypage        = undef,
                       $defaultcharset          = undef,
@@ -50,6 +57,8 @@ define apache::vhost(
                       $hsts_max_age            = '31536000',
                       $hsts_include_subdomains = false,
                       $hsts_preload            = false,
+                      $ssl_verify_client       = 'none',
+                      $ssl_verify_depth        = '1',
                     ) {
 
     if($custom_sorrypage)

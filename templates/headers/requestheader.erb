@@ -1,0 +1,7 @@
+
+<% if defined?(@description) -%>
+  #
+  # <%= @description %>
+  #
+<% end -%>
+  RequestHeader <%= @action %> <%= @header_name %> <% if defined?(@header_value) %>"<%= @header_value %>"<% end %>

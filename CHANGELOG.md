@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## 0.5.1
+
+* added **ssl_use_stapling** variable (only available on apache 2.4)
+* added **apache::sslproxy**
+* added **apache::location**
+* added ssl_options to **apache::directory**
+* added **apache::browsermatch**
+* added description variable to **apache::vhost**
+* added **apache::requestheader**
+* added variables to **apache::mod::proxy**:
+  * proxy_requests
+  * proxy_via
+  * proxy_preserve_host
+* added **apache::mod::proxy::proxypassreverse**
+* added ssl verify options:
+  * SSLVerifyClient
+  * SSLVerifyDepth
+* added **customlog_filter** to **apache::vhost** to be able to filter logs
+* added **apache::files** and **apache::filesmatch**
+* added **apache::logformat**
+* added log related variables to **apache::vhost**:
+  * log_format
+  * log_rotate_seconds
+* **INCOMPATIBLE CHANGE**: changed default values for **apache::directory**, directory is now mandatory, servername now default's to resource's name
+
 ## 0.4.26
 
 * added **apache::addtype**
@@ -87,9 +112,7 @@
 
 ## 0.4
 
-### Incompatible changes
-
-* Changed general ErrorLog and CustomLog to use rotatelogs, deleting any related logrotate stuff
+* **INCOMPATIBLE CHANGE**: Changed general ErrorLog and CustomLog to use rotatelogs, deleting any related logrotate stuff
 
 ## 0.3
 
