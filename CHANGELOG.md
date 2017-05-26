@@ -24,6 +24,7 @@
   * log_format
   * log_rotate_seconds
 * **INCOMPATIBLE CHANGE**: changed default values for **apache::directory**, directory is now mandatory, servername now default's to resource's name
+* bugfix: added unimplemented vhost options to the default vhost
 
 ## 0.4.26
 

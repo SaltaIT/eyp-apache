@@ -1,10 +1,39 @@
+<% if defined?(@description) -%>
+#
+# <%= @description %>
+#
+<% end -%>
 <VirtualHost *:<%= @port %>>
-DocumentRoot <%= @documentroot %>
+  DocumentRoot <%= @documentroot %>
+  ServerName <%= @servername %>
+  <%- if defined?(@serveralias) -%>
+    <%- @serveralias.each do |val| -%>
+  ServerAlias <%= val %>
+    <%- end -%>
+  <%- end -%>
+  <%- if defined?(@serveradmin) -%>
+  ServerAdmin <%= @serveradmin %>
+  <%- end -%>
+  DirectoryIndex <%= @directoryindex.join(' ') %>
+  <% if defined?(@defaultcharset) -%>
+  AddDefaultCharset <%= @defaultcharset %>
+  <% end -%>
+
+  <%- if @includes.any? -%>
+    <%- @includes.each do |val| -%>
+      <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
+  Include<% if @includes_optional %>Optional<% end %> <%= val %>
+      <%- else -%>
+  Include <%= val %>
+      <%- end -%>
+    <%- end -%>
+  <%- end -%>
+
 <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
 
   <Directory <%= @documentroot %>>
-    AllowOverride None
-    Options None
+    AllowOverride <%= @allowoverride %>
+    Options <%= @options.join(' ') %>
     <%- if defined?(@allowedip) -%>
     Require all denied
     <%- @allowedip.each do |val| -%>
@@ -17,8 +46,8 @@ DocumentRoot <%= @documentroot %>
 
 <%- else -%>
   <Directory <%= @documentroot %>>
-    AllowOverride None
-    Options None
+    AllowOverride <%= @allowoverride %>
+    Options <%= @options.join(' ') %>
     <%- if defined?(@allowedip) -%>Order Deny,Allow
     Deny from all
     <%- @allowedip.each do |val| -%>
