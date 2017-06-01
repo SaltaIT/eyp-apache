@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 0.5.3
+
+* bugfix **apache::logformat**
+
+## 0.5.2
+
+* bugfix **apache::header**
+
 ## 0.5.1
 
 * added **ssl_use_stapling** variable (only available on apache 2.4)
