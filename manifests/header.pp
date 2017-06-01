@@ -11,7 +11,7 @@ define apache::header (
 
   include ::apache::mod::headers
 
-  concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run header ${condition} ${action} ${header_name} ${header_value}":
+  concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run header ${name} ${condition} ${action} ${header_name} ${header_value}":
     target  => "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run",
     content => template("${module_name}/headers/header.erb"),
     order   => '20',
