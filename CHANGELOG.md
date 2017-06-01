@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.3
+
+* bugfix **apache::logformat**
+
 ## 0.5.2
 
 * bugfix **apache::header**
