@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.4
+
+* bugfix apache 2.4 - prefork parameters were not being used
+
 ## 0.5.3
 
 * bugfix **apache::logformat**
