@@ -2,7 +2,7 @@
 
 ## 0.5.4
 
-* bugfix apache 2.4 - prefork parameters were not being used
+* bugfix apache 2.4 - prefork parameters were not being honored
 
 ## 0.5.3
 
