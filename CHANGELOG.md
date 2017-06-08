@@ -3,6 +3,7 @@
 ## 0.5.5
 
 * added **lbmethod** to **apache::mod::proxy::balancer**
+* **INCOMPATIBLE CHANGE**: **apache::mod::proxy::proxypass** changed resource's name from **$url** to **$servername**, thus **url** is now a mandatory parameter
 
 ## 0.5.4
 

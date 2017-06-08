@@ -1,9 +1,9 @@
 define apache::mod::proxy::proxypass(
-                                      $servername,
+                                      $url,
                                       $destination,
+                                      $servername = $name,
                                       $vhost_order = '00',
                                       $port        = '80',
-                                      $url         = $name,
                                     ) {
   #
   concat::fragment { "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run proxypass ${url} ${destination}":
