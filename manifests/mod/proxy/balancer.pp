@@ -2,6 +2,7 @@ define apache::mod::proxy::balancer (
                                       $members,
                                       $balancername = $name,
                                       $ensure       = 'present',
+                                      $lbmethod     = undef,
                                     ) {
 
   if ! defined(Class['apache::mod::proxybalancer'])

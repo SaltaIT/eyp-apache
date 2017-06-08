@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.5
+
+* added **lbmethod** to **apache::mod::proxy::balancer**
+
 ## 0.5.4
 
 * bugfix apache 2.4 - prefork parameters were not being honored
