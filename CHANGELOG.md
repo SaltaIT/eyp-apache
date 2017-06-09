@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.6
+
+* added default **SSLStaplingCache**
+
 ## 0.5.5
 
 * added **lbmethod** to **apache::mod::proxy::balancer**
