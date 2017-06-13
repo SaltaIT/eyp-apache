@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 0.5.6
+
+* added default **SSLStaplingCache**
+
+## 0.5.5
+
+* added **lbmethod** to **apache::mod::proxy::balancer**
+* **INCOMPATIBLE CHANGE**: **apache::mod::proxy::proxypass** changed resource's name from **$url** to **$servername**, thus **url** is now a mandatory parameter
+
+## 0.5.4
+
+* bugfix apache 2.4 - prefork parameters were not being honored
+
 ## 0.5.3
 
 * bugfix **apache::logformat**

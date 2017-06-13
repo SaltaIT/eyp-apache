@@ -3,4 +3,9 @@
     <%- @members.each do | key, value | -%>
     BalancerMember <%= key %>
     <%- end -%>
+    <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
+      <%- if defined?(@lbmethod) -%>
+    ProxySet lbmethod=<%= @lbmethod %>
+      <%- end -%>
+    <%- end -%>
   </Proxy>
