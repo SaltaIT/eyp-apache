@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.7
+
+* added listen_address to **apache::vhost**
+
 ## 0.5.6
 
 * added default **SSLStaplingCache**
