@@ -18,6 +18,7 @@ define apache::mod::proxy::balancer (
     group   => 'root',
     mode    => '0644',
     require => [ Class[['apache', 'apache::version']], File["${apache::params::baseconf}/conf.d"] ],
+    notify  => Class['::apache::service'],
     content => template("${module_name}/proxy/balancer.erb"),
   }
 

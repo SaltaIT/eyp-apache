@@ -3,7 +3,7 @@
 # <%= @description %>
 #
 <% end -%>
-<VirtualHost *:<%= @port %>>
+<VirtualHost <%= @listen_address %>:<%= @port %>>
   DocumentRoot <%= @documentroot %>
   ServerName <%= @servername %>
   <%- if defined?(@serveralias) -%>

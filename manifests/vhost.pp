@@ -21,6 +21,7 @@ define apache::vhost(
                       $description             = undef,
                       $order                   = '00',
                       $port                    = '80',
+                      $listen_address          = '*',
                       $documentroot_owner      = 'root',
                       $documentroot_group      = 'root',
                       $documentroot_mode       = '0755',

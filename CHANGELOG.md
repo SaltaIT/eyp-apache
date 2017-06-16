@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.5.7
+
+* added listen_address to **apache::vhost**
+* modified **apache::mod::proxy::balancer** to notify apache service
+
 ## 0.5.6
 
 * added default **SSLStaplingCache**

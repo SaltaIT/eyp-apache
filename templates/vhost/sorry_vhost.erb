@@ -1,4 +1,4 @@
-<VirtualHost *:<%= @port %>>
+<VirtualHost <%= @listen_address %>:<%= @port %>>
   <%- if defined?(@custom_sorrypage) -%>
   DocumentRoot <%= @custom_sorrypage['path'] %>
   <%- else -%>
