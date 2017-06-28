@@ -1,6 +1,6 @@
 define apache::alias(
-                      $alias,
-                      $dir,
+                      $alias_from,
+                      $alias_dir,
                       $servername  = $name,
                       $vhost_order = '00',
                       $port        = '80',
