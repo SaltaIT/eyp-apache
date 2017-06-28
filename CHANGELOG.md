@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.5.8
+
+* added **apache::alias**
+* added selinux_httpd_use_nfs flag to allow httpd to use NFS mounts
+
 ## 0.5.7
 
 * added listen_address to **apache::vhost**

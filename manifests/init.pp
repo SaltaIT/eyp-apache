@@ -47,11 +47,33 @@ class apache(
               $startservers              = '8',
               $minspareservers           = '5',
               $maxspareservers           = '20',
+              $selinux_httpd_use_nfs     = false,
             ) inherits apache::params {
 
   if($version!=$apache::version::default)
   {
     fail("unsupported version for this system - expected: ${version} supported: ${apache::version::default}")
+  }
+
+  if(defined(Class['::selinux']))
+  {
+    $current_selinux_mode = $::selinux? {
+      bool2boolstr(false) => 'disabled',
+      false               => 'disabled',
+      default             => $::selinux_current_mode,
+    }
+
+    case $current_selinux_mode
+    {
+      /^(enforcing|permissive)$/:
+      {
+        selinux::setbool { 'httpd_use_nfs':
+          value => $selinux_httpd_use_nfs,
+        }
+      }
+      'disabled': { }
+      default: { fail('this should not happen') }
+    }
   }
 
   validate_string($server_name)
