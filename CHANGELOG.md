@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.9
+
+* added **AllowEncodedSlashes** to **apache::vhost**
+
 ## 0.5.8
 
 * added **apache::alias**
