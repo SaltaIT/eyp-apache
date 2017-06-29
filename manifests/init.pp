@@ -1,5 +1,3 @@
-# == Class: apache
-#
 class apache(
               $mpm                       = $apache::params::mpm_default,
               $servertokens              = $apache::params::servertokens_default,
