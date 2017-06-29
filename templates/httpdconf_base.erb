@@ -5,36 +5,6 @@
 #
 #
 #
-# This is the main Apache server configuration file.  It contains the
-# configuration directives that give the server its instructions.
-# See <URL:http://httpd.apache.org/docs/2.2/> for detailed information.
-# In particular, see
-# <URL:http://httpd.apache.org/docs/2.2/mod/directives.html>
-# for a discussion of each configuration directive.
-#
-#
-# Do NOT simply read the instructions in here without understanding
-# what they do.  They're here only as hints or reminders.  If you are unsure
-# consult the online docs. You have been warned.
-#
-# The configuration directives are grouped into three basic sections:
-#  1. Directives that control the operation of the Apache server process as a
-#     whole (the 'global environment').
-#  2. Directives that define the parameters of the 'main' or 'default' server,
-#     which responds to requests that aren't handled by a virtual host.
-#     These directives also provide default values for the settings
-#     of all virtual hosts.
-#  3. Settings for virtual hosts, which allow Web requests to be sent to
-#     different IP addresses or hostnames and have them handled by the
-#     same Apache server process.
-#
-# Configuration and logfile names: If the filenames you specify for many
-# of the server's control files begin with "/" (or "drive:/" for Win32), the
-# server will use that explicit path.  If the filenames do *not* begin
-# with "/", the value of ServerRoot is prepended -- so "logs/foo.log"
-# with ServerRoot set to "/etc/httpd" will be interpreted by the
-# server as "/etc/httpd/logs/foo.log".
-#
 
 ### Section 1: Global Environment
 #
@@ -999,25 +969,3 @@ NameVirtualHost *:<%= val %>
 <% end -%>
 <% end -%>
 <% end -%>
-
-
-
-#
-# NOTE: NameVirtualHost cannot be used without a port specifier
-# (e.g. :80) if mod_ssl is being used, due to the nature of the
-# SSL protocol.
-#
-
-#
-# VirtualHost example:
-# Almost any Apache directive may go into a VirtualHost container.
-# The first VirtualHost section is used for requests without a known
-# server name.
-#
-#<VirtualHost *:80>
-#    ServerAdmin webmaster@dummy-host.example.com
-#    DocumentRoot /www/docs/dummy-host.example.com
-#    ServerName dummy-host.example.com
-#    ErrorLog logs/dummy-host.example.com-error_log
-#    CustomLog logs/dummy-host.example.com-access_log common
-#</VirtualHost>

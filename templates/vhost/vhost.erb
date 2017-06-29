@@ -15,9 +15,10 @@
   ServerAdmin <%= @serveradmin %>
   <%- end -%>
   DirectoryIndex <%= @directoryindex.join(' ') %>
-  <% if defined?(@defaultcharset) -%>
+  <%- if defined?(@defaultcharset) -%>
   AddDefaultCharset <%= @defaultcharset %>
-  <% end -%>
+  <%- end -%>
+  AllowEncodedSlashes <%= scope.function_bool2onoff([@allow_encoded_slashes]) %>
 
   <%- if @includes.any? -%>
     <%- @includes.each do |val| -%>
