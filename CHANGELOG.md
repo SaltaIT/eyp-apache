@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.10
+
+* added variable **root_directory_deny** to set allow or deny by default to /
+
 ## 0.5.9
 
 * added **AllowEncodedSlashes** to **apache::vhost**
