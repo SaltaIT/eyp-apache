@@ -334,7 +334,7 @@ DocumentRoot "<%= @default_documentroot %>"
     <%- if scope.function_versioncmp([@version, '2.4']) >= 0 -%>
       <%- if @root_directory_deny -%>
     Require all denied
-      <%- end -%>
+      <%- else -%>
     Require all granted
       <%- end -%>
     <%- else -%>
