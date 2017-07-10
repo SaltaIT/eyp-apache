@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.11
+
+* added timeout and connectiontimeout variables to **apache::mod::proxy::proxypass**
+
 ## 0.5.10
 
 * added variable **root_directory_deny** to set allow or deny by default to /
@@ -75,7 +79,7 @@
 * added **apache::include_conf**
 * **apache::vhost::includes** and **apache::vhost::includes_optional** to be able to include non puppet managed files to a vhost
 * added option for **SSLHonorCipherOrder**
-* added preliminar **HSTS** support: **apache::hsts** (using **mod_headers**)
+* added **HSTS** support: **apache::hsts** (using **mod_headers**)
 * added a global variable to enable **PFS**
 
 ## 0.4.24

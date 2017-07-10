@@ -1,2 +1,4 @@
 
-  ProxyPass <%= @url %> <%= @destination %>
+  ProxyPass <%= @url %> <%= @destination -%>
+  <% if defined?(@connectiontimeout) %> connectiontimeout=<%= @connectiontimeout -%>
+  <% if defined?(@timeout) %> timeout=<%= @timeout -%>
