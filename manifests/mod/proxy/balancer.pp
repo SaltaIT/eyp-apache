@@ -5,10 +5,7 @@ define apache::mod::proxy::balancer (
                                       $lbmethod     = undef,
                                     ) {
 
-  if ! defined(Class['apache::mod::proxybalancer'])
-  {
-    fail('You must include the apache::mod::proxybalancer class before using any resources')
-  }
+  include ::apache::mod::proxybalancer
 
   validate_hash($members)
 
