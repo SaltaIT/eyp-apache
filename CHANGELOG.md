@@ -3,6 +3,7 @@
 ## 0.5.11
 
 * added timeout and connectiontimeout variables to **apache::mod::proxy::proxypass**
+* removed checks for subclasses, auto include required classes
 
 ## 0.5.10
 
