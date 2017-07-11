@@ -1,5 +1,3 @@
-# == Class: apache
-#
 class apache(
               $mpm                       = $apache::params::mpm_default,
               $servertokens              = $apache::params::servertokens_default,
@@ -48,6 +46,7 @@ class apache(
               $minspareservers           = '5',
               $maxspareservers           = '20',
               $selinux_httpd_use_nfs     = false,
+              $root_directory_deny       = true,
             ) inherits apache::params {
 
   if($version!=$apache::version::default)

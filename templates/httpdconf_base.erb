@@ -332,10 +332,18 @@ DocumentRoot "<%= @default_documentroot %>"
     Options +FollowSymLinks -Indexes
     AllowOverride None
     <%- if scope.function_versioncmp([@version, '2.4']) >= 0 -%>
+      <%- if @root_directory_deny -%>
     Require all denied
+      <%- else -%>
+    Require all granted
+      <%- end -%>
     <%- else -%>
     Order allow,deny
+      <%- if @root_directory_deny -%>
     Deny from all
+      <%- else -%>
+    Allow from all
+      <%- end -%>
     Satisfy all
     <%- end -%>
 </Directory>
