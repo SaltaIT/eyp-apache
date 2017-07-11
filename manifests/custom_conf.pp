@@ -1,3 +1,4 @@
+# puppet2sitepp @apachecustomconfs
 define apache::custom_conf(
                             $source,
                             $filename = $name,

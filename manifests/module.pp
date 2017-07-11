@@ -1,3 +1,4 @@
+# puppet2sitepp @apachemodules
 define apache::module (
                         $sofile,
                         $modname = $name,

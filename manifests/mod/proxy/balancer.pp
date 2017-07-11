@@ -1,3 +1,4 @@
+# puppet2sitepp @apachebalancers
 define apache::mod::proxy::balancer (
                                       $members,
                                       $balancername = $name,

@@ -1,3 +1,4 @@
+# puppet2sitepp @apacheproxypasses
 define apache::mod::proxy::proxypass(
                                       $url,
                                       $destination,

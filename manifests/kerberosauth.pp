@@ -11,6 +11,8 @@
 # require valid-user
 # </Location>
 #
+# puppet2sitepp @apachekerberosauth
+#
 define apache::kerberosauth(
                               $url,
                               $krb_authrealms,

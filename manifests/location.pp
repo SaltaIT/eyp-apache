@@ -1,3 +1,4 @@
+# puppet2sitepp @apachelocations
 define apache::location (
                               $servername       = $name,
                               $vhost_order      = '00',

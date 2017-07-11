@@ -1,3 +1,4 @@
+# puppet2sitepp @apachehsts
 define apache::hsts (
                       $max_age            = '31536000',
                       $include_subdomains = false,

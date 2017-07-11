@@ -1,3 +1,4 @@
+# puppet2sitepp @apacheredirects
 define apache::redirect (
                           $url,
                           $path             = undef,

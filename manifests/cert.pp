@@ -1,3 +1,4 @@
+# puppet2sitepp @apachecerts
 define apache::cert (
                       $pk_source           = undef,
                       $pk_file             = undef,

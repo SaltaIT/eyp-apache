@@ -1,3 +1,4 @@
+# puppet2sitepp @apacheheaders
 define apache::header (
                         $header_name,
                         $header_value,

@@ -16,6 +16,8 @@
 # 31 - browsermatch
 # 99 - end vhost
 #
+# puppet2sitepp @apachevhosts
+#
 define apache::vhost(
                       $documentroot,
                       $description             = undef,

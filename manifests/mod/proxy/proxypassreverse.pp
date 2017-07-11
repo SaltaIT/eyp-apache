@@ -1,3 +1,4 @@
+# puppet2sitepp @apachereverseproxypasses
 define apache::mod::proxy::proxypassreverse (
                                               $servername,
                                               $destination,
