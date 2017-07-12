@@ -1,3 +1,4 @@
+# puppet2sitepp @apacheaddtypes
 define apache::addtype(
                         $mediatype,
                         $extension   = $name,

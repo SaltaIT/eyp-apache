@@ -1,3 +1,4 @@
+# puppet2sitepp @apachesslproxies
 define apache::sslproxy (
                           $ssl_proxy_enabled           = true,
                           $ssl_proxy_verify            = 'none',

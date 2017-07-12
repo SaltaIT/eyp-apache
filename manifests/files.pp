@@ -3,6 +3,7 @@
 #     SSLOptions +StdEnvVars
 # </Files>
 #
+# puppet2sitepp @apachefiles
 define apache::files(
                       $file        = undef,
                       $file_regex  = undef,

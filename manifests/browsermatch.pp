@@ -1,3 +1,4 @@
+# puppet2sitepp @apachebrowsermatches
 define apache::browsermatch (
                               $regex,
                               $set,

@@ -1,3 +1,4 @@
+# puppet2sitepp @apachealiases
 define apache::alias(
                       $alias_from,
                       $alias_dir,

@@ -1,3 +1,4 @@
+# puppet2sitepp @apacheserverstatus
 define apache::serverstatus (
                               $order            = '00',
                               $port             = '80',

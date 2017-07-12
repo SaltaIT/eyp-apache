@@ -1,3 +1,4 @@
+# puppet2sitepp @apachedavsvnrepos
 define apache::davsvnrepo(
                             $url,
                             $svnpath,

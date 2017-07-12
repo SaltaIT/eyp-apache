@@ -3,6 +3,8 @@
 #     SSLOptions +StdEnvVars
 # </Files>
 #
+# puppet2sitepp @apachefilesmatches
+#
 define apache::filesmatch (
                             $file_regex,
                             $ssl_options = [],

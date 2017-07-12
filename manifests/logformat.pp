@@ -1,4 +1,5 @@
 # LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+# puppet2sitepp @apachelogformats
 define apache::logformat(
                           $logformat,
                           $logformat_name = $name,

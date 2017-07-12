@@ -1,3 +1,4 @@
+# puppet2sitepp @apacherequestheaders
 define apache::requestheader (
                         $header_name,
                         $header_value = undef,

@@ -1,3 +1,4 @@
+# puppet2sitepp @apachedirectories
 define apache::directory (
                               $directory,
                               $servername    = $name,

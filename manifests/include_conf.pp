@@ -1,3 +1,4 @@
+# puppet2sitepp @apacheincludesconf
 define apache::include_conf (
                               $path        = $name,
                               $files       = [ '*.conf' ],
