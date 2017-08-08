@@ -91,6 +91,7 @@ class apache::params inherits apache::version {
           $ssl_protocol_default=[ '-ALL', '+TLSv1' ]
           $snisupported=false
           $nss_pcache_path='/usr/sbin/nss_pcache'
+          $ssl_session_cache_file_default = '/var/cache/mod_ssl/scache'
         }
         /^6.*/:
         {
@@ -99,6 +100,7 @@ class apache::params inherits apache::version {
           $ssl_protocol_default=[ '-ALL', '+TLSv1', '+TLSv1.1', '+TLSv1.2' ]
           $snisupported=true
           $nss_pcache_path='/usr/libexec/nss_pcache'
+          $ssl_session_cache_file_default = '/var/cache/mod_ssl/scache'
         }
         /^7.*/:
         {
@@ -107,6 +109,7 @@ class apache::params inherits apache::version {
           $ssl_protocol_default=[ '-ALL', '+TLSv1', '+TLSv1.1', '+TLSv1.2' ]
           $snisupported=true
           $nss_pcache_path='/usr/libexec/nss_pcache'
+          $ssl_session_cache_file_default = '/run/httpd/sslcache'
         }
         default: { fail('Unsupported RHEL/CentOS version!')  }
       }
@@ -134,6 +137,8 @@ class apache::params inherits apache::version {
       $nss_pcache_path='/usr/sbin/nss_pcache'
 
       $kerberos_auth_package = 'libapache2-mod-auth-kerb'
+
+      $ssl_session_cache_file_default = '/var/run/apache2/ssl_scache'
 
       case $::operatingsystem
       {

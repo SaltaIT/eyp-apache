@@ -47,6 +47,9 @@ class apache(
               $maxspareservers           = '20',
               $selinux_httpd_use_nfs     = false,
               $root_directory_deny       = true,
+              $ssl_session_cache_type    = 'shmcb',
+              $ssl_session_cache_file    = $apache::params::ssl_session_cache_file_default,
+              $ssl_session_cache_size    = '512000',
             ) inherits apache::params {
 
   if($version!=$apache::version::default)
