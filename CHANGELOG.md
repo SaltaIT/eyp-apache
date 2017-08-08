@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.12
+
+* fixed hard-coded **SSLSessionCache**
+
 ## 0.5.11
 
 * added timeout and connectiontimeout variables to **apache::mod::proxy::proxypass**
