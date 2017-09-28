@@ -1,3 +1,4 @@
+# @param add_conf_audit_rules Add audit rules for httpd config files (default: false)
 class apache(
               $mpm                       = $apache::params::mpm_default,
               $servertokens              = $apache::params::servertokens_default,
@@ -50,11 +51,38 @@ class apache(
               $ssl_session_cache_type    = 'shmcb',
               $ssl_session_cache_file    = $apache::params::ssl_session_cache_file_default,
               $ssl_session_cache_size    = '512000',
+              $add_conf_audit_rules      = false,
             ) inherits apache::params {
 
   if($version!=$apache::version::default)
   {
     fail("unsupported version for this system - expected: ${version} supported: ${apache::version::default}")
+  }
+
+  if(defined(Class['::audit']))
+  {
+    # # Watch Apache configuration
+    # -w /etc/httpd/conf/ -p rwa -k apacheConfigAccess
+    # -w <%= @path %> -p <%= @permissions %> -k <%= @keyname %>
+    # define audit::fsrule(
+    #                   $path,
+    #                   $permissions,
+    #                   $keyname = $name,
+    #                 ) {
+    if($add_conf_audit_rules)
+    {
+      audit::fsrule { 'apacheConfigAccess-conf':
+        path => "${apache::params::baseconf}/conf",
+        permissions => 'rwa',
+        keyname => 'apacheConfigAccess',
+      }
+
+      audit::fsrule { 'apacheConfigAccess-confd':
+        path => "${apache::params::baseconf}/conf.d",
+        permissions => 'rwa',
+        keyname => 'apacheConfigAccess',
+      }
+    }
   }
 
   if(defined(Class['::selinux']))

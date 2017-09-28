@@ -1,6 +1,6 @@
 {
   "name": "eyp-apache",
-  "version": "0.5.12",
+  "version": "0.5.13",
   "author": "eyp",
   "summary": "apache setup and configuration",
   "license": "Apache-2.0",

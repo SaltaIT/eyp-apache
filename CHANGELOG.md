@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.13
+
+* added audit rules for apache config files
+
 ## 0.5.12
 
 * fixed hard-coded **SSLSessionCache**
