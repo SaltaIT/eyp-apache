@@ -72,15 +72,15 @@ class apache(
     if($add_conf_audit_rules)
     {
       audit::fsrule { 'apacheConfigAccess-conf':
-        path => "${apache::params::baseconf}/conf",
+        path        => "${apache::params::baseconf}/conf",
         permissions => 'rwa',
-        keyname => 'apacheConfigAccess',
+        keyname     => 'apacheConfigAccess',
       }
 
       audit::fsrule { 'apacheConfigAccess-confd':
-        path => "${apache::params::baseconf}/conf.d",
+        path        => "${apache::params::baseconf}/conf.d",
         permissions => 'rwa',
-        keyname => 'apacheConfigAccess',
+        keyname     => 'apacheConfigAccess',
       }
     }
   }
