@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 0.6.0
+
+* **INCOMPATIBLE CHANGES**:
+  - disabled apache modules:
+    - mod_userdir
+    - mod_info
+  - apache user shell under management by default
+* bugfix: default vhost documentroot ownership
+
 ## 0.5.13
 
 * added audit rules for apache config files

@@ -48,6 +48,8 @@ class apache::params inherits apache::version {
   {
     'redhat':
     {
+      $apache_default_shell = '/sbin/nologin'
+
       $baseconf='/etc/httpd'
       $modulesdir='modules'
       $loadmodules_extra=true
@@ -116,6 +118,8 @@ class apache::params inherits apache::version {
     }
     'Debian':
     {
+      $apache_default_shell = '/usr/sbin/nologin'
+
       $baseconf='/etc/apache2'
       $modulesdir='/usr/lib/apache2/modules'
       $loadmodules_extra=false

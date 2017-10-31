@@ -174,14 +174,12 @@ LoadModule mime_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_
 LoadModule dav_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_dav.so
 LoadModule status_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_status.so
 LoadModule autoindex_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_autoindex.so
-LoadModule info_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_info.so
 LoadModule dav_fs_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_dav_fs.so
 LoadModule vhost_alias_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_vhost_alias.so
 LoadModule negotiation_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_negotiation.so
 LoadModule dir_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_dir.so
 LoadModule actions_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_actions.so
 LoadModule speling_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_speling.so
-LoadModule userdir_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_userdir.so
 LoadModule alias_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_alias.so
 LoadModule substitute_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_substitute.so
 LoadModule rewrite_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_rewrite.so
@@ -393,37 +391,6 @@ DocumentRoot "<%= @default_documentroot %>"
     <%- end -%>
 
 </Directory>
-
-#
-# UserDir: The name of the directory that is appended onto a user's home
-# directory if a ~user request is received.
-#
-# The path to the end user account 'public_html' directory must be
-# accessible to the webserver userid.  This usually means that ~userid
-# must have permissions of 711, ~userid/public_html must have permissions
-# of 755, and documents contained therein must be world-readable.
-# Otherwise, the client will only receive a "403 Forbidden" message.
-#
-# See also: http://httpd.apache.org/docs/misc/FAQ.html#forbidden
-#
-<IfModule mod_userdir.c>
-    #
-    # UserDir is disabled by default since it can confirm the presence
-    # of a username on the system (depending on home directory
-    # permissions).
-    #
-    UserDir disabled
-
-    #
-    # To enable requests to /~user/ to serve the user's public_html
-    # directory, remove the "UserDir disabled" line above, and uncomment
-    # the following line instead:
-    #
-    #UserDir public_html
-
-</IfModule>
-
-
 
 #
 # DirectoryIndex: sets the file that Apache will serve if a directory

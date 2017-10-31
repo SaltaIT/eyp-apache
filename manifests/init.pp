@@ -21,6 +21,8 @@ class apache(
               $version                   = $apache::version::default,
               $apache_username           = $apache::params::apache_username,
               $apache_group              = $apache::params::apache_group,
+              $manage_apache_user_shell  = true,
+              $apache_user_shell         = $apache::params::apache_default_shell,
               $server_admin              = $apache::params::server_admin_default,
               $directoty_index           = [ 'index.html' ],
               $maxclients                = $apache::params::maxclients_default,
@@ -57,6 +59,17 @@ class apache(
   if($version!=$apache::version::default)
   {
     fail("unsupported version for this system - expected: ${version} supported: ${apache::version::default}")
+  }
+
+  if($manage_apache_user_shell)
+  {
+    user { $apache_username:
+      ensure  => 'present',
+      gid     => $apache_group,
+      shell   => $apache_user_shell,
+      require => Package[$apache::params::packagename],
+      before  => Class['apache::service'],
+    }
   }
 
   if(defined(Class['::audit']))

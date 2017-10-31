@@ -443,9 +443,9 @@ define apache::vhost(
       {
         file { $documentroot:
           ensure  => 'directory',
-          owner   => $apache::params::apache_username,
-          group   => $apache::params::apache_username,
-          mode    => '0775',
+          owner   => $documentroot_owner,
+          group   => $documentroot_group,
+          mode    => $documentroot_mode,
           require => Exec["mkdir p ${documentroot} ${servername} ${port}"],
         }
       }
