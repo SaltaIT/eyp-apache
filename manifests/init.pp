@@ -54,6 +54,10 @@ class apache(
               $ssl_session_cache_file    = $apache::params::ssl_session_cache_file_default,
               $ssl_session_cache_size    = '512000',
               $add_conf_audit_rules      = false,
+              $limit_request_line        = undef,
+              $limit_request_fields      = undef,
+              $limit_request_field_size  = undef,
+              $limit_request_body        = undef,
             ) inherits apache::params {
 
   if($version!=$apache::version::default)

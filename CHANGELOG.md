@@ -12,6 +12,11 @@
 * bugfix: default vhost documentroot ownership
 * added **apache::vhost::xframeoptions** to be able to easily add the X-Frame-Options header to a vhost
 * added support for **mod_reqtimeout** using **apache::mod::reqtimeout**
+* added variables for:
+  - LimitRequestLine
+  - LimitRequestFields
+  - LimitRequestFieldSize
+  - LimitRequestBody
 
 ## 0.5.13
 
