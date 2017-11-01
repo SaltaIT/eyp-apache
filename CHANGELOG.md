@@ -7,7 +7,11 @@
     - mod_userdir
     - mod_info
   - apache user shell under management by default
+  - changed default **LogLevel** from **warn** to **notice core:info**
+  - apache config cleanup (some useless directives have been removed)
 * bugfix: default vhost documentroot ownership
+* added **apache::vhost::xframeoptions** to be able to easily add the X-Frame-Options header to a vhost
+* added support for **mod_reqtimeout** using **apache::mod::reqtimeout**
 
 ## 0.5.13
 

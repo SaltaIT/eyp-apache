@@ -35,7 +35,7 @@ class apache(
               $systemd_socket_activation = false,
               $manage_docker_service     = false,
               $defaultcharset            = 'UTF-8',
-              $loglevel_errorlog         = 'warn',
+              $loglevel_errorlog         = [ 'notice', 'core:info' ],
               $usecanonicalname          = false,
               $default_documentroot      = '/var/www/html',
               $accessfilename            = '.htaccess',
