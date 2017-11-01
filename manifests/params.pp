@@ -95,6 +95,7 @@ class apache::params inherits apache::version {
           $nss_pcache_path='/usr/sbin/nss_pcache'
           $ssl_session_cache_file_default = '/var/cache/mod_ssl/scache'
           $reqtimeout_so = undef
+          $log_level_default = 'warn'
         }
         /^6.*/:
         {
@@ -105,6 +106,7 @@ class apache::params inherits apache::version {
           $nss_pcache_path='/usr/libexec/nss_pcache'
           $ssl_session_cache_file_default = '/var/cache/mod_ssl/scache'
           $reqtimeout_so = 'mod_reqtimeout.so'
+          $log_level_default = 'warn'
         }
         /^7.*/:
         {
@@ -115,6 +117,7 @@ class apache::params inherits apache::version {
           $nss_pcache_path='/usr/libexec/nss_pcache'
           $ssl_session_cache_file_default = '/run/httpd/sslcache'
           $reqtimeout_so = 'mod_reqtimeout.so'
+          $log_level_default = [ 'notice', 'core:info' ]
         }
         default: { fail('Unsupported RHEL/CentOS version!')  }
       }
@@ -148,6 +151,8 @@ class apache::params inherits apache::version {
       $ssl_session_cache_file_default = '/var/run/apache2/ssl_scache'
 
       $reqtimeout_so = 'mod_reqtimeout.so'
+
+      $log_level_default = [ 'notice', 'core:info' ]
 
       case $::operatingsystem
       {

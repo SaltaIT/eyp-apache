@@ -7,7 +7,7 @@
     - mod_userdir
     - mod_info
   - apache user shell under management by default
-  - changed default **LogLevel** from **warn** to **notice core:info**
+  - changed default **LogLevel** from **warn** to **notice core:info** for Apache 2.4 and **warn** for Apache 2.2
   - apache config cleanup (some useless directives have been removed)
 * bugfix: default vhost documentroot ownership
 * added **apache::vhost::xframeoptions** to be able to easily add the X-Frame-Options header to a vhost
