@@ -7,7 +7,7 @@ define apache::vhost::xframeoptions(
                                       $vhost_order = '00',
                                       $port        = '80',
                                       $servername  = $name,
-                                      $description = "X-Frame-Options",
+                                      $description = 'X-Frame-Options',
                                     ) {
   #
   include ::apache::mod::headers
