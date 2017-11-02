@@ -810,10 +810,10 @@ BrowserMatch "^Dreamweaver-WebDAV-SCM1" redirect-carefully
 # You may use the command line option '-S' to verify your virtual host
 # configuration.
 
+<%- if scope.function_versioncmp([@version, '2.4']) < 0 -%>
 #
 # Use name-based virtual hosting.
 #
-<%- if scope.function_versioncmp([@version, '2.4']) < 0 -%>
 <% if defined?(@namevirtualhosts) -%>
 <% @namevirtualhosts.each do |val| -%>
 NameVirtualHost *:<%= val %>
