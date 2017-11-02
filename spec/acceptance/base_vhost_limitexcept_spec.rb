@@ -19,6 +19,9 @@ describe 'apache class' do
 
       apache::vhost {'et2blog':
         documentroot => '/var/www/et2blog',
+      }
+
+      apache::location{ 'et2blog':
         limit_http_methods => [ 'GET' ],
       }
 
