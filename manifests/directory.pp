@@ -9,7 +9,6 @@ define apache::directory (
                               $options            = $apache::params::options_default,
                               $allowoverride      = $apache::params::allowoverride_default,
                               $ssl_options        = [],
-                              $limit_http_methods = [],
                             ) {
 
   if($allowedip!=undef)

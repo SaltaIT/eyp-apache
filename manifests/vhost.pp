@@ -63,7 +63,6 @@ define apache::vhost(
                       $ssl_verify_client       = 'none',
                       $ssl_verify_depth        = '1',
                       $allow_encoded_slashes   = false,
-                      $limit_http_methods      = [],
                     ) {
 
     if($custom_sorrypage)
