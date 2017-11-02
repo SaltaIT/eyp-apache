@@ -316,7 +316,11 @@ DocumentRoot "<%= @default_documentroot %>"
 # features.
 #
 <Directory />
-    Options +FollowSymLinks <% if @enable_autoindex %>-Indexes<% end %>
+    <%- if @default_follow_sym_links or @enable_autoindex -%>
+    Options <% if @default_follow_sym_links %>+FollowSymLinks<% end %> <% if @enable_autoindex %>-Indexes<% end %>
+    <%- else -%>
+    Options None
+    <%- end -%>
     AllowOverride None
     <%- if scope.function_versioncmp([@version, '2.4']) >= 0 -%>
       <%- if @root_directory_deny -%>
@@ -346,7 +350,11 @@ DocumentRoot "<%= @default_documentroot %>"
 # This should be changed to whatever you set DocumentRoot to.
 #
 <Directory "<%= @default_documentroot %>">
-    Options <% if @enable_autoindex %>-Indexes<% end %> +FollowSymLinks
+    <%- if @default_follow_sym_links or @enable_autoindex -%>
+    Options <% if @default_follow_sym_links %>+FollowSymLinks<% end %> <% if @enable_autoindex %>-Indexes<% end %>
+    <%- else -%>
+    Options None
+    <%- end -%>
     AllowOverride None
     <%- if scope.function_versioncmp([@version, '2.4']) >= 0 -%>
     Require all granted

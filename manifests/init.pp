@@ -59,6 +59,7 @@ class apache(
               $limit_request_field_size  = undef,
               $limit_request_body        = undef,
               $enable_autoindex          = true,
+              $default_follow_sym_links  = true,
             ) inherits apache::params {
 
   if($version!=$apache::version::default)

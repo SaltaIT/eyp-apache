@@ -19,6 +19,7 @@
   - LimitRequestBody
 * added block options to **apache::location** to be able to disable a specific URL
 * added a flag to disable **mod_autoindex**
+* added flag to **disable FollowSymlinks** by default
 
 ## 0.5.13
 
