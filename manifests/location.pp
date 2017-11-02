@@ -6,6 +6,7 @@ define apache::location (
                               $location         = '/',
                               $allowedip        = undef,
                               $denyip           = undef,
+                              $block            = false,
                               $options          = [],
                               $ssl_require      = undef,
                               $allowoverride    = undef,

@@ -10,7 +10,9 @@
     SSLRequire <%= @ssl_require %>
     <%- end -%>
   <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
-    <%- if @allowedip -%>
+    <%- if @block -%>
+    Require all denied
+    <%- elsif @allowedip -%>
     Require all denied
     Require ip <%= @allowedip.join(' ') %>
     <%- elsif @denyip -%>
@@ -22,6 +24,10 @@
     Require all granted
     <%- end -%>
   <%- else -%>
+    <%- if @block -%>
+    Order Deny,Allow
+    Deny from all
+    Allow from none
     <%- if @allowedip -%>
     Order Deny,Allow
     Deny from all

@@ -17,6 +17,7 @@
   - LimitRequestFields
   - LimitRequestFieldSize
   - LimitRequestBody
+* added block options to **apache::location** to be able to disable a specific URL
 
 ## 0.5.13
 
