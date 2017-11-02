@@ -69,7 +69,7 @@ describe 'apache class' do
     end
 
     it "check 200 et2blog" do
-      expect(shell("curl -I 127.0.0.1/check.rspec -H 'Host: et2blog' 2>/dev/null | head -n1 | grep 'HTTP/1.1 403 Forbidden'").exit_code).to be_zero
+      expect(shell("curl -d 'a=a' 127.0.0.1/check.rspec -H 'Host: et2blog' 2>/dev/null | head -n1 | grep 'HTTP/1.1 403 Forbidden'").exit_code).to be_zero
     end
 
     it "check content et2blog" do
