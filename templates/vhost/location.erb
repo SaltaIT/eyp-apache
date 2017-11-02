@@ -21,7 +21,7 @@
       Require not ip <%= @denyip.join(' ') %>
     </RequireAll>
     <%- elsif @limit_http_methods.any?-%>
-      <LimitExcept <% @limit_http_methods.join(' ') %>>
+      <LimitExcept <%= @limit_http_methods.join(' ') %>>
         Require all denied
       </LimitExcept>
     <%- else -%>
@@ -43,7 +43,7 @@
     Deny from <%= @denyip.join(' ') %>
       <%- end -%>
     <%- elsif @limit_http_methods.any?-%>
-    <LimitExcept <% @limit_http_methods.join(' ') %>>
+    <LimitExcept <%= @limit_http_methods.join(' ') %>>
       Order deny,allow
       Deny from all
     </LimitExcept>
