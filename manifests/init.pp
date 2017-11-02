@@ -58,11 +58,22 @@ class apache(
               $limit_request_fields      = undef,
               $limit_request_field_size  = undef,
               $limit_request_body        = undef,
+              $enable_autoindex          = true,
             ) inherits apache::params {
 
   if($version!=$apache::version::default)
   {
     fail("unsupported version for this system - expected: ${version} supported: ${apache::version::default}")
+  }
+
+  # LoadModule autoindex_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_autoindex.so
+  if($enable_autoindex)
+  {
+    apache::module { 'autoindex_module':
+      sofile  => "${apache::params::modulesdir}/mod_autoindex.so",
+      require => Package[$apache::params::packagename],
+      before  => Class['apache::service'],
+    }
   }
 
   if($manage_apache_user_shell)

@@ -185,7 +185,6 @@ LoadModule setenvif_module <%= scope.lookupvar('apache::params::modulesdir') %>/
 LoadModule mime_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_mime.so
 LoadModule dav_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_dav.so
 LoadModule status_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_status.so
-LoadModule autoindex_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_autoindex.so
 LoadModule dav_fs_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_dav_fs.so
 LoadModule vhost_alias_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_vhost_alias.so
 LoadModule negotiation_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_negotiation.so
@@ -317,7 +316,7 @@ DocumentRoot "<%= @default_documentroot %>"
 # features.
 #
 <Directory />
-    Options +FollowSymLinks -Indexes
+    Options +FollowSymLinks <% if @enable_autoindex %>-Indexes<% end %>
     AllowOverride None
     <%- if scope.function_versioncmp([@version, '2.4']) >= 0 -%>
       <%- if @root_directory_deny -%>
@@ -347,7 +346,7 @@ DocumentRoot "<%= @default_documentroot %>"
 # This should be changed to whatever you set DocumentRoot to.
 #
 <Directory "<%= @default_documentroot %>">
-    Options -Indexes +FollowSymLinks
+    Options <% if @enable_autoindex %>-Indexes<% end %> +FollowSymLinks
     AllowOverride None
     <%- if scope.function_versioncmp([@version, '2.4']) >= 0 -%>
     Require all granted
@@ -521,11 +520,18 @@ TraceEnable <%= scope.function_bool2onoff([@trace]) %>
 # Directives controlling the display of server-generated directory listings.
 #
 
+<% if @enable_autoindex -%>
 #
 # IndexOptions: Controls the appearance of server-generated directory
 # listings.
 #
 IndexOptions FancyIndexing VersionSort NameWidth=* HTMLTable Charset=UTF-8
+
+#
+# IndexIgnore is a set of filenames which directory indexing should ignore
+# and not include in the listing.  Shell-style wildcarding is permitted.
+#
+IndexIgnore .??* *~ *# HEADER* README* RCS CVS *,v *,t
 
 #
 # AddIcon* directives tell the server which icon to show for different
@@ -585,12 +591,9 @@ DefaultIcon /icons/unknown.gif
 # directory indexes.
 ReadmeName README.html
 HeaderName HEADER.html
+<% end -%>
 
-#
-# IndexIgnore is a set of filenames which directory indexing should ignore
-# and not include in the listing.  Shell-style wildcarding is permitted.
-#
-IndexIgnore .??* *~ *# HEADER* README* RCS CVS *,v *,t
+
 
 #
 # DefaultLanguage and AddLanguage allows you to specify the language of
