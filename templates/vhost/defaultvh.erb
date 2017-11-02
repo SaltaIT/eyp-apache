@@ -34,6 +34,12 @@
   <Directory <%= @documentroot %>>
     AllowOverride <%= @allowoverride %>
     Options <%= @options.join(' ') %>
+    <%- if @limit_http_methods.any? -%>
+    # Limit HTTP methods to standard methods. Note: Does not limit TRACE
+    <LimitExcept <%= @limit_http_methods.join(' ') %>>
+      Require all denied
+    </LimitExcept>
+    <%- end -%>
     <%- if defined?(@allowedip) -%>
     Require all denied
     <%- @allowedip.each do |val| -%>
@@ -48,6 +54,13 @@
   <Directory <%= @documentroot %>>
     AllowOverride <%= @allowoverride %>
     Options <%= @options.join(' ') %>
+    <%- if @limit_http_methods.any? -%>
+    # Limit HTTP methods to standard methods. Note: Does not limit TRACE
+    <LimitExcept <%= @limit_http_methods.join(' ') %>>
+      Deny from all
+      Allow from none
+    </LimitExcept>
+    <%- end -%>
     <%- if defined?(@allowedip) -%>Order Deny,Allow
     Deny from all
     <%- @allowedip.each do |val| -%>

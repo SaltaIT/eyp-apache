@@ -20,6 +20,7 @@
 * added block options to **apache::location** to be able to disable a specific URL
 * added a flag to disable **mod_autoindex**
 * added flag to **disable FollowSymlinks** by default
+* added **limit_http_methods** variable to **apache::vhost** and **apache::directory**
 
 ## 0.5.13
 

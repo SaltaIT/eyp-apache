@@ -38,6 +38,17 @@
   <Directory <%= @documentroot %>>
     AllowOverride <%= @allowoverride %>
     Options <%= @options.join(' ') %>
+    <%- if @limit_http_methods.any? -%>
+    # Limit HTTP methods to standard methods. Note: Does not limit TRACE
+    <LimitExcept <%= @limit_http_methods.join(' ') %>>
+      <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
+      Require all denied
+      <%- else -%>
+      Deny from all
+      Allow from none
+      <%- end -%>
+    </LimitExcept>
+    <%- end -%>
   <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
     <%- if defined?(@allowedip) -%>
     Require all denied
