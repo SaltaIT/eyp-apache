@@ -259,10 +259,13 @@ define apache::vhost(
 
       if($rewrites!=undef) or ($rewrites_source!=undef)
       {
-        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run rewrite engine on":
-          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
-          content => "\n  ## Rewrite rules ##\n\n  RewriteEngine On\n\n",
-          order   => '05',
+        if(!defined(Concat::Fragment["${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run rewrite engine on"]))
+        {
+          concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run rewrite engine on":
+            target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
+            content => "\n  ## Rewrite rules ##\n\n  RewriteEngine On\n\n",
+            order   => '05',
+          }
         }
 
         if($rewrites_source)
