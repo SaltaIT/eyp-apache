@@ -796,20 +796,6 @@ BrowserMatch "^XML Spy" redirect-carefully
 BrowserMatch "^Dreamweaver-WebDAV-SCM1" redirect-carefully
 
 
-### Section 3: Virtual Hosts
-#
-# VirtualHost: If you want to maintain multiple domains/hostnames on your
-# machine you can setup VirtualHost containers for them. Most configurations
-# use only name-based virtual hosts so the server doesn't need to worry about
-# IP addresses. This is indicated by the asterisks in the directives below.
-#
-# Please see the documentation at
-# <URL:http://httpd.apache.org/docs/2.2/vhosts/>
-# for further details before you try to setup virtual hosts.
-#
-# You may use the command line option '-S' to verify your virtual host
-# configuration.
-
 <%- if scope.function_versioncmp([@version, '2.4']) < 0 -%>
 #
 # Use name-based virtual hosting.
