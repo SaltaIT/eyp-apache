@@ -126,7 +126,6 @@ MaxRequestsPerChild  <%= @maxrequestsperchild %>
 # Change this to Listen on specific IP addresses as shown below to
 # prevent Apache from glomming onto all bound IP addresses (0.0.0.0)
 #
-#Listen 12.34.56.78:80
 <% @listen.each do |val| -%>
 Listen <%= val %>
 <% end -%>
@@ -171,15 +170,12 @@ LoadModule authz_user_module <%= scope.lookupvar('apache::params::modulesdir') %
 LoadModule authz_owner_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authz_owner.so
 LoadModule authz_groupfile_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authz_groupfile.so
 LoadModule authz_dbm_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_authz_dbm.so
-#fora ldap
 LoadModule include_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_include.so
 
 
 LoadModule env_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_env.so
 LoadModule ext_filter_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_ext_filter.so
 LoadModule mime_magic_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_mime_magic.so
-#LoadModule expires_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_expires.so
-#LoadModule deflate_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_deflate.so
 LoadModule headers_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_headers.so
 LoadModule setenvif_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_setenvif.so
 LoadModule mime_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_mime.so
