@@ -1,14 +1,16 @@
 # puppet2sitepp @apachelocations
 define apache::location (
-                              $servername       = $name,
-                              $vhost_order      = '00',
-                              $port             = '80',
-                              $location         = '/',
-                              $allowedip        = undef,
-                              $denyip           = undef,
-                              $options          = [],
-                              $ssl_require      = undef,
-                              $allowoverride    = undef,
+                              $servername         = $name,
+                              $vhost_order        = '00',
+                              $port               = '80',
+                              $location           = '/',
+                              $allowedip          = [],
+                              $denyip             = [],
+                              $block              = false,
+                              $options            = [],
+                              $ssl_require        = undef,
+                              $allowoverride      = undef,
+                              $limit_http_methods = [],
                             ) {
 
   if($allowedip!=undef)

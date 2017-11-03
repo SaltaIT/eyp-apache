@@ -1,14 +1,14 @@
 # puppet2sitepp @apachedirectories
 define apache::directory (
                               $directory,
-                              $servername    = $name,
-                              $vhost_order   = '00',
-                              $port          = '80',
-                              $allowedip     = undef,
-                              $denyip        = undef,
-                              $options       = $apache::params::options_default,
-                              $allowoverride = $apache::params::allowoverride_default,
-                              $ssl_options   = [],
+                              $servername         = $name,
+                              $vhost_order        = '00',
+                              $port               = '80',
+                              $allowedip          = undef,
+                              $denyip             = undef,
+                              $options            = $apache::params::options_default,
+                              $allowoverride      = $apache::params::allowoverride_default,
+                              $ssl_options        = [],
                             ) {
 
   if($allowedip!=undef)

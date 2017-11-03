@@ -1,3 +1,4 @@
+# @param add_conf_audit_rules Add audit rules for httpd config files (default: false)
 class apache(
               $mpm                       = $apache::params::mpm_default,
               $servertokens              = $apache::params::servertokens_default,
@@ -20,6 +21,8 @@ class apache(
               $version                   = $apache::version::default,
               $apache_username           = $apache::params::apache_username,
               $apache_group              = $apache::params::apache_group,
+              $manage_apache_user_shell  = true,
+              $apache_user_shell         = $apache::params::apache_default_shell,
               $server_admin              = $apache::params::server_admin_default,
               $directoty_index           = [ 'index.html' ],
               $maxclients                = $apache::params::maxclients_default,
@@ -32,7 +35,7 @@ class apache(
               $systemd_socket_activation = false,
               $manage_docker_service     = false,
               $defaultcharset            = 'UTF-8',
-              $loglevel_errorlog         = 'warn',
+              $loglevel_errorlog         = $apache::params::log_level_default,
               $usecanonicalname          = false,
               $default_documentroot      = '/var/www/html',
               $accessfilename            = '.htaccess',
@@ -50,11 +53,65 @@ class apache(
               $ssl_session_cache_type    = 'shmcb',
               $ssl_session_cache_file    = $apache::params::ssl_session_cache_file_default,
               $ssl_session_cache_size    = '512000',
+              $add_conf_audit_rules      = false,
+              $limit_request_line        = undef,
+              $limit_request_fields      = undef,
+              $limit_request_field_size  = undef,
+              $limit_request_body        = undef,
+              $enable_autoindex          = true,
+              $default_follow_sym_links  = true,
             ) inherits apache::params {
 
   if($version!=$apache::version::default)
   {
     fail("unsupported version for this system - expected: ${version} supported: ${apache::version::default}")
+  }
+
+  # LoadModule autoindex_module <%= scope.lookupvar('apache::params::modulesdir') %>/mod_autoindex.so
+  if($enable_autoindex)
+  {
+    apache::module { 'autoindex_module':
+      sofile  => "${apache::params::modulesdir}/mod_autoindex.so",
+      require => Package[$apache::params::packagename],
+      before  => Class['apache::service'],
+    }
+  }
+
+  if($manage_apache_user_shell)
+  {
+    user { $apache_username:
+      ensure  => 'present',
+      gid     => $apache_group,
+      shell   => $apache_user_shell,
+      require => Package[$apache::params::packagename],
+      before  => Class['apache::service'],
+    }
+  }
+
+  if(defined(Class['::audit']))
+  {
+    # # Watch Apache configuration
+    # -w /etc/httpd/conf/ -p rwa -k apacheConfigAccess
+    # -w <%= @path %> -p <%= @permissions %> -k <%= @keyname %>
+    # define audit::fsrule(
+    #                   $path,
+    #                   $permissions,
+    #                   $keyname = $name,
+    #                 ) {
+    if($add_conf_audit_rules)
+    {
+      audit::fsrule { 'apacheConfigAccess-conf':
+        path        => "${apache::params::baseconf}/conf",
+        permissions => 'rwa',
+        keyname     => 'apacheConfigAccess',
+      }
+
+      audit::fsrule { 'apacheConfigAccess-confd':
+        path        => "${apache::params::baseconf}/conf.d",
+        permissions => 'rwa',
+        keyname     => 'apacheConfigAccess',
+      }
+    }
   }
 
   if(defined(Class['::selinux']))

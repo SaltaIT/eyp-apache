@@ -82,7 +82,7 @@ describe 'apache class' do
       its(:content) { should match 'MaxClients       150' }
       its(:content) { should match 'ServerLimit      150' }
       its(:content) { should match 'ServerAdmin webmaster@localhost' }
-      its(:content) { should match 'access_log vhost_combined' }
+      its(:content) { should match 'access_log' }
       its(:content) { should match 'LogFormat "%{User-agent}i" agent' }
       #TODO: arreglar
       #its(:content) { should match /LogFormat "%v:%p %h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" vhost_combined/ }

@@ -1,0 +1,7 @@
+<% if defined?(@allow_from) -%>
+ALLOW-FROM <%= @allow_from -%>
+<% elsif @sameorigin-%>
+SAMEORIGIN<% -%>
+<% else -%>
+DENY<% -%>
+<% end -%>

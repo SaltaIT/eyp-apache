@@ -1,5 +1,31 @@
 # CHANGELOG
 
+## 0.6.0
+
+* **INCOMPATIBLE CHANGES**:
+  - disabled apache modules:
+    - mod_userdir
+    - mod_info
+  - apache user shell under management by default
+  - changed default **LogLevel** from **warn** to **notice core:info** for Apache 2.4 and **warn** for Apache 2.2
+  - apache config cleanup (some useless directives have been removed)
+* bugfix: default vhost documentroot ownership
+* added **apache::vhost::xframeoptions** to be able to easily add the X-Frame-Options header to a vhost
+* added support for **mod_reqtimeout** using **apache::mod::reqtimeout**
+* added variables for:
+  - LimitRequestLine
+  - LimitRequestFields
+  - LimitRequestFieldSize
+  - LimitRequestBody
+* added block options to **apache::location** to be able to disable a specific URL
+* added a flag to disable **mod_autoindex**
+* added flag to **disable FollowSymlinks** by default
+* added **limit_http_methods** variable to **apache::location** to be able to limit http methods by URL
+
+## 0.5.13
+
+* added audit rules for apache config files
+
 ## 0.5.12
 
 * fixed hard-coded **SSLSessionCache**

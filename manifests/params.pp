@@ -48,6 +48,8 @@ class apache::params inherits apache::version {
   {
     'redhat':
     {
+      $apache_default_shell = '/sbin/nologin'
+
       $baseconf='/etc/httpd'
       $modulesdir='modules'
       $loadmodules_extra=true
@@ -92,6 +94,8 @@ class apache::params inherits apache::version {
           $snisupported=false
           $nss_pcache_path='/usr/sbin/nss_pcache'
           $ssl_session_cache_file_default = '/var/cache/mod_ssl/scache'
+          $reqtimeout_so = undef
+          $log_level_default = 'warn'
         }
         /^6.*/:
         {
@@ -101,6 +105,8 @@ class apache::params inherits apache::version {
           $snisupported=true
           $nss_pcache_path='/usr/libexec/nss_pcache'
           $ssl_session_cache_file_default = '/var/cache/mod_ssl/scache'
+          $reqtimeout_so = 'mod_reqtimeout.so'
+          $log_level_default = 'warn'
         }
         /^7.*/:
         {
@@ -110,12 +116,16 @@ class apache::params inherits apache::version {
           $snisupported=true
           $nss_pcache_path='/usr/libexec/nss_pcache'
           $ssl_session_cache_file_default = '/run/httpd/sslcache'
+          $reqtimeout_so = 'mod_reqtimeout.so'
+          $log_level_default = [ 'notice', 'core:info' ]
         }
         default: { fail('Unsupported RHEL/CentOS version!')  }
       }
     }
     'Debian':
     {
+      $apache_default_shell = '/usr/sbin/nologin'
+
       $baseconf='/etc/apache2'
       $modulesdir='/usr/lib/apache2/modules'
       $loadmodules_extra=false
@@ -139,6 +149,10 @@ class apache::params inherits apache::version {
       $kerberos_auth_package = 'libapache2-mod-auth-kerb'
 
       $ssl_session_cache_file_default = '/var/run/apache2/ssl_scache'
+
+      $reqtimeout_so = 'mod_reqtimeout.so'
+
+      $log_level_default = [ 'notice', 'core:info' ]
 
       case $::operatingsystem
       {

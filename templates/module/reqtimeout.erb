@@ -1,0 +1,2 @@
+RequestReadTimeout header=<%= @header_timeout %><% if defined?(@header_maxtimeout) %>-<%= @header_maxtimeout %><% end %><% if defined?(@header_minrate) %>,MinRate=<%= @header_minrate %><% end -%>
+ body=<%= @body_timeout %><% if defined?(@body_maxtimeout) %>-<%= @body_maxtimeout %><% end %><% if defined?(@body_minrate) %>,MinRate=<%= @body_minrate %><% end %>

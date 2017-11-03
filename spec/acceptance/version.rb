@@ -18,6 +18,7 @@ when 'RedHat'
   $modulesconf     = '/etc/httpd/conf.d/modules.conf'
   $includesconf    = '/etc/httpd/conf.d/includes.conf'
   $deflateconf     = '/etc/httpd/conf.d/deflate.conf'
+  $reqtimeoutconf  = '/etc/httpd/conf.d/reqtimeout.conf'
   $nssvhostconf    = '/etc/httpd/conf.d/sites/11-ZnVja3RoYXRiaXRjaAo.com-443.conf'
 
 when 'Debian'
@@ -34,6 +35,7 @@ when 'Debian'
   $modulesconf     = '/etc/apache2/conf.d/modules.conf'
   $includesconf    = '/etc/apache2/conf.d/includes.conf'
   $deflateconf     = '/etc/apache2/conf.d/deflate.conf'
+  $reqtimeoutconf  = '/etc/apache2/conf.d/reqtimeout.conf'
   $nssvhostconf    = '/etc/apache2/conf.d/sites/11-ZnVja3RoYXRiaXRjaAo.com-443.conf'
 
 else
@@ -48,6 +50,7 @@ else
   $modulesconf     = '-_-'
   $includesconf    = '-_-'
   $deflateconf     = '-_-'
+  $reqtimeoutconf  = '-_-'
   $nssvhostconf    = '-_-'
 
 end

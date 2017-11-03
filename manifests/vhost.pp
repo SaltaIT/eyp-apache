@@ -259,10 +259,13 @@ define apache::vhost(
 
       if($rewrites!=undef) or ($rewrites_source!=undef)
       {
-        concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run rewrite engine on":
-          target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
-          content => "\n  ## Rewrite rules ##\n\n  RewriteEngine On\n\n",
-          order   => '05',
+        if(!defined(Concat::Fragment["${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run rewrite engine on"]))
+        {
+          concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run rewrite engine on":
+            target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.run",
+            content => "\n  ## Rewrite rules ##\n\n  RewriteEngine On\n\n",
+            order   => '05',
+          }
         }
 
         if($rewrites_source)
@@ -443,9 +446,9 @@ define apache::vhost(
       {
         file { $documentroot:
           ensure  => 'directory',
-          owner   => $apache::params::apache_username,
-          group   => $apache::params::apache_username,
-          mode    => '0775',
+          owner   => $documentroot_owner,
+          group   => $documentroot_group,
+          mode    => $documentroot_mode,
           require => Exec["mkdir p ${documentroot} ${servername} ${port}"],
         }
       }

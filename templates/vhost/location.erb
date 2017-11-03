@@ -10,28 +10,47 @@
     SSLRequire <%= @ssl_require %>
     <%- end -%>
   <%- if scope.function_versioncmp([scope.lookupvar('apache::version'), '2.4']) >= 0 -%>
-    <%- if @allowedip -%>
+    <%- if @block -%>
+    Require all denied
+    <%- elsif @allowedip.any? -%>
     Require all denied
     Require ip <%= @allowedip.join(' ') %>
-    <%- elsif @denyip -%>
+    <%- elsif @denyip.any? -%>
     <RequireAll>
       Require all granted
       Require not ip <%= @denyip.join(' ') %>
     </RequireAll>
+    <%- elsif @limit_http_methods.any?-%>
+      <LimitExcept <%= @limit_http_methods.join(' ') %>>
+        Require all denied
+      </LimitExcept>
     <%- else -%>
     Require all granted
     <%- end -%>
   <%- else -%>
-    <%- if @allowedip -%>
+    <%- if @block -%>
+    Order Deny,Allow
+    Deny from all
+    Allow from none
+    <%- elsif @allowedip.any? -%>
     Order Deny,Allow
     Deny from all
     Allow from <%= @allowedip.join(' ') %>
-    <%- else -%>
+    <%- elsif @denyip.any? -%>
     Order Allow,Deny
     Allow from all
       <%- if @denyip -%>
     Deny from <%= @denyip.join(' ') %>
       <%- end -%>
+    <%- elsif @limit_http_methods.any?-%>
+    <LimitExcept <%= @limit_http_methods.join(' ') %>>
+      Order deny,allow
+      Deny from all
+    </LimitExcept>
+    <%- else -%>
+    Order Allow,Deny
+    Allow from all
+    Deny from none
     <%- end -%>
   <%- end -%>
   </Location>
