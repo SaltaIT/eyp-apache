@@ -60,6 +60,8 @@ class apache(
               $limit_request_body        = undef,
               $enable_autoindex          = true,
               $default_follow_sym_links  = true,
+              $confd_purge               = true,
+              $confd_recurse             = true,
             ) inherits apache::params {
 
   if($version!=$apache::version::default)
@@ -203,8 +205,8 @@ class apache(
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    recurse => true,
-    purge   => true,
+    recurse => $confd_recurse,
+    purge   => $confd_purge,
     require => Package[$apache::params::packagename],
   }
 

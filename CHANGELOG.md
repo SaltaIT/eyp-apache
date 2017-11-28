@@ -10,6 +10,7 @@
   - changed default **LogLevel** from **warn** to **notice core:info** for Apache 2.4 and **warn** for Apache 2.2
   - apache config cleanup (some useless directives have been removed)
 * bugfix: default vhost documentroot ownership
+* configurable **conf.d** purge/recurse
 * added **apache::vhost::xframeoptions** to be able to easily add the X-Frame-Options header to a vhost
 * added support for **mod_reqtimeout** using **apache::mod::reqtimeout**
 * added variables for:
