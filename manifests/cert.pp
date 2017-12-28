@@ -9,10 +9,7 @@ define apache::cert (
                       $version             = '',
                     ) {
 
-  if ! defined(Class['apache'])
-  {
-    fail('You must include the apache base class before using any apache defined resources')
-  }
+  include ::apache
 
   if($pk_source==undef and $pk_file==undef)
   {
@@ -22,31 +19,6 @@ define apache::cert (
   if($cert_source==undef and $cert_file==undef)
   {
     fail('both cert_source and cert_file are undefined')
-  }
-
-  if($pk_source!=undef)
-  {
-    validate_string($pk_source)
-  }
-
-  if($cert_source!=undef)
-  {
-    validate_string($cert_source)
-  }
-
-  if($pk_file!=undef)
-  {
-    validate_absolute_path($pk_file)
-  }
-
-  if($cert_file!=undef)
-  {
-    validate_absolute_path($cert_file)
-  }
-
-  if($intermediate_source!=undef)
-  {
-    validate_string($intermediate_source)
   }
 
   if($pk_source!=undef)
@@ -95,7 +67,6 @@ define apache::cert (
 
   if($intermediate_source!=undef)
   {
-    validate_string($intermediate_source)
 
     file { "${apache::params::baseconf}/ssl/${certname}_intermediate${version}.cert":
       ensure  => 'present',
