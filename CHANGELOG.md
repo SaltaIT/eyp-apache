@@ -22,6 +22,7 @@
 * added a flag to disable **mod_autoindex**
 * added flag to **disable FollowSymlinks** by default
 * added **limit_http_methods** variable to **apache::location** to be able to limit http methods by URL
+* added **disablereuse** variable to **apache::proxy::proxypass**
 
 ## 0.5.13
 
