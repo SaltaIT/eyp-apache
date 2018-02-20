@@ -6,6 +6,7 @@ define apache::mod::proxy::proxypass(
                                       $vhost_order       = '00',
                                       $port              = '80',
                                       $connectiontimeout = undef,
+                                      $disablereuse      = undef,
                                       $timeout           = undef,
                                     ) {
   #
