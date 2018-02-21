@@ -23,6 +23,9 @@
 * added flag to **disable FollowSymlinks** by default
 * added **limit_http_methods** variable to **apache::location** to be able to limit http methods by URL
 * added **disablereuse** variable to **apache::proxy::proxypass**
+* added AD auth support:
+  - mod_ldap via **apache::mod::ldap**
+  - AD auth via **apache::vhost::adsauth**
 
 ## 0.5.13
 

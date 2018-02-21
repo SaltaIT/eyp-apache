@@ -79,6 +79,7 @@ class apache::params inherits apache::version {
       $modnss_so='libmodnss.so'
 
       $kerberos_auth_package = 'mod_auth_kerb'
+      $mod_ldap_package = 'mod_ldap'
 
       $dav_svn_package = 'mod_dav_svn'
 
@@ -147,6 +148,7 @@ class apache::params inherits apache::version {
       $nss_pcache_path='/usr/sbin/nss_pcache'
 
       $kerberos_auth_package = 'libapache2-mod-auth-kerb'
+      $mod_ldap_package = undef
 
       $ssl_session_cache_file_default = '/var/run/apache2/ssl_scache'
 

@@ -1,0 +1,18 @@
+
+    <Location <%= @url %>>
+      AuthBasicProvider ldap
+      AuthType Basic
+      AuthLDAPGroupAttribute member
+      AuthLDAPGroupAttributeIsDN On
+      AuthLDAPURL "ldaps://srv-ad02.nttcom.ms.local/OU=NTTCMS,DC=nttcom,DC=ms,DC=local?sAMAccountName?sub?(objectClass=user)"
+      AuthLDAPBindDN  "cn=auth GBM,OU=Service Account,OU=NTTCMS,DC=nttcom,DC=ms,DC=local"
+      AuthLDAPBindPassword "XXXXXXXX"
+      AuthUserFile /dev/null
+      Require valid-user
+      AuthType Kerberos
+      <%- if defined?(@authname) -%>
+      AuthName "<%= @authname %>"
+      <%- else -%>
+      AuthName "authentication requried"
+      <%- end -%>
+    </Location>
