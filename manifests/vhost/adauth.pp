@@ -1,19 +1,19 @@
 #
 # puppet2sitepp @apachevhostadauth
 #
-define apache::vhost::adsauth(
-                                $url,
-                                $auth_ldap_url,
-                                $auth_ldap_bind_dn,
-                                $auth_ldap_bind_password,
-                                $vhost_order                     = '00',
-                                $port                            = '80',
-                                $servername                      = $name,
-                                $authname                        = undef,
-                                $auth_ldap_group_attribute       = 'member',
-                                $auth_ldap_group_attribute_is_dn = true,
-                                $requisites                      = [ 'valid-user' ],
-                              ) {
+define apache::vhost::adauth(
+                              $url,
+                              $auth_ldap_url,
+                              $auth_ldap_bind_dn,
+                              $auth_ldap_bind_password,
+                              $vhost_order                     = '00',
+                              $port                            = '80',
+                              $servername                      = $name,
+                              $authname                        = undef,
+                              $auth_ldap_group_attribute       = 'member',
+                              $auth_ldap_group_attribute_is_dn = true,
+                              $requisites                      = [ 'valid-user' ],
+                            ) {
   #
   # apache 2.4
   #
