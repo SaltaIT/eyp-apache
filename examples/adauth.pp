@@ -27,7 +27,7 @@ apache::vhost {'et2blog':
 # AuthLDAPBindPassword "XXXXXXXX"
 # AuthUserFile /dev/null
 # Require valid-user
-apache::vhost::adsauth { 'et2blog':
+apache::vhost::adauth { 'et2blog':
   url => '/',
   auth_ldap_url => 'ldaps://srv-ad02.nttcom.ms.local/OU=NTTCMS,DC=nttcom,DC=ms,DC=local?sAMAccountName?sub?(objectClass=user)',
   auth_ldap_bind_dn => 'cn=auth GBM,OU=Service Account,OU=NTTCMS,DC=nttcom,DC=ms,DC=local',
