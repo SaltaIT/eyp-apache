@@ -3,10 +3,16 @@
 #
 define apache::vhost::adsauth(
                                 $url,
-                                $vhost_order       = '00',
-                                $port              = '80',
-                                $servername        = $name,
-                                $authname          = undef,
+                                $auth_ldap_url,
+                                $auth_ldap_bind_dn,
+                                $auth_ldap_bind_password,
+                                $vhost_order                     = '00',
+                                $port                            = '80',
+                                $servername                      = $name,
+                                $authname                        = undef,
+                                $auth_ldap_group_attribute       = 'member',
+                                $auth_ldap_group_attribute_is_dn = true,
+                                $requisites                      = [ 'valid-user' ],
                               ) {
   #
   # apache 2.4
@@ -30,7 +36,7 @@ define apache::vhost::adsauth(
   # Require valid-user
   #
   include ::apache::mod::ldap
-  
+
   if($apache::params::mod_ldap_package!=undef)
   {
     if(! defined(Package[$apache::params::mod_ldap_package]))
