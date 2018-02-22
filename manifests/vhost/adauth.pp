@@ -56,6 +56,14 @@ define apache::vhost::adauth(
     }
   }
 
+  if(!defined(Apache::Module['authnz_ldap_module']))
+  {
+    # LoadModule authnz_ldap_module modules/mod_authnz_ldap.so
+    apache::module { 'authnz_ldap_module':
+      sofile  => "${apache::params::modulesdir}/mod_authnz_ldap.so",
+    }
+  }
+
   $url_cleanup = regsubst($url, '[^a-zA-Z]+', '')
 
   concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run ADauth ${url}":
