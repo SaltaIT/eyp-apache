@@ -1,0 +1,20 @@
+
+  <Location <%= @url %>>
+    AuthBasicProvider ldap
+    AuthType Basic
+    AuthLDAPGroupAttribute <%= @auth_ldap_group_attribute %>
+    AuthLDAPGroupAttributeIsDN <%= scope.function_bool2onoff([@auth_ldap_group_attribute_is_dn]) %>
+    AuthLDAPURL <%= @auth_ldap_url %>
+    AuthLDAPBindDN  "<%= @auth_ldap_bind_dn %>"
+    AuthLDAPBindPassword "<%= @auth_ldap_bind_password %>"
+    AuthUserFile /dev/null
+    <%- @requisites.each do |item| -%>
+    Require <%= item %>
+    <%- end -%>
+    AuthType Kerberos
+    <%- if defined?(@authname) -%>
+    AuthName "<%= @authname %>"
+    <%- else -%>
+    AuthName "authentication requried"
+    <%- end -%>
+  </Location>
