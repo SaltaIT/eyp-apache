@@ -190,7 +190,7 @@ class apache::params inherits apache::version {
             }
             /^18.*$/:
             {
-              $packagename=[ 'apache2', 'apache2-utils', 'lynx' ]
+              $packagename=[ 'apache2', 'apache2-utils' ]
 
               $modphp_so='libphp7.2.so'
               $modphp_modulename='php7_module'
