@@ -403,6 +403,7 @@ define apache::vhost(
           order   => '05',
           content => "\n  RewriteCond %{REQUEST_URI} !/sorrypage/.*\n",
         }
+
         if(has_key($custom_sorrypage, 'healthcheck'))
         {
           concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage custom healtcheck":
@@ -425,6 +426,8 @@ define apache::vhost(
                             ],
           }
         }
+
+      }
 
       concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage redirect 503":
         target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage",
