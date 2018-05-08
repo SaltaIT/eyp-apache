@@ -409,9 +409,9 @@ define apache::vhost(
             target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage",
             order   => '04',
             content => "\n  RewriteCond %{REQUEST_URI} !/${custom_sorrypage['healthcheck']}",
+          }
         }
-
-        }
+        
         if($certname!=undef)
         {
           concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage sslcert":
