@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.1
+
+* added ssl certs to sorrypage
+
 ## 0.6.0
 
 * **INCOMPATIBLE CHANGES**:
