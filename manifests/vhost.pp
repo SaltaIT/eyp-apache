@@ -411,7 +411,7 @@ define apache::vhost(
             content => "\n  RewriteCond %{REQUEST_URI} !/${custom_sorrypage['healthcheck']}",
           }
         }
-        
+
         if($certname!=undef)
         {
           concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage sslcert":
@@ -422,7 +422,7 @@ define apache::vhost(
                               "${apache::params::baseconf}/ssl/${certname}_pk${certname_version}.pk",
                               "${apache::params::baseconf}/ssl/${certname}_cert${certname_version}.cert"
                               ]
-                           ],
+                            ],
           }
         }
 
