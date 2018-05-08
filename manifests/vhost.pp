@@ -412,7 +412,19 @@ define apache::vhost(
         }
 
         }
-      }
+        if($certname!=undef)
+        {
+          concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage sslcert":
+            target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage",
+            order   => '02',
+            content => template("${module_name}/ssl/vhost_template.erb"),
+            require => File[  [
+                              "${apache::params::baseconf}/ssl/${certname}_pk${certname_version}.pk",
+                              "${apache::params::baseconf}/ssl/${certname}_cert${certname_version}.cert"
+                              ]
+                           ],
+          }
+        }
 
       concat::fragment{ "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage redirect 503":
         target  => "${apache::params::baseconf}/conf.d/sites/${order}-${servername}-${port}.conf.sorrypage",
