@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.2 - 2018-06-19
+
+* bugfix mod_php on Ubuntu 14.04
+
 ## 0.6.1
 
 * added ssl certs to sorrypage
