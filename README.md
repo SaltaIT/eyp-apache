@@ -1,4 +1,4 @@
-# apache ![status ready](https://img.shields.io/badge/status-ready-brightgreen.svg)
+# apache
 
 **NTTCom-MS/eyp-apache**: [![Build Status](https://travis-ci.org/NTTCom-MS/eyp-apache.png?branch=master)](https://travis-ci.org/NTTCom-MS/eyp-apache)
 
@@ -8,7 +8,6 @@
 2. [Module Description](#module-description)
 3. [Setup](#setup)
     * [What apache affects](#what-apache-affects)
-    * [Setup requirements](#setup-requirements)
     * [Beginning with apache](#beginning-with-apache)
 4. [Usage](#usage)
 5. [Reference](#reference)
@@ -34,20 +33,6 @@ apache httpd and apache modules management
   * ${apache_confdir}/conf.d
   * ${apache_confdir}/conf.d/sites
   * ${apache_confdir}/ssl
-
-### Setup Requirements
-
-This module requires pluginsync enabled
-
-Requirements:
-* **eyp/eyplib** is required to be able to use helper functions like **bool2onoff**
-* **puppetlabs/concat**: most config files are created using concat (beaware of file changes)
-
-Optional:
-
-* **eyp/logrotate**: To be able to purge package's logrotate configuration files you need version 0.1.21 or greater
-* **eyp/purgefiles**: To be able to configure cronjobs to purge apache logs you need version 0.1.4 of greater
-
 
 ### Beginning with apache
 
@@ -648,10 +633,10 @@ apache::redirect { 'et2blog':
 ## Limitations
 
 Tested on:
-* CentOS 5
 * CentOS 6
 * CentOS 7
-* Ubuntu 14.04
+* Ubuntu 16.04
+* Ubuntu 18.04
 
 ## Development
 
