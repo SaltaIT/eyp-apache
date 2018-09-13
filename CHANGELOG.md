@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.3 - 2018-09-19
+
+* fix dependencies
+
 ## 0.6.2 - 2018-06-19
 
 * bugfix mod_php on Ubuntu 14.04
