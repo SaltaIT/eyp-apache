@@ -197,7 +197,7 @@ apache::addtype { '.sinep':
 
 #### SSL setup using yaml
 
-```yaml
+```
 classes:
   - apache
 apache::listen:
