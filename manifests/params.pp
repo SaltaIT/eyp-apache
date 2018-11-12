@@ -110,7 +110,7 @@ class apache::params inherits apache::version {
           $log_level_default = 'warn'
 
           $modphp_pkg=undef
-          $modphp_so='modules/libphp5.so'
+          $modphp_so='libphp5.so'
           $modphp_modulename='php5_module'
         }
         /^7.*/:
