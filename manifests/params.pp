@@ -108,6 +108,10 @@ class apache::params inherits apache::version {
           $ssl_session_cache_file_default = '/var/cache/mod_ssl/scache'
           $reqtimeout_so = 'mod_reqtimeout.so'
           $log_level_default = 'warn'
+
+          $modphp_pkg=undef
+          $modphp_so='modules/libphp5.so'
+          $modphp_modulename='php5_module'
         }
         /^7.*/:
         {

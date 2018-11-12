@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.4
+
+* added CentOS 6 support for mod_php (via **apache::mod::php**)
+
 ## 0.6.3 - 2018-09-19
 
 * fix dependencies
