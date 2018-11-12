@@ -70,9 +70,6 @@ class apache::params inherits apache::version {
       $conftemplate='httpdconf_base.erb'
       $conffile='conf/httpd.conf'
 
-      $modphp_pkg=undef
-      $modphp_so=undef
-
       $ssl_compression_default=false
 
       $package_nss=[ 'mod_nss', 'nss-tools' ]
@@ -83,7 +80,6 @@ class apache::params inherits apache::version {
 
       $dav_svn_package = 'mod_dav_svn'
 
-      $modphp_modulename='php5_module'
 
       case $::operatingsystemrelease
       {
@@ -97,6 +93,10 @@ class apache::params inherits apache::version {
           $ssl_session_cache_file_default = '/var/cache/mod_ssl/scache'
           $reqtimeout_so = undef
           $log_level_default = 'warn'
+
+          $modphp_pkg=undef
+          $modphp_so=undef
+          $modphp_modulename=undef
         }
         /^6.*/:
         {
@@ -123,6 +123,10 @@ class apache::params inherits apache::version {
           $ssl_session_cache_file_default = '/run/httpd/sslcache'
           $reqtimeout_so = 'mod_reqtimeout.so'
           $log_level_default = [ 'notice', 'core:info' ]
+
+          $modphp_pkg=undef
+          $modphp_so=undef
+          $modphp_modulename=undef
         }
         default: { fail('Unsupported RHEL/CentOS version!')  }
       }
