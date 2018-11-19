@@ -25,6 +25,13 @@ class apache::mod::php(
     package { $apache::params::modphp_pkg:
       ensure => $ensure,
     }
+
+    if($ensure=='installed')
+    {
+      Package[$apache::params::modphp_pkg] {
+        before => Apache::Module[$apache::params::modphp_modulename],
+      }
+    }
   }
   else
   {
@@ -36,7 +43,6 @@ class apache::mod::php(
   {
     apache::module { $apache::params::modphp_modulename:
       sofile  => "${apache::params::modulesdir}/${apache::params::modphp_so}",
-      require => Package[$apache::params::modphp_pkg],
     }
   }
 
