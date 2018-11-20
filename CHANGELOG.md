@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.5
+
+* updated metadata to allow **eyp-php:0.6**
+
 ## 0.6.4
 
 * added CentOS 6 support for mod_php (via **apache::mod::php**)
