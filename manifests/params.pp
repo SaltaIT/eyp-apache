@@ -125,8 +125,8 @@ class apache::params inherits apache::version {
           $log_level_default = [ 'notice', 'core:info' ]
 
           $modphp_pkg=undef
-          $modphp_so=undef
-          $modphp_modulename=undef
+          $modphp_so='libphp5.so'
+          $modphp_modulename='php5_module'
         }
         default: { fail('Unsupported RHEL/CentOS version!')  }
       }
