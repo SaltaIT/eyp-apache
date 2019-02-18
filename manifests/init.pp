@@ -13,7 +13,7 @@ class apache(
               $ssl                       = false,
               $sni                       = true,
               $ssl_honor_cipher_order    = true,
-              $ssl_compression           = false,
+              $ssl_compression           = $apache::params::ssl_compression_default,
               $ssl_protocol              = $apache::params::ssl_protocol_default,
               $ssl_chiphersuite          = $apache::params::ssl_chiphersuite_default,
               $ssl_use_stapling          = false,

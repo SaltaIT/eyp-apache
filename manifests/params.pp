@@ -92,6 +92,8 @@ class apache::params inherits apache::version {
           $reqtimeout_so = undef
           $log_level_default = 'warn'
 
+          $ssl_compression_default = undef
+
           $modphp_pkg=undef
           $modphp_so=undef
           $modphp_modulename=undef
@@ -107,6 +109,8 @@ class apache::params inherits apache::version {
           $reqtimeout_so = 'mod_reqtimeout.so'
           $log_level_default = 'warn'
 
+          $ssl_compression_default = undef
+
           $modphp_pkg=undef
           $modphp_so='libphp5.so'
           $modphp_modulename='php5_module'
@@ -121,6 +125,8 @@ class apache::params inherits apache::version {
           $ssl_session_cache_file_default = '/run/httpd/sslcache'
           $reqtimeout_so = 'mod_reqtimeout.so'
           $log_level_default = [ 'notice', 'core:info' ]
+
+          $ssl_compression_default = false
 
           $modphp_pkg=undef
           $modphp_so='libphp5.so'
@@ -159,6 +165,8 @@ class apache::params inherits apache::version {
       $reqtimeout_so = 'mod_reqtimeout.so'
 
       $log_level_default = [ 'notice', 'core:info' ]
+
+      $ssl_compression_default = false
 
       case $::operatingsystem
       {
