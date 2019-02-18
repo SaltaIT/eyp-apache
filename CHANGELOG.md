@@ -2,6 +2,7 @@
 
 ## 0.6.6
 
+* added CentOS 7 support for mod_php (via **apache::mod::php**)
 * Explicitly disable SSLCompression by default
 
 ## 0.6.5
