@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.6
+
+* Explicitly disable SSLCompression by default
+
 ## 0.6.5
 
 * updated metadata to allow **eyp-php:0.6**

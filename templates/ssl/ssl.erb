@@ -31,9 +31,7 @@ SSLProtocol <%= @ssl_protocol.join(' ') %>
 
 SSLHonorCipherOrder <%= scope.function_bool2onoff([@ssl_honor_cipher_order]) %>
 SSLCipherSuite <%= @ssl_chiphersuite.join(':') %>
-<%- if(@ssl_compression) -%>
-SSLCompression On
-<%- end -%>
+SSLCompression <%= scope.function_bool2onoff([@ssl_compression]) %>
 
 <% if(scope.lookupvar('apache::params::snisupported')) -%>
 # SNI - virtualhosting SSL

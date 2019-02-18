@@ -70,8 +70,6 @@ class apache::params inherits apache::version {
       $conftemplate='httpdconf_base.erb'
       $conffile='conf/httpd.conf'
 
-      $ssl_compression_default=false
-
       $package_nss=[ 'mod_nss', 'nss-tools' ]
       $modnss_so='libmodnss.so'
 
@@ -148,8 +146,6 @@ class apache::params inherits apache::version {
 
       $sysconfigfile='/etc/apache2/envvars'
       $sysconfigtemplate="${module_name}/sysconfig/debian/envvars.erb"
-
-      $ssl_compression_default=false
 
       $package_nss=[ 'libapache2-mod-nss' ]
       $modnss_so='mod_nss.so'
