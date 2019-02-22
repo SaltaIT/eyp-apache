@@ -13,11 +13,8 @@ class apache::params inherits apache::version {
   $maxrequestsperchild_default='4000'
   $customlog_type_default='combined'
   $server_name_default = $::fqdn
-  $site_enabled_default = true
 
   # Default directory options
-  $options_default= [ 'FollowSymlinks' ]
-  $allowoverride_default='None'
   $directory_default='/var/www/undef'
 
   $deflate_so='mod_deflate.so'
