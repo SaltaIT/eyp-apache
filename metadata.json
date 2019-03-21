@@ -1,6 +1,6 @@
 {
   "name": "eyp-apache",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "author": "eyp",
   "summary": "apache setup and configuration",
   "license": "Apache-2.0",
@@ -12,7 +12,7 @@
     {"name":"puppetlabs/concat","version_requirement":">= 1.2.3 < 9.9.9"},
     {"name":"eyp/eyplib","version_requirement":">= 0.1.0 < 0.2.0"},
     {"name":"eyp/php","version_requirement":">= 0.3.0 < 0.7.0"},
-    {"name":"eyp/audit","version_requirement":">= 0.1.12 < 0.2.0"}
+    {"name":"eyp/audit","version_requirement":">= 0.1.12 < 0.3.0"}
   ],
   "operatingsystem_support": [
     {

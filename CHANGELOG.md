@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.7
+
+* updated **eyp-auditd** max version
+
 ## 0.6.6
 
 * added CentOS 7 support for mod_php (via **apache::mod::php**)
