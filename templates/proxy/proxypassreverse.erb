@@ -1,2 +1,8 @@
 
+<% if defined?(@location) -%>
+  <Location "<%= @location %>">
+<% end -%>
   ProxyPassReverse <%= @url %> <%= @destination %>
+<% if defined?(@location) -%>
+  </Location>
+<% end -%>

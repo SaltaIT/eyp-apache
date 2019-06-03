@@ -2,7 +2,7 @@
 
 ## 0.6.8
 
-* added optional location for proxypass
+* added optional location for **ProxyPass** and **ProxyPassReverse**
 
 ## 0.6.7
 
