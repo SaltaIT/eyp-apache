@@ -8,6 +8,7 @@ define apache::mod::proxy::proxypass(
                                       $connectiontimeout = undef,
                                       $disablereuse      = undef,
                                       $timeout           = undef,
+                                      $location          = undef,
                                     ) {
   #
   concat::fragment { "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run proxypass ${url} ${destination}":

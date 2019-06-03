@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.8
+
+* added optional location for proxypass
+
 ## 0.6.7
 
 * updated **eyp-auditd** max version
