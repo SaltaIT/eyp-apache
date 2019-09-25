@@ -209,7 +209,32 @@ class apache::params inherits apache::version {
             default: { fail("Unsupported Ubuntu version! - ${::operatingsystemrelease}")  }
           }
         }
-        'Debian': { fail('Unsupported')  }
+        'Debian':
+        {
+          $packagenamedevel=undef
+          $servicename='apache2'
+          $conftemplate='httpdconf_base.erb'
+          $conffile='apache2.conf'
+          $modssl_package=[ 'apache2-bin' ]
+
+          $ssl_protocol_default=[ '-ALL', '+TLSv1', '+TLSv1.1', '+TLSv1.2' ]
+          $snisupported=true
+
+          $modsystemd=false
+
+          case $::operatingsystemrelease
+          {
+            /^10\..*$/:
+            {
+              $packagename=[ 'apache2', 'apache2-utils' ]
+              $modphp_pkg=[ 'libapache2-mod-php' ]
+
+              $modphp_so='libphp7.3.so'
+              $modphp_modulename='php7_module'
+            }
+            default: { fail("Unsupported Ubuntu version! - ${::operatingsystemrelease}")  }
+          }
+        }
         default: { fail('Unsupported Debian flavour!')  }
       }
     }

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.9
+
+* added **Debian 10** support
+
 ## 0.6.8
 
 * added optional location for **ProxyPass** and **ProxyPassReverse**
