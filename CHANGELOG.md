@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 0.6.9
+## 0.6.10
 
 * added **Debian 10** support
 

@@ -227,7 +227,7 @@ class apache::params inherits apache::version {
             /^10\..*$/:
             {
               $packagename=[ 'apache2', 'apache2-utils' ]
-              $modphp_pkg=[ 'libapache2-mod-php' ]
+              $modphp_pkg=[ 'libapache2-mod-php7.3' ]
 
               $modphp_so='libphp7.3.so'
               $modphp_modulename='php7_module'
