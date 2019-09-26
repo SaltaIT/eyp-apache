@@ -26,7 +26,8 @@ class apache::mod::php(
   {
     package { $apache::params::modphp_pkg:
       ensure  => $ensure,
-      require => Class['::apache'],
+      before  => File["${apache::params::baseconf}/${apache::params::conffile}"],
+      require => Package[$apache::params::packagename],
     }
 
     if($ensure=='installed')
