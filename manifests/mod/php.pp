@@ -2,6 +2,8 @@ class apache::mod::php(
                         $ensure = 'installed'
                       ) inherits apache::params {
 
+  include ::apache
+
   if($apache::params::modphp_so==undef)
   {
     fail('Unsupported')
@@ -23,7 +25,8 @@ class apache::mod::php(
   if($apache::params::modphp_pkg!=undef)
   {
     package { $apache::params::modphp_pkg:
-      ensure => $ensure,
+      ensure  => $ensure,
+      require => Class['::apache'],
     }
 
     if($ensure=='installed')

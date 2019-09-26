@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.11
+
+* improved mod_php installation
+
 ## 0.6.10
 
 * added **Debian 10** support
