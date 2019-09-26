@@ -26,14 +26,13 @@ class apache::mod::php(
   {
     package { $apache::params::modphp_pkg:
       ensure  => $ensure,
-      before  => File["${apache::params::baseconf}/${apache::params::conffile}"],
       require => Package[$apache::params::packagename],
     }
 
     if($ensure=='installed')
     {
       Package[$apache::params::modphp_pkg] {
-        before => Apache::Module[$apache::params::modphp_modulename],
+        before => [ File["${apache::params::baseconf}/${apache::params::conffile}"], Apache::Module[$apache::params::modphp_modulename] ],
       }
     }
   }
