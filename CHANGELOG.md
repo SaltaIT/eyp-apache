@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.12
+
+* added extension flag to **apache::custom_conf**
+
 ## 0.6.11
 
 * improved mod_php installation

@@ -1,13 +1,14 @@
 # puppet2sitepp @apachecustomconfs
 define apache::custom_conf(
                             $source,
-                            $filename = $name,
-                            $replace  = true,
+                            $filename  = $name,
+                            $replace   = true,
+                            $extension = 'conf',
                           ) {
 
   include ::apache
 
-  file { "${apache::params::baseconf}/conf.d/${filename}.conf":
+  file { "${apache::params::baseconf}/conf.d/${filename}.${extension}":
     ensure  => 'present',
     owner   => 'root',
     group   => 'root',
