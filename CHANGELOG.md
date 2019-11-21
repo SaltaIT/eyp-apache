@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.14
+
+* mkdir ssl cert dir for each cert
+
 ## 0.6.13
 
 * added intermediate_file support to **apache::cert**

@@ -22,6 +22,12 @@ define apache::cert (
     fail('both cert_source and cert_file are undefined')
   }
 
+  exec { "mkdir ${apache::params::baseconf}/ssl ${certname}":
+    command => "mkdir -p ${apache::params::baseconf}/ssl",
+    path    => '/usr/sbin:/usr/bin:/sbin:/bin',
+    creates => "${apache::params::baseconf}/ssl",
+  }
+
   if($pk_source!=undef)
   {
     file { "${apache::params::baseconf}/ssl/${certname}_pk${version}.pk":
