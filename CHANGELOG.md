@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.13
+
+* added intermediate_file support to **apache::cert**
+
 ## 0.6.12
 
 * added extension flag to **apache::custom_conf**

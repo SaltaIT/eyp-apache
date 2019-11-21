@@ -5,6 +5,7 @@ define apache::cert (
                       $cert_source         = undef,
                       $cert_file           = undef,
                       $intermediate_source = undef,
+                      $intermediate_file   = undef,
                       $certname            = $name,
                       $version             = '',
                     ) {
@@ -76,6 +77,14 @@ define apache::cert (
       require => [ Package[$apache::params::packagename], File["${apache::params::baseconf}/ssl"] ],
       source  => $intermediate_source,
       notify  => Class['apache::service'],
+    }
+  }
+  else
+  {
+    file { "${apache::params::baseconf}/ssl/${certname}_intermediate${version}.cert":
+    ensure => 'link',
+    target => $intermediate_file,
+    notify => Class['apache::service'],
     }
   }
 
