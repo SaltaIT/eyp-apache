@@ -4,7 +4,7 @@
   ProxyPass <%= @url %> <%= @destination -%>
   <% if defined?(@connectiontimeout) %> connectiontimeout=<%= @connectiontimeout %><% end -%>
   <% if defined?(@timeout) %> timeout=<%= @timeout %><% end -%>
-  <% if defined?(@disablereuse) %> disablereuse=<%= scope.function_bool2onoff([@disablereuse]) %><% end -%>
+  <% if defined?(@disablereuse) %> disablereuse=<%= scope.function_bool2onoff([@disablereuse]) %><% end %>
 <% if defined?(@location) -%>
   </Location>
 <% end -%>

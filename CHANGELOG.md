@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.15
+
+* bugfix multiple ProxyPass
+
 ## 0.6.14
 
 * mkdir ssl cert dir for each cert
