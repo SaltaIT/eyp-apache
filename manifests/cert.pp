@@ -87,10 +87,13 @@ define apache::cert (
   }
   else
   {
-    file { "${apache::params::baseconf}/ssl/${certname}_intermediate${version}.cert":
-    ensure => 'link',
-    target => $intermediate_file,
-    notify => Class['apache::service'],
+    if($intermediate_file!=undef)
+    {
+      file { "${apache::params::baseconf}/ssl/${certname}_intermediate${version}.cert":
+      ensure => 'link',
+      target => $intermediate_file,
+      notify => Class['apache::service'],
+      }
     }
   }
 

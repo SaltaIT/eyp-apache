@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.16
+
+* bugfix: intermediate file is optional
+
 ## 0.6.15
 
 * bugfix multiple ProxyPass
