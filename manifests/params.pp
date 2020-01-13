@@ -21,6 +21,7 @@ class apache::params inherits apache::version {
   $modexpires_so='mod_expires.so'
   $modproxy_so='mod_proxy.so'
   $modproxyajp_so='mod_proxy_ajp.so'
+  $modproxywstunnel_so='mod_proxy_wstunnel.so'
   $modproxyftp_so='mod_proxy_ftp.so'
   $modproxyhttp_so='mod_proxy_http.so'
   $modproxybalancer_so='mod_proxy_balancer.so'
