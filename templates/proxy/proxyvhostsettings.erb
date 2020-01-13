@@ -1,3 +1,9 @@
+  <%- if defined?(@proxy_requests) -%>
   ProxyRequests <%= scope.function_bool2onoff([@proxy_requests]) %>
+  <%- end -%>
+  <%- if defined?(@proxy_via) -%>
   ProxyVia <%= scope.function_bool2onoff([@proxy_via]) %>
+  <%- end -%>
+  <%- if defined?(@proxy_preserve_host) -%>
   ProxyPreserveHost <%= scope.function_bool2onoff([@proxy_preserve_host]) %>
+  <%- end -%>

@@ -3,9 +3,9 @@ define apache::mod::proxy::vhostsettings(
                                           $servername          = $name,
                                           $vhost_order         = '00',
                                           $port                = '80',
-                                          $proxy_requests      = false,
-                                          $proxy_via           = false,
-                                          $proxy_preserve_host = false,
+                                          $proxy_requests      = undef,
+                                          $proxy_via           = undef,
+                                          $proxy_preserve_host = undef,
                                         ) {
   #
   concat::fragment { "${apache::params::baseconf}/conf.d/sites/${vhost_order}-${servername}-${port}.conf.run proxy vhost settings ${url} ${destination}":
