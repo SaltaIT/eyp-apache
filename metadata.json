@@ -1,7 +1,7 @@
 {
   "name": "eyp-apache",
   "version": "0.6.17",
-  "author": "eyp",
+  "author": "Jordi Prats",
   "summary": "apache setup and configuration",
   "license": "Apache-2.0",
   "source": "https://github.com/SaltaIT/eyp-apache",
