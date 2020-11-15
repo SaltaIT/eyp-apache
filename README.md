@@ -1,6 +1,6 @@
 # apache
 
-**NTTCom-MS/eyp-apache**: [![Build Status](https://travis-ci.org/NTTCom-MS/eyp-apache.png?branch=master)](https://travis-ci.org/NTTCom-MS/eyp-apache)
+**SaltaIT/eyp-apache**: [![Build Status](https://travis-ci.org/SaltaIT/eyp-apache.png?branch=master)](https://travis-ci.org/SaltaIT/eyp-apache)
 
 #### Table of Contents
 
